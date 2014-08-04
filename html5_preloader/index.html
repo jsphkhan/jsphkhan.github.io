@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<head>
+    <title>HTML5 Preloader example</title>
+</head>
+<body>
+        <input type="button" value="Trigger" onclick="trigger()"/>
+        <div id="loaderElement" style="width:0; height:0;"></div>
+        <script type="text/javascript">
+        	function trigger() {
+        		var assetArr = ['color_picker.png','color_picker.png','color_picker.png','color_picker.png','color_picker.png','color_picker.png','color_picker.png','color_picker.png'],
+        			folderPath = 'assets',
+        			total = assetArr.length,
+        			count = 0;
+        		
+        		var lObj = document.getElementById('loaderElement');
+        		for(var i=0 ; i < total ; i+=1) {
+        			var tObj = document.createElement('object');
+        			tObj.style.width = "0";
+        			tObj.onload = function() {
+        			console.log('loaded ' + count);
+        				count += 1;        				
+        				if(count === total) {
+        					onLoadComplete();	
+        				}        				
+        			}
+        			tObj.data = folderPath + "/" + assetArr[i];
+        			lObj.appendChild(tObj);	
+        			
+        		}
+        		//calback
+        		function onLoadComplete() {
+        			console.log('DONE');
+        		}
+        	}
+        </script>  
+</body>
+</html>
