@@ -1,0 +1,49 @@
+{
+	"data" : [
+		{
+			"id" : 0,
+			"name" : "DAG Banking",
+			"value" : 12325480
+		},
+		{
+			"id" : 1,
+			"name" : "HSBC Bank",
+			"value" : 78687687
+		},
+		{
+			"id" : 2,
+			"name" : "Axis Bank",
+			"value" : 35436546
+		},
+		{
+			"id" : 3,
+			"name" : "DAG Banking",
+			"value" : 12325480
+		},
+		{
+			"id" : 4,
+			"name" : "HSBC Bank",
+			"value" : 78687687
+		},
+		{
+			"id" : 5,
+			"name" : "Axis Bank",
+			"value" : 35436546
+		},
+		{
+			"id" : 6,
+			"name" : "DAG Banking",
+			"value" : 12325480
+		},
+		{
+			"id" : 7,
+			"name" : "HSBC Bank",
+			"value" : 78687687
+		},
+		{
+			"id" : 8,
+			"name" : "Axis Bank",
+			"value" : 35436546
+		}
+	]
+}

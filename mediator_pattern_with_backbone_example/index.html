@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Home Page</title>
+        <style type="text/css">
+            html, body {
+                margin: 0;
+                padding: 0;
+                height: 100%;
+            }
+
+            ul {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+
+            ul.menu {
+                padding: 10px;
+                overflow: hidden;
+                height: 30px;
+                background: #4285f4;
+            }
+            ul.menu li {
+                float: left;
+                margin-left: 10px;
+            }
+
+            ul.menu li:hover {
+                cursor: pointer;
+                color: #fff;
+            }
+
+            #holder {
+                position: absolute;
+                top: 51px;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: #efefef;
+                padding: 10px;
+            }
+
+            ul.data-container .data-row {
+                padding: 15px 10px;
+                border-bottom: 1px solid #9a9a9a;
+                background: #fff;
+            }
+
+            ul.data-container .data-row:hover {
+                cursor: pointer;
+                background: #ccc;
+            }
+        </style>
+       
+    </head>
+    <body>
+    	<div id="container">
+            <ul class="menu">
+                <li id="as">Account Summary</li>
+                <li id="tl">Transaction List</li>
+                <li id="ts">Track Spending</li>
+            </ul>
+    		
+    		<div id="holder"></div>
+    	</div>
+    	<script type="text/javascript" src="js/lib/jquery.js"></script>
+    	<script type="text/javascript" src="js/lib/underscore-min.js"></script>
+    	<script type="text/javascript" src="js/lib/backbone.js"></script>
+        <script data-main="main" src="js/lib/handlebars.js"></script>
+        <!--<script type="text/javascript" src="js/mediator/mediator.js"></script>-->
+        <script data-main="main" src="js/lib/require.js"></script>
+
+        <script type="text/x-handlebars-template" id="accountSummaryTemplate">
+            <ul class="data-container">
+                {{#each results}}
+                    <li class="data-row" id="{{id}}">{{name}} {{value}}</li>
+                {{/each}}
+            </ul>
+        </script>
+        
+        <!--<script type="text/javascript">
+        	require.config({
+        		paths: {
+        			"underscore" : "js/lib/underscore-min",
+        			"backbone" : "js/lib/backbone",
+        			"jquery" : "js/lib/jquery"
+        		},
+        		shim: {
+        			"underscore" : {
+        				exports: "_"
+        			},
+        			"jquery" : {
+        				exports: "$"
+        			},
+        			"backbone" : {
+        				deps: ['underscore', 'jquery'],
+            			exports: 'Backbone'
+        			}
+        		}
+        	});
+        </script>-->
+    </body>
+</html>

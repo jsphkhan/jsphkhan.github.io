@@ -1,0 +1,77 @@
+<!-- Tutorial Link: http://addyosmani.com/largescalejavascript/ -->
+<!DOCTYPE html>
+<html>
+  <style type="text/css">
+   html, body {
+    
+   }
+  </style>
+  <body>
+    <h4>Mediator Pattern demo</h4>  
+    <h5>Publisher/Subscriber Model - modules will publish event and mediator will listen or subscribe to them</h5> 
+
+    <button id="myBtn">Publish an event</button>
+    
+    <script type="text/javascript">
+        document.querySelector("#myBtn").addEventListener('click', function() {
+
+          mediator.publish('nameChange', 'Ayaan');
+
+        }, false);
+        /*
+        * Mediator Pattern definition 
+        */
+        var mediator = (function(){
+          console.log('Mediator started');
+
+          //private API's - not exposed to users. This uses the Facade pattern
+          var _subscribe = function(channel, fn) {
+            if (!mediator.channels[channel]) {
+              mediator.channels[channel] = [];
+            }
+            mediator.channels[channel].push({ context: this, callback: fn });
+            return this;
+          }
+
+          var _publish = function(channel) {
+            if (!mediator.channels[channel]) { 
+              return false;
+            }
+            var args = Array.prototype.slice.call(arguments, 1);
+            for (var i = 0, l = mediator.channels[channel].length; i < l; i++) {
+                var subscription = mediator.channels[channel][i];
+                subscription.callback.apply(subscription.context, args);
+            }
+            return this;
+          }
+
+          //Public High Level API
+          return {
+            channels: {},
+            subscribe: _subscribe,
+            publish: _publish,
+            installTo: function(obj) {
+              obj.subscribe = _subscribe;
+              obj.publish = _publish;
+            }
+          };
+        }());
+
+
+        /* 
+        * Mediator Pattern implementation
+        */
+        mediator.name = "Joseph";
+
+        mediator.subscribe('nameChange', function(args) {
+          //callback function to be called when nameChange event is triggered
+          console.log("-----------------------------------");
+          console.log('Before: ' + this.name);
+          this.name = args;
+          console.log('After: ' + this.name);
+        });
+
+        mediator.publish('nameChange', 'David');  //publish or broadcast an event with event type and message data
+    </script>
+  </body>
+</html>
