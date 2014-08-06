@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<RecentTutorials>
+    <Tutorial author="The Reddest">
+        <Title>Silverlight and the Netflix API</Title>
+        <Categories>
+            <Category>Tutorials</Category>
+            <Category>Silverlight 2.0</Category>
+            <Category>Silverlight</Category>
+            <Category>C#</Category>
+            <Category>XAML</Category>
+        </Categories>
+        <Date>1/13/2009</Date>
+    </Tutorial>
+    <Tutorial author="The Hairiest">
+        <Title>Cake PHP 4 - Saving and Validating Data</Title>
+        <Categories>
+            <Category>Tutorials</Category>
+            <Category>CakePHP</Category>
+            <Category>PHP</Category>
+        </Categories>
+        <Date>1/12/2009</Date>
+    </Tutorial>
+    <Tutorial author="The Tallest">
+        <Title>Silverlight 2 - Using initParams</Title>
+        <Categories>
+            <Category>Tutorials</Category>
+            <Category>Silverlight 2.0</Category>
+            <Category>Silverlight</Category>
+            <Category>C#</Category>
+            <Category>HTML</Category>
+        </Categories>
+        <Date>1/6/2009</Date>
+    </Tutorial>
+    <Tutorial author="The Fattest">
+        <Title>Controlling iTunes with AutoHotkey</Title>
+        <Categories>
+            <Category>Tutorials</Category>
+            <Category>AutoHotkey</Category>
+        </Categories>
+        <Date>12/12/2008</Date>
+    </Tutorial>
+</RecentTutorials>

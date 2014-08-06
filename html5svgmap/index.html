@@ -1,0 +1,1223 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>HTML5 SVG Map Demo</title>
+    <link rel="stylesheet" type="text/css" href="jquery-ui-1.8.13.custom.css">
+    <link rel="stylesheet" type="text/css" href="css/demo_page.css">
+    <link rel="stylesheet" type="text/css" href="css/demo_table.css">
+    <link rel="stylesheet" type="text/css" href="css/diQuery-collapsiblePanel.css">
+
+    <style>    
+        .Tooltipstyle
+        {
+	        border: 1px solid #000;
+	        background-color: #444;
+	        padding: 4px;
+	        color: #ccc;
+	        font-family: Arial, Helvetica, sans-serif;
+	        font-size: 11px;	        
+        }
+        
+        .basicdata
+        {            
+            padding:5px;
+            height:15px;            
+            border-color:#d3d3d3;
+            border-style:solid;
+            border-width:thin;
+            background-color:#fff;
+        }
+        
+        body
+        {
+            font-family:Arial;
+            font-size:12px;
+        }
+        
+        #example tbody tr.even:hover, #example tbody tr.even td.highlighted {
+	        background-color: #ECFFB3;
+        }
+
+        #example tbody tr.odd:hover, #example tbody tr.odd td.highlighted {
+	        background-color: #E6FF99;
+        }
+
+        #example tr.even:hover {
+	        background-color: #ECFFB3;
+        }
+
+        #example tr.even:hover td.sorting_1 {
+	        background-color: #DDFF75;
+        }
+
+        #example tr.even:hover td.sorting_2 {
+	        background-color: #E7FF9E;
+        }
+
+        #example tr.even:hover td.sorting_3 {
+	        background-color: #E2FF89;
+        }
+
+        #example tr.odd:hover {
+	        background-color: #E6FF99;
+        }
+
+        #example tr.odd:hover td.sorting_1 {
+	        background-color: #D6FF5C;
+        }
+
+        #example tr.odd:hover td.sorting_2 {
+	        background-color: #E0FF84;
+        }
+
+        #example tr.odd:hover td.sorting_3 {
+	        background-color: #DBFF70;
+        }
+        
+        /*#legendTable th
+        {
+            background-color:#858585;            
+        }
+        #legendTable td
+        {
+            background-color:#d3d3d3;                  
+        }*/
+    </style> 
+      
+    <script type="text/javascript" src="jquery-1.6.1.min.js"></script>
+    <script type="text/javascript" src="interface.js"></script>
+    <script type="text/javascript" src="jquery-ui-1.8.13.custom.min.js"></script>
+    <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="js/diQuery-collapsiblePanel.js"></script>    
+    
+    <script type="text/javascript" src="js/RGraph.common.core.js"></script>
+    <script type="text/javascript" src="js/RGraph.common.context.js"></script>
+    <script type="text/javascript" src="js/RGraph.common.tooltips.js"></script>       
+    <script type="text/javascript" src="js/RGraph.pie.js"></script>    
+    <script type="text/javascript" src="js/RGraph.line.js"></script>
+    <script type="text/javascript" src="js/RGraph.skeleton.js"></script>  
+    
+    <!-- For inline SVG to run in all browser -->
+    <script src="js/svg.js" type="text/javascript"></script>      
+
+    <script type="text/javascript">
+        var svgNS = "http://www.w3.org/2000/svg";
+		var xlinkNS = "http://www.w3.org/1999/xlink";
+		
+		var unempcolorArr = ["#78a633","#d9c043","#f2d479","#f26b1d","#a6351c"];
+		var popcolorArr = ["#e4de4d","#b5c213","#508229","#054d16","#062f00"];
+		
+		var unempdataArr = [24,56,10,7,78,120];
+		var popDataArr = [1398,6758,424,8500,127621];
+		var numberOfClass = 5;
+		
+		//stores the count of states in each class
+		//length shuld be 5
+		var pieData = [0,0,0,0,0];
+		var pieLabel = [];
+		
+		var barData = [];
+		var barLabel = [];
+		
+		 var previousPathObj;
+         var prevPathColor = "";	
+				
+		var currentYear = "2011";
+		var selectedYear = "2011"; //initially
+		
+		var selectedStatistic = "Unemplyoment";//initially
+		
+		var selectedClassification = "Equal Intervals";
+		
+		var masterDataCollection = []; //an array ob all the state objects recieved from XML
+		
+		var xmlObj;
+		
+		//data array for the data table
+		var aDataSet = [];						
+        
+        $(document).ready(function()
+        {      
+            $(".collapsibleDataTablePanel").collapsiblePanel();
+            $(".collapsibleLineChartPanel").collapsiblePanel();
+             $(".collapsiblePieChartPanel").collapsiblePanel();
+                             
+            //send request for XML
+            $.ajax({
+                type: "GET",
+                url: "data/mapXML.xml",
+                dataType: "xml",
+                success: handleSuccess,
+                error: handleError
+            });                                               
+            
+            function handleSuccess(xml)
+            {
+                xmlObj = xml;
+                
+                parseXml(xmlObj);                 
+            }                        
+            
+            function parseXml(xml)
+             {
+                unempdataArr = [];
+                popDataArr = [];
+                masterDataCollection = [];
+                  //alert("Success " + xml);
+                  $(xml).find("year").each(function()
+                  {
+                    if($(this).attr("value") == selectedYear)
+                    {      
+                        //alert('test');                  
+                        $(this).find("state").each(function()
+                        {
+                            //alert('test');
+                            unempdataArr.push(parseFloat($(this).attr("unemployment")));
+                            popDataArr.push(parseFloat($(this).attr("population")));
+                            
+                            var name = $(this).attr("name");
+                            var id = $(this).attr("id");
+                            var emp = parseFloat($(this).attr("unemployment"));
+                            var pop = parseFloat($(this).attr("population"));
+                            
+                            var obj = new Object();
+                            obj.name = name;
+                            obj.id = id;
+                            obj.unemployment = emp;
+                            obj.population = pop;
+                            
+                            masterDataCollection.push(obj);
+                        });
+                    }                    
+                  });
+                  //alert("Arr: " + masterDataCollection.length); 
+                  parseData(unempdataArr,'unemployment',unempcolorArr,selectedClassification);                                                    
+              }
+              
+             
+              function handleError(err)
+              {
+                alert("Request for XML failed");
+              }
+            
+             function createDataTable()
+             {
+                aDataSet = [];
+                //first manipulate data
+                for(var i=0; i < masterDataCollection.length; i++)
+                {
+                    var arr = [];
+                    arr.push(masterDataCollection[i].id);
+                    arr.push(masterDataCollection[i].name);
+                    arr.push(masterDataCollection[i].population);
+                    arr.push(masterDataCollection[i].unemployment);
+                    arr.push(selectedYear);
+                    
+                    aDataSet.push(arr);
+                }
+                
+                
+                $('#targetdiv').html( '<table cellpadding="0" cellspacing="0" border="0" class="display" id="example"></table>' );
+				$('#example').dataTable( 
+				{	
+				    "bPaginate": true,
+		            "bLengthChange": true,
+		            "bFilter": true,
+		            "bSort": true,
+		            "bInfo": true,
+		            "bAutoWidth": true,	
+		            "bStateSave": true,		    
+		            "aLengthMenu": [10,25,50],
+					"aaData": aDataSet,
+					"aoColumns": [
+						{ "sTitle": "ID" },
+						{ "sTitle": "Name" },
+						{ "sTitle": "Population","sClass": "center" },
+						{ "sTitle": "Unemplyoment", "sClass": "center" },
+						{
+							"sTitle": "Year",
+							"sClass": "center",
+							"fnRender": function(obj) {
+								var sReturn = obj.aData[ obj.iDataColumn ];
+								if ( sReturn == "A" ) {
+									sReturn = "<b>A</b>";
+								}
+								return sReturn;
+							}
+						}
+					]
+				} );
+								
+	            //highlight the map state when mouse over a row in table
+	            $('#example tbody tr').live('hover', function () 
+	            {
+	                if(previousPathObj)
+                    {
+                        previousPathObj.style.fill = prevPathColor;                    
+                    }
+                                        
+		            var nTds = $('td', this);
+		            var id = $(nTds[0]).text();
+		            previousPathObj = document.getElementById(id);
+                    prevPathColor =  document.getElementById(id).style.fill;
+		           
+		            document.getElementById(id).style.fill = "#3489CF";
+		            
+		            $("#state").text("State: " + $(nTds[1]).text());
+                    $("#area").text(selectedStatistic + ": " + document.getElementById(id).getAttributeNS(null,selectedStatistic.toLowerCase()));
+                    $("#year").text("Year: " + selectedYear);
+	            } );								
+             } //end of data create function
+            
+            
+            $("path").mouseover(function(event)
+            {                                            
+                this.setAttributeNS(null,"fill-opacity","0.8");                                
+                $("#state").text("State: " + this.getAttributeNS(null,'title'));
+                $("#area").text(selectedStatistic + ": " + this.getAttributeNS(null,selectedStatistic.toLowerCase()));
+                $("#year").text("Year: " + selectedYear);
+                //document.getElementById("state").textContent = "State: " + this.getAttributeNS(null,'title');
+                //document.getElementById("area").textContent = selectedStatistic + ": " + this.getAttributeNS(null,selectedStatistic.toLowerCase());
+                //document.getElementById("year").textContent = "Year: " + selectedYear;
+            });
+            
+            $("path").mouseout(function(event)
+            {                
+                this.setAttributeNS(null,"fill-opacity","1.0");
+                //document.getElementById("state").textContent = " ";
+                //document.getElementById("area").textContent = " ";
+                //document.getElementById("year").textContent = " ";
+            });
+            
+            //for tooltips
+            $("path").ToolTip(
+            {
+                className: 'Tooltipstyle',	       
+		        position: 'mouse',
+		        delay: 10
+            });
+            
+            $("div .basicdata").ToolTip(
+            {
+                className: 'Tooltipstyle',	       
+		        position: 'mouse',
+		        delay: 10
+            });
+            //tool tip ends
+                                                         
+            
+            //change handlers for select lists
+            $("#classList").change(function(event)
+            {                
+                $("#classList option:selected").each(function() 
+                {
+                    selectedClassification = $(this).text();
+                }); 
+                
+                if(selectedStatistic == "Unemployment") 
+                {          
+                    parseData(unempdataArr,'unemployment',unempcolorArr,selectedClassification);                                       
+                }
+                else if(selectedStatistic == "Population")   
+                {             
+                    parseData(popDataArr,'population',popcolorArr,selectedClassification) ;                   
+                }
+                else
+                {
+                    
+                }  
+                //alert(selectedClassification);
+            });
+            
+            $("#yearList").change(function(event)
+            {                
+                $("#yearList option:selected").each(function() 
+                {
+                    selectedYear = $(this).text();
+                });                               
+                
+                parseXml(xmlObj);
+                
+                if(selectedStatistic == "Unemployment") 
+                {          
+                    parseData(unempdataArr,'unemployment',unempcolorArr,selectedClassification);                                       
+                }
+                else if(selectedStatistic == "Population")   
+                {             
+                    parseData(popDataArr,'population',popcolorArr,selectedClassification) ;                   
+                }
+                else
+                {
+                    
+                } 
+                
+                createDataTable();                       
+            });
+            
+            
+            $("#statisticList").change(function(event)
+            {                
+                //clear the previous path object so that on change in map colors the previous color does not highlight
+                previousPathObj = null;
+                prevPathColor = "";
+                
+                $("#statisticList option:selected").each(function() 
+                {
+                    selectedStatistic = $(this).text();
+                });                               
+                
+                //var state = document.getElementById("statisticList").options[document.getElementById("statisticList").selectedIndex].value;//$('#statisticList option:selected').val();                
+                                           
+                if(selectedStatistic == "Unemployment") 
+                {          
+                    parseData(unempdataArr,'unemployment',unempcolorArr,selectedClassification);                                       
+                }
+                else if(selectedStatistic == "Population")   
+                {             
+                    parseData(popDataArr,'population',popcolorArr,selectedClassification) ;                   
+                }
+                else
+                {
+                    
+                }
+                
+                 createDataTable();                                                                                 
+            });
+                      
+            
+        //function that uses Equal Interval method to classify data    
+        function parseData(dataArr,stat,colorArr,classification)
+        {                   
+                var classArray = [];
+                                
+                //find out the max and min from data array
+                dataArr = dataArr.sort(function(a,b){return a - b}); //sort the array in increasing order.
+                
+                if(classification == "Equal Intervals")
+                {
+                    var min = dataArr[0];
+                    var max = dataArr[dataArr.length - 1];
+                                    
+                    //alert(min + "/" + max);   
+                    
+                    var classinterval = (max - min)/numberOfClass;
+                    
+                    //generate the classes and assign each class a color
+                    var l = min;
+                    var u;
+                    
+                    pieLabel = [];
+                    
+                    for(var i=1; i <= numberOfClass; i++)
+                    {   
+                        var arr = [];
+                        u = Math.round(l + classinterval);
+                        var c = colorArr[i-1];
+                        
+                        //var red = Math.round(Math.random() * 255);
+	      		        //var green = Math.round(Math.random() * 255);
+	    		        //var blue = Math.round(Math.random() * 255);
+    	    		        
+	    		       //c = rgb(red + green + blue);
+                        
+                       arr.push(l); 
+                       arr.push(u);
+                       arr.push(c);
+                       
+                       pieLabel.push(l + "-" + u);
+                       
+                       l = u;
+                       
+                       classArray.push(arr);
+                    }
+                }
+                else if(classification == "Quantiles")
+                {
+                    //alert("Hehe");
+                    
+                    var frequency = Math.round(dataArr.length / numberOfClass);                                        
+                    
+                    var startIndex = 0;
+                    var endIndex = frequency;
+                    for(var n=1; n <= numberOfClass; n++)
+                    {
+                        var subarray = dataArr.slice(startIndex,endIndex);                        
+                        
+                        var l = subarray[0];
+                        var u = subarray[subarray.length-1];
+                        var c = colorArr[n-1]; 
+                                               
+                        startIndex = endIndex;
+                        endIndex = endIndex + frequency;
+                        //alert(subarray);
+                        //alert(l + " - " + u);
+                        
+                        var arr = [];                                              
+                           arr.push(l); 
+                           arr.push(u);
+                           arr.push(c);
+                           
+                           pieLabel.push(l + "-" + u);
+                                                      
+                           classArray.push(arr);
+                    }
+                }
+                else
+                    return;
+                
+                
+                
+                //alert(classArray[2][2]);
+                
+                pieData = [0,0,0,0,0];
+                barData = [];
+                barLabel = [];
+                
+                //now classify map data based on class array
+                //$("path").each(function()
+                for(var k=0; k < masterDataCollection.length; k++)
+                {                    
+                    //this.style.fill = classArray[][2];
+                    //alert(stat);
+                    var mapData = masterDataCollection[k][stat];//this.getAttributeNS(null,stat);
+                    var id = masterDataCollection[k].id;
+                    
+                    $("#" + id).attr(stat,mapData);
+                    
+                    /*var newTtitle = $("#" + id).attr('title') + "<br/>" + stat + ": " + mapData;
+                    
+                    $("#" + id).attr('title',newTtitle);*/
+                    //alert(mapData);
+                    
+                    barData.push(mapData);
+                    barLabel.push(masterDataCollection[k].name);
+                    
+                    //now compare
+                    for(var i=0; i < classArray.length; i++)
+                    {
+                        var l = classArray[i][0];
+                        var u = classArray[i][1];
+                        var c = classArray[i][2];                                               
+                        
+                        if(l <= mapData && mapData <= u)
+                        {                                                   
+                            //$("#" + id).attr('fill',c); //this was throwing an error, corrected on 08/06/2011                            
+                            document.getElementById(id).style.fill = c; //correct statement
+                                                       
+                            //now increment the pieData array value at the matched index
+                            pieData[i] = pieData[i] + 1;
+                        }                                              
+                    }
+                }
+                
+                //clear the legend table                
+                
+                //create the legend table
+                var htmlStr = "";
+                for(var i=0; i < classArray.length; i++)                                                
+                {   
+                    htmlStr = htmlStr + "<td style='width:15px; height:5px; background-color:" + 
+                    classArray[i][2] + "'>" + 
+                    "</td><td align='left; margin-right:10px'>" + classArray[i][0] + " - " + classArray[i][1] + "</td>";// + " (<b>" + pieData[i] + "</b>)" + "</td>";//<td align='right'>" +                                                                 
+                }
+                 document.getElementById("legendTable").innerHTML = "<tr>" + htmlStr + "</tr>";                                 
+                 
+                //createPieChart();
+                //generate pie chart
+                RGraph.Clear(document.getElementById("myCanvas1"));
+                
+                var pie = new RGraph.Pie('myCanvas1', pieData);
+                //pie.Set('chart.title', 'Range wise distribution of states');
+                pie.Set('chart.labels', pieLabel);
+                //pie.Set('chart.gutter', 30);                
+                pie.Set('chart.colors', colorArr);  
+                pie.Set('chart.shadow', false);
+                pie.Set('chart.tooltips.effect', 'fade');
+                pie.Set('chart.tooltips.event', 'onmousemove');
+                pie.Set('chart.tooltips',pieData);
+                //pie.Set('chart.highlight.style', '3d');
+                pie.Set('chart.labels.sticks', true);
+                pie.Set('chart.labels.sticks.color', '#000');
+                pie.Set('chart.strokestyle', 'rgba(0,0,0,0)');
+                pie.Set('chart.radius', 90);
+                //pie.Set('chart.linewidth', 1);
+                //pie.Set('chart.stroke', '#fff');
+                pie.Set('chart.highlight.style', 'explode'); //for animating the slices
+                pie.Draw();
+                                                                
+                //create a line chart
+                RGraph.Clear(document.getElementById("myCanvas"));
+                
+                var line = new RGraph.Line("myCanvas", barData);
+                //line.Set('chart.title', 'Yearly Distribution');
+                line.Set('chart.background.barcolor1', 'rgba(255,255,255,1)');
+                line.Set('chart.background.barcolor2', 'rgba(255,255,255,1)');
+                line.Set('chart.background.grid.color', '#d3d3d3');
+                line.Set('chart.colors', ['#3489CF']);
+                line.Set('chart.linewidth', 1);
+                line.Set('chart.filled', true);
+                line.Set('chart.tickmarks', ['circle']);
+                line.Set('chart.background.grid.autofit', true);
+                line.Set('chart.background.grid.autofit.align', true);
+                line.Set('chart.fillstyle', 'rgba(52,137,207,0.5)');
+                //line.Set('chart.crosshairs',true);                
+                //line.Set('chart.crosshairs.linewidth',0.3); 
+                line.Set('chart.tooltips', barLabel);
+                line.Set('chart.tooltips.effect', 'fade');
+                line.Set('chart.tooltips.event', 'onmousemove');
+                //line.Set('chart.labels', barLabel);
+                line.Set('chart.gutter.left', 40);                
+                line.Set('chart.contextmenu', [['Get PNG', RGraph.showPNG],null,['Download Data',function(){alert('Under construction')}],
+                ['Zoom View', function () 
+                    {
+                    var $dialog = $("#zoomWindow").dialog({
+			            autoOpen: false,
+			            title: 'Zoom View - Yearly Distribution',
+			            modal: true,
+			            height: 450,
+			            width: 780,
+			            resizable: false
+		            });
+		            	
+		            RGraph.Clear(document.getElementById("zoomCanvas"));
+		            
+		            var line1 = new RGraph.Line("zoomCanvas", barData);
+                    //line1.Set('chart.title', 'Yearly Distribution');
+                    line1.Set('chart.background.barcolor1', 'rgba(255,255,255,1)');
+                    line1.Set('chart.background.barcolor2', 'rgba(255,255,255,1)');
+                    line1.Set('chart.background.grid.color', '#d3d3d3');
+                    line1.Set('chart.colors', ['#3489CF']);
+                    line1.Set('chart.linewidth', 1);
+                    line1.Set('chart.filled', true);
+                    line1.Set('chart.tickmarks', ['circle']);
+                    line1.Set('chart.background.grid.autofit', true);
+                    line1.Set('chart.background.grid.autofit.align', true);
+                    line1.Set('chart.fillstyle', 'rgba(52,137,207,0.5)');
+                    line1.Set('chart.labels', barLabel);
+                    line1.Set('chart.text.angle', 90);
+                    line1.Set('chart.text.size', 8);
+                    line1.Set('chart.text.font', 'Arial');
+                    line1.Set('chart.labels.above', true);
+                    line1.Set('chart.labels.above.size', 6);
+                    //line1.Set('chart.zoom.mode', 'area');
+                    //line.Set('chart.crosshairs',true);                
+                    //line.Set('chart.crosshairs.linewidth',0.3); 
+                    //line1.Set('chart.tooltips', barLabel);
+                    //line1.Set('chart.tooltips.effect', 'fade');
+                    //line1.Set('chart.tooltips.event', 'onmousemove');                    
+                    line1.Set('chart.gutter.left', 60);
+                    line1.Set('chart.gutter.bottom', 150);
+                    line1.Draw();
+		            		                
+		            $dialog.dialog('open');}]
+		        ]);//end of content menu
+		        
+                line.Draw();                                                 
+                RGraph.AddCustomEventListener(line, 'ontooltip', handleTooltipCreate);
+            } 
+                                   
+            function handleTooltipCreate(obj)
+            {                
+                //getting the tooltip on which mouse over was done
+                var tooltipElement = RGraph.Registry.Get('chart.tooltip');                                
+                var tooltipText = tooltipElement.innerHTML;
+                
+                //first restore the previous path
+                if(previousPathObj)
+                {
+                    previousPathObj.style.fill = prevPathColor;                    
+                }
+                
+                $("path").each(function(){
+                    var state = this.getAttributeNS(null,"title");
+                    
+                    if(tooltipText == state)
+                    {
+                        previousPathObj = this;
+                        prevPathColor = this.style.fill;  
+                                              
+                        this.style.fill = "#3489CF"; 
+                        
+                        //show in basic data
+                        $("#state").text("State: " + this.getAttributeNS(null,'title'));
+                        $("#area").text(selectedStatistic + ": " + this.getAttributeNS(null,selectedStatistic.toLowerCase()));
+                        $("#year").text("Year: " + selectedYear);
+                    }
+                });                
+            }  
+            
+            
+            //functions to create charts
+            function createPieChart()
+            {
+                
+            }   
+            
+            function createLineChart()
+            {
+            
+            }
+            
+            function createFunnelChart()
+            {
+                var funnel = new RGraph.Funnel('myCanvas1', pieData);
+                funnel.Set('chart.text.boxed', false);
+                funnel.Set('chart.colors', popcolorArr);
+                funnel.Set('chart.title', 'Leads through to sales');
+                funnel.Set('chart.labels', pieLabel);
+                funnel.Set('chart.shadow', true);
+                funnel.Draw();
+            }
+            
+            function createBarChart()
+            {
+                //create bar chart
+                /*var bar = new RGraph.Bar('myCanvas', barData);
+                //bar.Set('chart.labels', barLabel);
+                bar.Set('chart.gutter.left', 60);
+                //bar.Set('chart.text.angle', 90);
+                bar.Set('chart.background.barcolor1', 'rgba(255,255,255,1)');
+                bar.Set('chart.background.barcolor2', 'rgba(255,255,255,1)');
+                bar.Set('chart.background.grid', true);
+                bar.Set('chart.tooltips', barLabel);
+                bar.Set('chart.tooltips.effect', 'fade');
+                bar.Set('chart.tooltips.event', 'onmousemove');
+                //bar.Set('chart.tooltips.css.class', 'Tooltipstyle');
+                bar.Set('chart.colors', ['#3489CF']);                
+                bar.Draw(); */ 
+                
+            }                                         
+        });                    
+    </script>
+</head>
+<body>
+<table width="100%">
+    
+<tr>        
+<td style="width:750px;" valign="top" align="center">
+    <div style="vertical-align:top; text-align:left; margin-bottom:10px; font-size:13px; font-weight:bold; font-family:Arial">
+        USA Demographic Data Visualization
+        &nbsp;&nbsp;&nbsp;&nbsp;  
+        <select id="statisticList">
+            <option >Make a selection</option>
+            <option selected="selected">Unemployment</option>
+            <option>Population</option>                      
+        </select>
+        &nbsp;&nbsp;&nbsp;&nbsp;        
+        <select id="yearList">
+            <option>Year</option>
+            <option selected="selected">2011</option>
+            <option>2010</option>  
+            <option>2009</option>
+            <option>2008</option>
+            <option>2007</option>            
+        </select>       
+        &nbsp;&nbsp;&nbsp;&nbsp;                
+        <select id="classList"> 
+            <option>Classify</option>           
+            <option selected="selected">Equal Intervals</option>  
+            <option>Quantiles</option>                    
+        </select>                             
+    </div> 
+           
+<div style="width:750px; vertical-align:middle;">
+
+<svg version="1.1"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+	 xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
+	 x="0px" y="10px" width="750px" height="500px"
+	 xml:space="preserve">
+
+<path id="HI" title="Hawaii" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="M185.853,408.419l1.547-2.836l1.805-0.257l0.258,0.645
+	l-1.676,2.448H185.853z M193.974,405.455l4.898,2.063l1.676-0.258l1.289-3.094l-0.515-2.706l-3.352-0.387l-3.223,1.418
+	L193.974,405.455z M218.465,413.447l2.965,4.383l1.934-0.258l0.902-0.387l1.16,1.031l2.965-0.129l0.774-1.16l-2.321-1.418
+	l-1.546-2.965l-1.676-2.836l-4.641,2.32L218.465,413.447z M234.578,420.537l1.031-1.547l3.738,0.772l0.516-0.386l4.898,0.516
+	l-0.257,1.031l-2.063,1.16l-3.48-0.258L234.578,420.537z M238.832,424.662l1.547,3.094l2.449-0.903l0.258-1.288l-1.289-1.676
+	l-2.965-0.258V424.662z M244.374,423.759l1.805-2.32l3.739,1.934l3.479,0.901l3.481,2.192v1.546l-2.836,1.418l-3.867,0.773
+	l-1.933-1.159L244.374,423.759z M257.651,436.133l1.289-1.031l2.708,1.289l6.058,2.836l2.708,1.676l1.289,1.934l1.546,3.48
+	l3.223,2.063l-0.258,1.031l-3.094,2.578l-3.352,1.16l-1.16-0.516l-2.449,1.417l-1.934,2.578l-1.805,2.32l-1.418-0.129l-2.836-2.062
+	l-0.258-3.609l0.516-1.934l-1.289-4.512l-1.676-1.418l-0.129-2.063l1.805-0.773l1.675-2.449l0.386-0.773l-1.289-1.418
+	L257.651,436.133z"/>
+<path id="AK" title="Alaska" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="M126.043,356.085l-0.258,68.061l1.289,0.773l2.449,0.129
+	l1.161-0.902h2.062l0.129,2.32l5.543,5.413l0.387,2.063l2.707-1.546l0.515-0.13l0.258-2.448l1.16-1.29l0.903-0.128l1.547-1.16
+	l2.449,1.676l0.516,2.32l1.547,0.901l0.902,1.935l3.094,1.417l2.707,4.77l2.191,3.094l1.805,2.191l1.16,2.965l3.996,1.418
+	l4.125,1.675l0.773,3.481l0.387,2.448l-0.773,2.707l-1.418,1.805l-1.289-0.645l-1.16-2.449l-2.191-1.16l-1.418-0.902l-0.645,0.645
+	l1.16,2.191l0.129,2.965l-0.902,0.387l-1.547-1.547l-1.675-1.03l0.386,1.288l1.031,1.418l-0.645,0.645c0,0-0.645-0.258-1.031-0.773
+	s-1.676-2.707-1.676-2.707l-0.773-1.805c0,0-0.258,1.031-0.774,0.774c-0.516-0.258-1.031-1.161-1.031-1.161l1.418-1.547l-1.16-1.16
+	v-3.995h-0.645l-0.645,2.706l-0.903,0.388l-0.773-2.966l-0.516-2.964l-0.645-0.387l0.258,4.511v0.903l-1.16-1.031l-2.836-4.771
+	l-1.676-0.386l-0.516-2.965l-1.289-2.32l-1.289-0.902v-1.805l1.676-1.031l-0.387-0.258l-2.063,0.516l-2.707-1.934l-2.063-2.32
+	l-3.867-2.062l-3.222-2.063l1.031-2.578v-1.289l-1.417,1.289l-2.32,0.902l-2.965-0.902l-4.512-1.934h-4.382l-0.516,0.387
+	l-5.156-3.094l-1.675-0.258l-2.192-4.641l-2.835,0.258l-2.836,1.16l0.387,3.609l0.902-2.32l0.773,0.258l-1.16,3.48l2.578-2.191
+	l0.515,1.289l-3.093,3.48l-1.031-0.258l-0.387-1.548l-1.031-0.644l-1.031,0.901l-2.191-1.418l-2.45,1.676l-1.417,1.676l-2.707,1.677
+	l-3.738-0.129l-0.387-1.676l2.965-0.516v-1.032l-1.804-0.516l0.773-1.933l1.805-3.094v-1.418l0.129-0.645l3.48-1.805l0.773,1.031
+	h2.191l-1.031-2.063l-2.965-0.258l-3.996,2.191l-1.934,2.707l-1.418,2.063l-0.902,1.804l-3.352,1.16l-2.449,2.063l-0.258,1.288
+	l1.805,0.774l0.644,1.676l-2.191,2.577l-5.156,3.353l-6.188,3.351l-1.676,0.902l-4.254,0.902l-4.253,1.805l1.417,1.031l-1.16,1.16
+	l-0.386,0.902l-2.191-0.774l-2.578,0.13l-0.645,1.805h-0.773l0.258-1.935l-2.835,1.032l-2.32,0.773l-2.707-1.031l-2.32,1.547h-2.578
+	l-1.676,1.03l-1.289,0.645l-1.676-0.257l-2.062-0.903l-1.805,0.516l-0.773,0.774l-1.289-0.902v-1.548l2.449-1.03l5.027,0.516
+	l3.481-1.289l1.675-1.676l2.32-0.516l1.418-0.645l2.191,0.129l1.289,1.031l0.774-0.258l1.804-2.191l2.449-0.773l2.707-0.516
+	l1.031-0.258l0.516,0.387h0.645l1.031-2.965l3.223-1.16l1.547-2.965l1.805-3.608l1.289-1.16l0.258-2.063l-1.289,1.032l-2.707,0.516
+	l-0.515-1.934l-1.031-0.258l-0.774,0.773l-0.129,2.32l-1.16-0.129l-1.16-4.641l-1.031,1.031l-0.902-0.388l-0.258-1.546l-3.223,0.129
+	l-1.676,0.902l-2.063-0.258l1.161-1.16l0.386-2.063l-0.515-1.547l1.16-0.773l1.031-0.129l-0.516-1.418v-3.48l-0.773-0.773
+	l-0.645,1.16h-4.898l-1.16-1.031l-0.516-3.094l-1.676-2.836v-0.772l1.676-0.646l0.129-1.676l0.902-0.902l-0.645-0.386l-1.031,0.386
+	l-0.902-2.19l0.773-3.996l3.609-2.578l2.063-1.289l1.547-2.965l2.191-1.031l2.063,0.902l0.258,1.934l1.934-0.258l2.578-1.934
+	l1.289,0.516l0.774,0.516h1.289l1.804-1.031l0.645-3.48c0,0,0.258-2.319,0.773-2.707c0.516-0.387,0.773-0.772,0.773-0.772
+	l-0.902-1.548l-2.063,0.645l-2.578,0.646l-1.547-0.388l-2.836-1.418l-3.996-0.128l-2.836-2.965l0.387-3.094l0.515-1.934
+	l-1.676-1.418l-1.546-2.965l0.386-0.645l5.414-0.387h1.676l0.773,0.773h0.516l-0.129-1.289l3.094-0.516l2.063,0.258l1.16,0.902
+	l-1.16,1.676l-0.387,1.16l2.191,1.289l3.996,1.418l1.418-0.773l-1.805-3.48l-0.773-2.578l0.773-0.645l-2.707-1.547l-0.387-0.902
+	l0.387-1.289l-0.645-3.094l-2.32-3.738l-1.934-3.352l2.321-1.546h2.578l1.418,0.516l3.352-0.13l2.964-2.835l0.902-2.449l2.965-1.934
+	l1.289,0.773l2.191-0.516l2.965-1.676l0.902-0.129l0.773,0.645l3.609-0.129l2.191-2.448h0.902l2.836,1.933l1.547,1.676l-0.387,0.902
+	l0.515,0.902l1.29-1.289l3.093,0.258l0.258,2.965l1.547,1.16l5.672,0.515l5.027,3.352l1.16-0.772l4.125,2.063l1.675-0.516
+	l1.547-0.645l3.867,1.546L126.043,356.085z M34.266,379.16l1.676,4.253l-0.129,0.773l-2.32-0.258l-1.418-3.222l-1.418-1.16h-1.934
+	l-0.129-2.063l1.418-1.934l0.902,1.934l1.161,1.16L34.266,379.16z M32.203,405.841l2.965,0.646l2.965,0.772l0.645,0.773
+	l-1.289,2.965l-2.45-0.129l-2.707-2.836L32.203,405.841z M15.704,394.627l0.902,2.063l0.902,1.289l-0.902,0.645l-1.676-2.45v-1.546
+	H15.704z M4.747,452.891l2.707-1.805l2.707-0.773l2.063,0.258l0.386,1.288l1.547,0.388l1.547-1.548l-0.258-1.288l2.191-0.516
+	l2.32,2.062l-0.902,1.418l-3.48,0.902l-2.191-0.386l-2.965-0.902l-3.48,1.16l-1.289,0.258L4.747,452.891z M43.804,449.281
+	l1.289,1.548l1.676-1.29l-1.16-1.03L43.804,449.281z M46.124,451.731l0.903-1.805l1.675,0.257l-0.645,1.548H46.124z M64.944,450.183
+	l1.16,1.418l0.773-0.902l-0.645-1.546L64.944,450.183z M71.905,440.258l0.902,4.641l2.32,0.645l3.996-2.32l3.48-2.063l-1.289-1.934
+	l0.387-1.934l-1.676,1.031l-2.32-0.645l1.289-0.902l1.547,0.645l3.093-1.418l0.387-1.16l-1.933-0.645l0.644-1.546l-2.191,1.546
+	l-3.738,2.836l-3.867,2.32L71.905,440.258z M105.677,424.404l1.933-1.16l-0.773-1.418l-1.418,0.772L105.677,424.404z"/>
+<path id="FL" title="Florida" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="
+	M605.842,344.499l1.807,5.835l2.975,7.769l4.253,7.477l2.965,5.027l3.867,4.382l3.223,2.965l1.289,2.32l-0.902,1.031l-0.645,1.031
+	l2.32,5.93l2.32,2.32l2.063,4.254l2.835,4.64l3.61,6.574l1.03,6.059l0.388,9.538l0.516,1.418l-0.258,2.707l-1.935,1.031l0.259,1.547
+	l-0.517,1.546l0.258,1.935l0.387,1.547l-2.19,2.578l-2.449,1.16l-3.094,0.128l-1.16,1.29l-1.934,0.772l-1.031-0.387l-0.902-0.773
+	l-0.258-2.32l-0.645-2.706l-2.707-4.125l-2.835-1.805l-3.094-0.258l-0.645,1.031l-2.449-3.48l-0.517-2.836l-2.062-3.223
+	l-1.418-0.901l-1.289,1.676l-1.418-0.258l-1.676-3.996l-2.32-3.094l-2.32-4.254l-2.063-2.449l-2.835-2.965l1.676-1.934l2.577-4.382
+	l-0.129-1.29l-3.608-0.773l-1.29,0.516l0.258,0.517l2.063,0.773l-1.16,3.608l-0.645,0.388l-1.418-3.224l-1.031-3.866l-0.258-2.191
+	l1.16-3.738v-7.605l-2.448-2.964l-1.032-2.45l-4.124-1.031l-1.547-0.515l-1.289-2.063l-2.707-1.288l-0.902-2.708l-2.191-0.772
+	l-1.934-2.965l-3.351-1.16l-2.32-1.16h-2.063l-3.222,0.645l-0.129,1.547l0.645,0.773l-0.388,0.902l-2.448-0.129l-2.965,2.836
+	l-2.836,1.547h-3.094l-2.578,1.03l-0.258-2.191l-1.288-1.546l-2.32-0.902l-1.29-1.16l-6.444-3.094l-6.059-1.418l-3.48,0.516
+	l-4.77,0.387l-4.77,1.676l-2.773,0.489l-0.189-6.419l-2.063-1.547l-1.418-1.418l0.258-2.449l8.121-1.031l20.366-2.32l5.414-0.516
+	l4.334,0.224l2.063,3.094l1.16,1.16l6.457,0.41l8.627-0.515l17.152-1.031l4.343-0.538l4.072,0.163l0.341,2.32l1.78,0.645
+	l0.188-3.691l-1.219-3.327l1.043-1.149l4.43,0.363L605.842,344.499z M615.846,450.072l1.934-0.515l1.03-0.193l1.16-1.87l1.869-1.288
+	l1.032,0.386l1.353,0.258l0.322,0.838l-2.771,0.967l-3.352,1.161l-1.87,0.967L615.846,450.072z M626.609,446.076l0.966,0.838
+	l2.191-1.676l4.254-3.351l2.965-3.094l1.997-5.285l0.774-1.354l0.129-2.707l-0.581,0.387l-0.772,2.256l-1.16,3.674l-2.578,4.189
+	l-3.48,3.352l-2.707,1.547L626.609,446.076z"/>
+<path id="NH" title="New Hampshire" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="
+	M702.308,107.91l0.693-0.858l0.869-2.624l-2.028-0.729l-0.386-2.449l-3.094-0.902l-0.258-2.191l-5.801-18.69l-3.669-11.596
+	l-0.715-0.004l-0.516,1.289l-0.516-0.387l-0.774-0.773l-1.16,1.547l-0.038,4.012l0.249,4.519l1.546,2.191v3.223l-2.964,4.037
+	l-2.063,0.902v0.902l0.903,1.418v6.832l-0.646,7.347l-0.128,3.867l0.773,1.031l-0.129,3.609l-0.387,1.417l0.772,0.566l13.386-3.528
+	l1.734-0.48l1.469-2.211L702.308,107.91z"/>
+<!--
+    for the line above Alaska and Hawaii
+<path id="path57_1_" fill="none" stroke="#A9A9A9" stroke-width="2" d="M168.242,387.442v43.854l28.705,35.881 M0,333.222h114.819
+	l53.423,54.22h68.572l42.26,43.057v36.679"/>
+	-->
+<path id="MI" title="Michigan" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="
+	M556.441,135.667l-2.578-6.574l-1.806-7.218l-1.933-2.578l-2.063-1.418l-1.289,0.902l-3.094,1.418l-1.547,3.996l-2.19,2.965
+	l-0.902,0.516l-1.161-0.516c0,0-2.063-1.16-1.933-1.676c0.128-0.515,0.386-3.996,0.386-3.996l2.708-1.031l0.644-2.707l0.517-2.063
+	l1.933-1.289l-0.258-7.992l-1.289-1.805l-1.031-0.645l-0.645-1.676l0.645-0.645l1.289,0.258l0.129-1.289l-1.933-1.805l-1.032-2.062
+	h-2.062l-3.609-1.16l-4.383-2.707h-2.191l-0.516,0.516l-0.773-0.386l-2.449-1.805l-2.32,1.418l-2.32,1.805l0.258,2.836l0.773,0.257
+	l1.676,0.387l0.387,0.645l-2.063,0.644l-2.062,0.258l-1.16,1.417l-0.258,1.676l0.258,1.289l0.258,4.383l-2.836,1.676l-0.516-0.129
+	v-3.352l1.03-1.934l0.516-1.933l-0.644-0.645l-1.547,0.645l-0.773,3.351l-2.191,0.902l-1.418,1.547l-0.129,0.773l0.515,0.645
+	l-0.515,2.062l-1.805,0.387v0.902l0.645,1.934l-0.902,4.898l-1.289,3.223l0.516,3.738l0.387,0.902l-0.645,1.934l-0.258,0.645
+	l-0.258,2.191l2.836,4.77l2.32,5.156l1.16,3.867l-0.645,3.738l-0.773,4.769l-1.934,4.125l-0.258,2.191l-2.599,2.46l3.516-0.129
+	l17.077-1.805l5.804-0.787l0.077,1.329l5.463-0.967l8.211-1.198l3.073-0.368l0.11-0.468l0.129-1.16l1.676-2.965l1.595-1.386
+	l-0.177-4.028l1.273-1.273l0.869-0.273l0.177-2.836l1.226-2.417l0.838,0.483l0.129,0.516l0.644,0.129l1.548-0.773L556.441,135.667z"
+	/>
+<!--<path id="SP-_1_" inkscape:label="#SP-" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="
+	M463.756,59.777l1.458-1.641l1.732-0.638l4.284-3.099l1.823-0.456l0.364,0.364l-4.101,4.102l-2.644,1.549l-1.641,0.729
+	L463.756,59.777z M532.468,85.394l0.516,1.998l2.578,0.129l1.03-0.967c0,0-0.064-1.16-0.322-1.289s-1.288-1.482-1.288-1.482
+	l-1.74,0.193l-1.289,0.128l-0.258,0.902L532.468,85.394z M452.492,83.023l0.571-0.463l2.192-0.645l2.835-1.805v-0.773l0.517-0.515
+	l4.769-0.774l1.934-1.547l3.48-1.675l0.129-1.032l1.546-2.32l1.418-0.644l1.032-1.418l1.804-1.805l3.481-1.934l3.738-0.386
+	l0.902,0.902l-0.258,0.773l-2.964,0.774l-1.161,2.449l-1.805,0.645l-0.386,1.933l-1.934,2.578l-0.258,2.063l0.645,0.387l0.773-0.903
+	l2.836-2.32l1.032,1.031h1.804l2.578,0.773l1.16,0.902l1.16,2.449l2.191,2.191l3.094-0.128l1.16-0.774l1.288,1.031l1.29,0.387
+	l1.03-0.644h0.903l1.288-0.774l3.223-2.836l2.707-0.902l5.285-0.258l3.608-1.547l2.063-1.031l1.16,0.129v4.512l0.386,0.257
+	l2.32,0.645l1.547-0.387l4.898-1.289l0.902-0.902l1.16,0.387v5.542l2.577,2.449l1.032,0.516l1.031,0.773l-1.031,0.258l-0.645-0.258
+	l-2.965-0.387l-1.676,0.516l-1.805-0.129l-2.578,1.16h-1.418l-4.64-1.031l-4.125,0.129l-1.547,2.062l-5.543,0.516l-1.934,0.644
+	l-0.902,2.45l-1.031,0.902l-0.387-0.129l-1.16-1.289l-3.609,1.934h-0.516l-0.902-1.289l-0.645,0.129l-1.546,3.48l-0.773,3.223
+	l-2.537,5.582l-0.938-0.825l-1.093-0.822l-1.548-8.204l-2.826-1.092l-1.637-1.823l-9.664-2.188l-2.277-0.82l-6.563-1.733
+	l-6.292-0.911L452.492,83.023z"/>-->
+<path id="VT" title="Vermont" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="
+	M673.353,117.186l0.252-4.263l-2.305-8.599l-0.516-0.258l-2.32-1.031l0.645-2.32l-0.645-1.676l-2.153-3.7l0.773-3.093l-0.644-4.125
+	l-1.934-5.156l-0.643-3.925l21.065-5.368l0.246,4.403l1.528,2.187v3.222l-2.957,4.033l-2.062,0.911l-0.01,0.894l1.046,1.211
+	l-0.248,6.457l-0.486,7.383l-0.182,4.431l0.773,1.032l-0.129,3.644l-0.387,1.347l0.809,0.58l-5.93,1.201L673.353,117.186z"/>
+<path id="ME" title="Maine" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="
+	M735.829,57.203l1.547,1.676l1.805,2.964v1.547l-1.676,3.738l-1.547,0.516l-2.707,2.449l-3.866,4.383c0,0-0.516,0-1.031,0
+	c-0.517,0-0.774-1.676-0.774-1.676l-1.418,0.129l-0.772,1.16l-1.934,1.161l-0.773,1.16l1.289,1.16l-0.387,0.516l-0.387,2.191
+	l-1.548-0.129v-1.289l-0.257-1.031l-1.16,0.258l-1.418-2.578l-1.676,1.031l1.031,1.16l0.258,0.902l-0.645,1.031l0.258,2.449
+	l0.129,1.289l-1.289,2.062l-2.32,0.387l-0.258,2.32l-4.254,2.449l-1.03,0.386l-1.29-1.16l-2.448,2.835l0.772,2.578l-1.16,1.032
+	l-0.128,3.48l-0.896,4.991l-1.963-0.921l-0.387-2.449l-3.093-0.902l-0.259-2.191l-5.801-18.69l-3.746-11.673l1.133-0.094
+	l1.206,0.327v-2.063l1.044-3.585l2.063-3.738l1.16-3.223l-1.547-1.934v-4.769l0.645-0.773l0.645-2.191l-0.129-1.16l-0.129-3.867
+	l1.418-3.867l2.32-7.09l1.676-3.351h1.031l1.031,0.129v0.902l1.03,1.805l2.191,0.515l0.645-0.644v-0.774l3.224-2.32l1.418-1.418
+	l1.159,0.129l4.77,1.933l1.547,0.774l7.219,23.847h4.769l0.646,1.547l0.128,3.867l2.32,1.805h0.645l0.129-0.387l-0.387-0.902
+	L735.829,57.203z M719.14,81.241l1.224-1.225l1.097,0.838l0.45,1.934l-1.353,0.709L719.14,81.241z M724.489,76.536l1.418,1.482
+	c0,0,1.03,0.065,1.03-0.193s0.193-1.612,0.193-1.612l0.709-0.644l-0.645-1.418l-1.611,0.58L724.489,76.536z"/>
+<path id="RI" title="Rhode Island" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="M696.942,136.99
+	l-2.947-11.925l4.999-1.471l1.748,1.537l2.636,3.445l2.144,3.51l-2.392,1.295l-1.031-0.129l-0.902,1.418l-1.934,1.546
+	L696.942,136.99z"/>
+
+<path id="NY" title="New York" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="M662.106,144.844l-0.903-0.774l-2.063-0.128l-1.804-1.547
+	l-1.301-4.887l-2.758,0.072l-1.948-2.159l-15.457,3.494l-34.287,6.961l-6.004,0.979l-0.589-5.157l1.139-0.897l1.031-0.902
+	l0.773-1.289l1.418-0.902l1.547-1.418l0.387-1.289l1.675-2.191l0.903-0.773l-0.129-0.773l-1.031-2.45l-1.418-0.128l-1.547-4.898
+	l2.32-1.418l3.479-1.16l3.224-1.031l2.578-0.387l5.026-0.129l1.547,1.031l1.289,0.129l1.676-1.031l2.063-0.902l4.124-0.387
+	l1.676-1.418l1.418-2.578l1.29-1.547h1.676l1.546-0.902l0.129-1.805l-1.16-1.676l-0.258-1.16l0.903-1.676v-1.16h-1.418l-1.418-0.645
+	l-0.646-0.902l-0.128-2.063l4.64-4.382l0.516-0.645l1.16-2.32l2.32-3.609l2.191-2.965l1.676-1.933l1.926-1.456l2.456-0.994
+	l4.384-1.031l2.578,0.129l3.608-1.16l6.032-1.651l0.415,3.971l1.934,5.156l0.644,4.125l-0.773,3.094l2.063,3.609l0.646,1.676
+	l-0.646,2.32l2.321,1.031l0.515,0.258l2.449,8.765l-0.428,4.034l-0.387,8.636l0.645,4.383l0.645,2.836l1.16,5.8v6.445l-0.902,1.805
+	l1.467,1.589l0.635,1.338l-1.547,1.418l0.259,1.032l1.031-0.258l1.16-1.031l1.804-2.063l0.902-0.516l1.289,0.516l1.805,0.129
+	l6.315-3.094l2.32-2.191l1.031-1.16l3.353,1.289l-2.708,2.835l-3.093,2.32l-5.672,4.254l-2.063,0.773l-4.641,1.547l-3.222,0.902
+	l-0.938-0.425l-0.194-2.941l0.387-2.192l-0.129-1.676l-2.243-1.354l-3.609-0.773l-3.094-0.902L662.106,144.844z"/>
+<path id="PA" title="Pennsylvania" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="
+	M657.915,173.505l1.043-0.216l1.857-0.999l0.967-1.98l1.289-1.804l2.578-2.449v-0.645l-1.934-1.289l-2.836-1.934l-0.773-2.062
+	l-2.191-0.258l-0.129-0.902l-0.645-2.191l1.805-0.902l0.129-1.934l-1.031-1.031l0.129-1.289l1.547-2.45v-2.449l2.151-2.109
+	l-0.734-0.538l-2.012-0.154l-1.83-1.547l-1.236-4.876l-2.794,0.08l-1.958-2.156l-14.425,3.347l-34.288,6.96l-7.089,1.16l-0.495-5.2
+	l-4.275,4.041l-1.031,0.386l-3.352,2.399l2.321,15.259l1.979,7.758l2.847,15.358l2.607-0.508l9.523-1.198l30.24-6.111l11.862-2.251
+	l6.618-1.293l0.213-0.19l1.676-1.289L657.915,173.505z"/>
+<path id="NJ" title="New Jersey" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="
+	M661.548,144.616l-1.853,2.181v2.449l-1.547,2.449l-0.129,1.289l1.032,1.031l-0.13,1.934l-1.804,0.902l0.644,2.192l0.13,0.902
+	l2.19,0.258l0.773,2.062l2.836,1.934l1.934,1.289v0.645l-2.378,2.15l-1.29,1.805l-1.16,2.191l-1.804,1.031l-0.369,1.278
+	l-0.193,0.967l-0.485,2.079l0.87,1.789l2.578,2.32l3.867,1.804l3.223,0.516l0.128,1.16l-0.644,0.773l0.258,2.191h0.645l1.676-1.934
+	l0.645-3.867l2.19-3.223l2.45-5.156l0.902-4.383l-0.517-0.902l-0.128-7.477l-1.29-2.707l-0.901,0.645l-2.192,0.258l-0.386-0.387
+	l0.902-0.773l1.676-1.546l0.05-0.873l-0.306-2.738l0.457-2.191l-0.095-1.57l-2.238-1.396l-4.061-0.938l-3.299-1.102L661.548,144.616
+	z"/>
+<path id="DE" title="Delaware" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="
+	M658.315,176.366l0.294-1.712l0.299-1.348l-1.294,0.317l-1.288,0.373l-1.759,1.407l1.371,4.021l1.805,4.512l1.676,7.734l1.289,5.027
+	l3.996-0.129l4.897-0.942l-1.806-5.889l-0.773,0.387l-2.836-1.934l-1.418-3.738l-1.546-2.836l-2.51-2.289l-0.689-1.673
+	L658.315,176.366z"/>
+<path id="MD" title="Maryland" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="
+	M669.611,195.611l-4.792,0.959l-4.1,0.094l-1.471-5.52l-1.534-7.311l-2.053-4.935l-1.026-3.507l-5.985,1.294l-11.861,2.251
+	l-29.861,6.021l0.901,3.996l0.773,4.511l0.258-0.258l1.676-1.934l1.805-2.087l1.934-0.49l1.16-1.16l1.418-2.063l1.031,0.516
+	l2.32-0.258l2.062-1.676l1.601-1.159l1.472-0.387l1.311,0.901l2.32,1.16l1.547,1.418l0.967,1.225l3.287,1.354v2.32l4.382,1.032
+	l0.913,0.432l1.126-1.618l2.298,1.571l-1.02,1.979l-0.609,3.178l-1.418,2.063v1.676l0.516,1.418l4.037,1.081l3.438-0.049
+	l2.449,0.773l1.676,0.258l0.773-1.676l-1.16-1.675v-1.418l-1.933-1.676l-1.676-4.382l1.03-4.254l-0.129-1.676l-1.031-1.031
+	c0,0,1.16-1.289,1.16-1.805s0.387-1.676,0.387-1.676l1.547-1.031l1.547-1.289l0.387,0.773l-1.16,1.29l-1.031,2.964l0.258,0.902
+	l1.418,0.258l0.387,4.382l-1.676,0.774l0.258,2.835l0.387-0.129l0.902-1.547l1.289,1.418l-1.289,1.031l-0.258,2.707l2.063,2.707
+	l3.094,0.387l1.289-0.644l2.58,3.335l1.083,0.428l5.306-2.23l1.601-3.208L669.611,195.611z M656.877,202.81l0.902,1.998l0.129,1.418
+	l0.902,1.482c0,0,0.71-0.709,0.71-0.967s-0.58-2.449-0.58-2.449l-0.58-1.869L656.877,202.81z"/>
+<path id="VA" title="Virginia" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="
+	M663.109,206.498l-0.114-1.552l5.146-2.033l-0.614,2.566l-2.328,3.013l-0.333,3.657l0.368,2.704l-1.458,3.969l-1.726,1.528
+	l-1.173-3.7l0.356-4.345l1.265-3.335L663.109,206.498z M665.773,229.063l-46.386,10.027l-29.843,4.209l-5.325-0.299l-2.061,1.536
+	l-5.852,0.176l-6.685,0.78l-8.702,1.287l8.348-4.474l-0.011-1.655l1.212-1.71l8.415-9.171l3.147,3.57l3.017,0.77l2.027-0.91
+	l1.784-1.046l2.022,1.072l3.121-1.139l1.496-3.633l2.074,0.431l2.276-1.699l1.435,0.394l2.254-2.932l0.278-1.661l-0.769-1.018
+	l0.8-1.488l4.206-9.789l0.491-4.573l0.98-0.417l1.736,1.948l3.139-0.24l1.538-6.039l2.228-0.447l0.837-2.186l2.058-1.872
+	l2.209-4.541l0.068-4.041l7.832,3.048c0.542,0.271,0.663-4.026,0.663-4.026l2.913,1.274l0.055,2.343l4.611,1.036l1.701,0.938
+	l1.323,1.639l-0.522,2.909l-1.553,2.066l0.088,1.642l0.47,1.478l3.97,1.011l3.549,0.032l2.448,0.764l1.549,0.247l0.57,2.462
+	l2.544,0.321l0.692,0.957l-0.351,3.739l1.096,0.879l-0.382,1.539l0.98,0.63l-0.177,1.104l-2.148-0.076l0.071,1.288l1.818,1.23
+	l0.097,1.125l1.414,1.424l0.392,2.012l-2.035,1.102l1.254,1.191l4.625-1.344L665.773,229.063z"/>
+<path id="WV" title="West Virginia" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="
+	M606.934,184.888l0.887,3.942l0.864,4.809l1.698-2.058l1.805-2.449l2.023-0.49l1.16-1.161l1.418-2.062l1.152,0.516l2.32-0.258
+	l2.063-1.676l1.6-1.159l1.472-0.387l1.04,0.811l2.905,1.452l1.546,1.418l1.096,1.031l-0.607,4.429l-4.652-2.026l-3.385-1.293
+	l-0.08,4.129l-2.191,4.415l-2.018,1.935l-0.95,2.192l-2.107,0.398l-0.717,2.873l-0.831,3.149l-3.165,0.272l-1.853-1.945
+	l-0.854,0.446l-0.505,4.361l-1.076,2.818l-3.954,8.735l0.715,0.926l-0.163,1.521l-2.24,3.097l-1.441-0.434l-2.367,1.722
+	l-2.027-0.456l-1.594,3.632c0,0-2.599,1.14-3.128,1.09c-0.128-0.012-1.969-0.995-1.969-0.995l-1.863,1.099l-1.921,0.833
+	l-2.986-0.709l-0.895-0.932l-1.748-2.41l-2.506-1.585l-1.364-2.889l-3.416-2.765l-0.516-1.805l-2.063-1.16l-0.646-1.289
+	l-0.192-4.189l1.74-0.064l1.546-0.645l0.13-2.191l1.288-1.16l0.13-3.997l0.772-3.093l1.031-0.516l1.032,0.902l0.386,1.418
+	l1.418-0.773l0.387-1.289l-0.902-1.418V199.6l0.773-1.031l1.805-2.707l1.031-1.16l1.676,0.387l1.805-1.289l2.449-2.707l1.805-3.093
+	l0.258-4.512l0.386-3.996v-3.739l-0.901-2.449l0.773-1.16l1.023-1.031l2.783,15.809l3.692-0.599L606.934,184.888z"/>
+<path id="OH" title="Ohio" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="
+	M586.313,148.498l-4.858,3.232l-3.094,1.804l-2.707,2.965l-3.223,3.094l-2.578,0.644l-2.319,0.387l-4.383,2.063l-1.676,0.128
+	l-2.707-2.449l-4.124,0.516l-2.063-1.16l-1.898-1.078l-3.9,0.562l-8.121,1.289l-8.936,1.742l1.03,11.666l1.418,10.957l2.063,18.69
+	l0.451,3.853l3.287-0.104l1.934-0.644l2.682,1.198l1.651,3.48l4.098-0.014l1.509,1.689l1.403-0.052l2.024-1.069l1.997,0.296
+	l4.322,0.385l1.378-1.701l1.87-1.031l1.65-0.543l0.516,2.191l1.418,0.773l2.771,1.869l1.74-0.064l1.063-0.393l0.147-2.202
+	l1.264-1.16l0.079-3.821l0.816-3.277l1.036-0.479l1.054,0.915l0.429,1.353l1.371-0.827l0.351-1.165l-0.892-1.518l0.054-1.846
+	l0.597-0.855l1.717-2.636l0.838-1.231l1.675,0.387l1.806-1.289l2.448-2.707l2.21-3.253l0.256-4.03l0.387-3.996l-0.141-4.231
+	l-0.762-2.309l0.279-0.949l1.439-1.395l-1.825-7.214L586.313,148.498z"/>
+<path id="IN" title="Indiana" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="M494.016,233.529l0.052-2.278l0.388-3.609l1.804-2.321
+	l1.418-3.093l2.063-3.352l-0.387-4.641l-1.418-2.191l-0.258-2.578l0.645-4.382l-0.387-5.543l-1.031-12.761l-1.03-12.246
+	l-0.774-9.345l2.449,0.709l1.159,0.773l0.902-0.258l1.676-1.547l2.257-1.289l4.061-0.129l17.53-1.805l4.446-0.425l1.198,12.723
+	l3.391,29.375l0.476,4.602l-0.296,1.805l0.979,1.432l0.077,1.094l-2.011,1.275l-2.822,1.237l-2.553,0.439l-0.478,3.881l-3.647,2.641
+	l-2.229,3.198l0.258,1.895l-0.464,1.224h-2.652l-1.265-1.289l-1.987,1.006l-2.14,1.198l0.129,2.436l-0.951,0.206l-0.374-0.812
+	l-1.728-1.199l-2.592,1.07l-1.236,2.397l-1.147-0.645l-1.159-1.276l-3.56,0.387l-4.46,0.773L494.016,233.529z"/>
+<path id="IL" title="Illinois" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="
+	M493.993,233.825l0.024-2.574l0.453-3.705l1.859-2.325l1.488-3.25l1.781-3.186l-0.296-4.188l-1.6-2.825l-0.076-2.668l0.554-4.201
+	l-0.658-5.724l-0.851-12.58l-1.03-11.974l-0.736-9.281l-0.217-0.734l-0.646-2.063l-1.03-2.965l-1.289-1.417l-1.16-2.063
+	l-0.186-4.376l-36.517,2.072l0.182,1.891l1.823,0.546l0.729,0.912l0.365,1.458l3.099,2.734l0.546,1.823l-0.546,2.734l-1.458,2.917
+	l-0.547,2.005l-1.823,1.458l-1.458,0.546l-4.193,1.094l-0.547,1.458l-0.546,1.641l0.546,1.094l1.458,1.276l-0.182,3.281
+	l-1.458,1.276l-0.547,1.276v2.188l-1.458,0.365l-1.275,0.912l-0.182,1.094l0.182,1.641l-1.367,1.048l-0.821,2.233l0.365,2.917
+	l1.823,5.833l5.833,6.016l4.375,2.917l-0.183,3.464l0.729,1.093l5.104,0.365l2.188,1.094l-0.547,2.917l-1.823,4.739l-0.546,2.552
+	l1.823,3.099l5.104,4.193l3.646,0.548l1.641,4.01l1.641,2.553l-0.729,2.369l1.276,3.282l1.458,1.641l1.127-0.703l0.724-1.654
+	l1.764-1.394l1.7-0.49l2.075,0.941l2.892,1.097l0.948-0.238l0.159-1.8l-1.026-1.923l0.242-1.896l1.467-1.074l2.409-0.646
+	l1.006-0.365l-0.488-1.106l-0.632-1.877l1.143-0.782L493.993,233.825z"/>
+<path id="CT" title="Connecticut" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="M696.941,136.963
+	l-2.933-11.864l-3.763,0.734l-16.927,3.782l0.798,2.572l1.16,5.801l0.141,7.15l-0.973,1.734l1.532,1.541l3.405-3.114l2.835-2.578
+	l1.548-1.676l0.645,0.516l2.191-1.16l4.124-0.902L696.941,136.963z"/>
+<path id="WI" title="Wisconsin" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="
+	M490.425,151.719l-0.054-2.518l-0.939-3.609l-0.516-4.898l-0.902-1.933l0.773-2.449l0.645-2.32l1.16-2.062l-0.517-2.707
+	l-0.515-2.836l0.387-1.417l1.546-1.934l0.13-2.191l-0.645-1.032l0.515-2.062l-0.36-3.326l2.191-4.511l2.32-5.414l0.129-1.805
+	l-0.258-0.773l-0.645,0.387l-3.352,5.027l-2.191,3.223l-1.547,1.418l-0.645,1.804l-1.559,0.645l-0.902,1.547l-1.16-0.258
+	l-0.129-1.418l1.032-1.934l1.675-3.738l1.418-1.289l0.79-1.88l-2.042-1.516l-1.574-8.266l-2.829-1.07l-1.552-1.84l-9.671-2.17
+	l-2.293-0.807l-6.549-1.729l-6.313-0.924l-3.002-4.091l-0.598,0.442l-0.955-0.129l-0.516-0.902l-1.063,0.236l-0.903,0.129
+	l-1.418,0.773l-0.773-0.516l0.516-1.547l1.546-2.449l0.902-0.903l-1.546-1.16l-1.676,0.645l-2.32,1.546l-5.93,2.579l-2.32,0.515
+	l-2.32-0.387l-0.783-0.7l-1.688,2.261l-0.182,2.188v6.745l-0.912,1.276l-4.192,3.099l-1.823,4.74l0.364,0.182l2.005,1.641
+	l0.547,2.552l-1.458,2.552v3.1l0.365,5.286l2.369,2.37h2.735l1.458,2.552l2.734,0.365l3.099,4.557l5.651,3.281l1.64,2.188
+	l0.729,5.924l0.546,2.643l1.823,1.276l0.182,1.094l-1.641,2.734l0.183,2.552l2.005,3.099l2.005,0.912l2.37,0.365l1.071,1.1
+	L490.425,151.719z"/>
+<path id="NC" title="North Carolina" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="
+	M665.775,229.02l1.662,3.92l2.836,5.157l1.934,1.933l0.516,1.805l-1.934,0.128l0.645,0.516l-0.258,3.351l-2.063,1.032l-0.516,1.676
+	l-1.031,2.32l-2.965,1.289l-1.934-0.257l-1.16-0.128l-1.288-1.032l0.258,1.032v0.772h1.546l0.645,1.032l-1.546,5.027h3.352
+	l0.515,1.289l1.805-1.804l1.031-0.387l-1.547,2.836l-2.449,3.867h-1.03l-0.902-0.386l-2.191,0.516l-4.126,1.933l-5.155,4.254
+	l-2.707,3.738l-1.547,5.156l-0.387,1.933l-3.737,0.387l-4.349,1.065l-7.931-6.54l-10.055-6.058l-2.319-0.645l-10.055,1.16
+	l-3.41,0.598l-1.289-2.578l-2.368-1.688l-13.148,0.387l-5.8,0.644l-7.219,3.609l-4.898,2.063l-16.886,2.063l0.398-3.233l1.418-1.16
+	l2.192-0.516l0.515-2.965l3.352-2.191l3.094-1.16l3.352-2.836l3.479-1.676l0.516-2.449l3.095-3.094l0.516-0.129
+	c0,0,0,0.903,0.644,0.903c0.645,0,1.547,0.257,1.547,0.257l1.805-2.836l1.676-0.515l1.805,0.258l1.289-2.836l2.32-2.063l0.387-1.676
+	l0.149-2.909l3.41-0.018l5.739-0.682l12.564-1.796l12.068-1.665l17.256-3.763l15.934-3.395l8.912-1.918L665.775,229.02z
+	 M669.181,255.497l2.063-1.998l2.514-2.063l1.224-0.516l0.129-1.612l-0.515-4.897l-1.161-1.869l-0.515-1.482l0.58-0.193l2.19,4.382
+	l0.323,3.544l-0.13,2.707l-2.706,1.225l-2.256,1.933l-0.903,0.967L669.181,255.497z"/>
+<!--<path id="DC" title="District of Columbia" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="M642.522,194.358
+	l-1.481-1.455l-0.982-0.547l1.15-1.612l2.304,1.553L642.522,194.358z"/>-->
+<path id="MA" title="Massacheussetts" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="
+	M717.317,132.491l1.731-0.547l0.365-1.367l0.82,0.091l0.82,1.823l-1.003,0.364l-3.099,0.092L717.317,132.491z M709.844,133.129
+	l1.823-2.097h1.275l1.459,1.185l-1.914,0.82l-1.732,0.82L709.844,133.129z M682.097,115.597l14.07-3.7l1.806-0.516l1.525-2.229
+	l2.979-1.326l2.304,3.519l-1.934,4.125l-0.258,1.16l1.547,2.063l0.902-0.645h1.418l1.805,2.063l3.094,4.769l2.836,0.387l1.805-0.773
+	l1.418-1.418l-0.645-2.191l-1.676-1.289l-1.16,0.645l-0.773-1.031l0.386-0.386l1.676-0.129l1.418,0.644l1.548,1.934l0.772,2.32
+	l0.258,1.934l-3.352,1.16l-3.093,1.547l-3.094,3.609l-1.547,1.16v-0.773l1.934-1.16l0.387-1.417l-0.645-2.449l-2.32,1.16
+	l-0.645,1.16l0.387,1.805l-1.647,0.797l-2.19-3.61l-2.707-3.48l-1.651-1.445l-5.209,1.496l-4.061,0.837l-16.485,3.662l-0.532-3.802
+	l0.516-8.442l3.42-0.709L682.097,115.597z"/>
+<path id="TN" title="Tennessee" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="
+	M555.498,248.107l-41.377,3.996l-12.565,1.418l-3.685,0.409l-3.085-0.021l-0.177,3.27l-6.526,0.21l-5.543,0.517l-6.451-0.1
+	l-1.127,5.64l-1.354,4.369l-2.625,2.194l-1.075,3.493l-0.258,2.062l-3.222,1.805l1.16,2.836l-0.774,3.48l-0.771,0.629l86.24-8.299
+	l0.321-3.153l1.444-1.189l2.259-0.597l0.536-2.963l3.268-2.157l3.228-1.19l3.256-2.848l3.538-1.615l0.415-2.446l3.24-3.177
+	l0.439-0.092c0,0,0.024,0.903,0.67,0.903c0.645,0,1.547,0.282,1.547,0.282l1.804-2.861l1.651-0.515l1.814,0.236l1.274-2.817
+	l2.356-2.108l0.336-1.546l0.246-2.959l-1.711-0.159l-2.075,1.617l-5.575,0.023l-14.64,1.903L555.498,248.107z"/>
+<path id="AR" title="Arkansas" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="
+	M473.488,267.881l-3.174,0.572l-4.076-0.505l0.335-1.278l2.376-2.046l0.752-2.916l-1.458-2.37l-62.527,2.006l1.276,5.469v6.563
+	l1.093,8.75l0.183,30.169l1.823,1.55l2.369-1.094l2.188,0.911l0.542,5.241l44.35-0.909l0.913-1.666l-0.228-2.831l-1.456-2.369
+	l1.274-1.185l-1.274-2.003l0.546-2.001l1.091-4.47l2.008-1.645l-0.548-1.821l2.917-4.283l2.188-1.091l-0.091-1.191l-0.275-1.456
+	l2.277-4.463l1.917-1.002l0.306-2.733l1.412-0.99l-2.506-0.386l-1.069-3.198l2.235-1.895l0.439-1.61l1.02-3.227L473.488,267.881z"/>
+
+<path id="MO" title="Missouri" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="
+	M445.274,192.181l-2.01-2.462l-0.911-1.823l-51.315,1.914l-1.823,0.091l1.003,2.006l-0.183,1.823l2.006,3.099l2.46,3.281
+	l2.461,2.187l1.723,0.182l1.193,0.729v2.37l-1.458,1.276l-0.365,1.823l1.641,2.734l2.005,2.37l2.006,1.458l1.093,9.297l0.251,28.763
+	l0.182,3.736l0.364,4.293l17.888-0.691l18.503-0.546l16.588-0.64l9.292-0.183l1.73,2.731l-0.546,2.637l-2.461,1.916l-0.456,1.465
+	l4.288,0.365l3.106-0.547l1.369-4.38l0.519-4.669l1.673-2.038l2.07-1.186l0.041-2.432l0.811-1.544l-1.351-2.027l-1.061,0.784
+	l-1.589-1.776l-1.024-3.793l0.638-2.009l-1.55-2.732l-1.459-3.648l-3.827-0.638l-5.557-4.463l-1.371-3.281l0.637-2.552l1.642-4.83
+	l0.366-2.283l-1.554-0.823l-5.466-0.636l-0.819-1.365l-0.089-3.374l-4.375-2.735l-5.562-6.196l-1.823-5.833l-0.183-3.37
+	L445.274,192.181z"/>
+<path id="GA" title="Georgia" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="
+	M536.054,277.847v1.74l0.13,1.676l0.516,2.707l2.706,6.317l1.934,7.862l1.16,4.898l1.29,3.866l1.16,5.544l1.676,5.026l2.062,2.707
+	l0.387,2.707l1.547,0.645l0.129,1.676l-1.418,3.866l-0.387,2.578l-0.129,1.548l1.289,3.479l0.258,4.254l-0.645,1.934l0.516,0.645
+	l1.16,0.645l0.163,2.565l1.781,2.671l1.794,1.725l6.316,0.128l8.627-0.516l17.153-1.03l4.342-0.538l3.649,0.022l0.129,2.319
+	l2.063,0.645l0.258-3.479l-1.289-3.609l0.902-1.289l4.641,0.645l3.968,0.253l-0.618-5.022l1.806-7.991l1.16-3.352l-0.388-2.063
+	l2.659-4.979l-0.407-1.078l-1.525,0.562l-2.063-1.03l-0.516-1.676l-1.03-2.836l-1.806-1.676l-2.063-0.516l-1.288-3.868l-2.333-5.05
+	l-3.351-1.548l-1.676-1.547l-1.032-2.062l-1.676-1.547l-1.804-1.031l-1.805-2.32l-2.449-1.805l-3.609-1.418l-0.387-1.16l-1.934-2.32
+	l-0.387-1.16l-2.707-3.963l-2.806,0.079l-2.994-1.879l-1.132-1.031l-0.258-1.418l0.695-1.547l1.774-0.884l-0.505-1.673
+	L536.054,277.847z"/>
+<path id="SC" title="South Carolina" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="
+	M609.93,319.798l-1.417,0.773l-2.062-1.032l-0.517-1.676l-1.031-2.836l-1.804-1.675l-2.063-0.516l-1.29-3.867l-2.19-4.77
+	l-3.352-1.546l-1.676-1.548l-1.031-2.063l-1.676-1.546l-1.805-1.031l-1.804-2.32l-2.45-1.805l-3.609-1.418l-0.386-1.16l-1.934-2.321
+	l-0.387-1.16l-2.707-4.125l-2.707,0.129l-3.223-1.933l-1.031-1.032l-0.258-1.417l0.645-1.547l1.805-0.773l-0.407-1.825l4.6-1.862
+	l7.268-3.66l6.2-0.645l12.849-0.336l2.103,1.497l1.34,2.678l3.43-0.486l10.055-1.16l2.32,0.645l10.054,6.058l8.061,6.477
+	l-4.323,4.351l-2.063,4.898l-0.386,5.028l-1.29,0.644l-0.902,2.191l-1.934,0.516l-1.676,2.835l-2.19,2.192l-1.805,2.707
+	l-1.289,0.645l-2.836,2.706l-2.32,0.129l0.773,2.578l-3.996,4.383L609.93,319.798z"/>
+<path id="KY" title="Kentucky" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="
+	M578.874,229.782l-1.828,1.915l-2.854,3.185l-3.927,4.357l-0.97,1.368l-0.05,1.676l-3.492,1.726l-4.512,2.708l-5.766,1.434
+	l-41.357,3.906l-12.566,1.418l-3.685,0.409l-3.084-0.021l-0.181,3.365l-6.522,0.115l-5.542,0.516l-6.37-0.048l0.963-1.053
+	l1.993-1.229l0.182-2.553l0.729-1.458l-1.281-2.025l0.64-1.52l1.805-1.419l1.676-0.516l2.191,1.031l2.836,1.032l0.902-0.258
+	l0.128-1.805l-1.03-1.933l0.258-1.804l1.546-1.16l2.063-0.516l1.289-0.516l-0.644-1.418l-0.517-1.546l1.201-0.794
+	c0.003-0.03,1-2.808,0.987-2.917l2.436-1.179l4.241-0.773l3.583-0.386l1.11,1.297l1.219,0.695l1.269-2.479l2.541-1.023l1.758,1.183
+	l0.328,0.797l0.936-0.21L513.378,229l2.496-1.395l1.713-0.856l1.22,1.325l2.646-0.036l0.469-1.253l-0.293-1.804l2.073-3.188
+	l3.809-2.741l0.563-3.855l2.332-0.364l3.022-1.313l1.948-1.362l-0.158-1.248l-0.911-1.16l0.452-2.388l3.336-0.094l1.834-0.595
+	l2.669,1.139l1.638,3.481l4.093,0.008l1.636,1.761l1.287-0.118l2.075-1.019l4.176,0.457l2.053,0.173l1.346-1.639l2.088-1.137
+	l1.5-0.564l0.516,2.262l1.629,0.844l2.107,1.66l0.094,4.524l0.645,1.253l2.064,1.241l0.615,1.83l3.317,2.741l1.439,2.889
+	L578.874,229.782z"/>
+<path id="AL" title="Alabama" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="
+	M503.374,361.46l-1.188-11.42l-2.191-14.951l0.129-11.215l0.645-24.749l-0.129-13.276l0.132-5.119l35.47-2.886l-0.117,1.74
+	l0.128,1.675l0.516,2.708l2.707,6.315l1.934,7.863l1.16,4.898l1.289,3.867l1.16,5.543l1.676,5.027l2.063,2.707l0.387,2.706
+	l1.547,0.645l0.128,1.676l-1.418,3.867l-0.386,2.578l-0.129,1.547l1.289,3.48l0.258,4.254l-0.645,1.933l0.516,0.646l1.16,0.644
+	l0.262,2.304l-4.464-0.281l-5.414,0.516l-20.366,2.319l-8.301,1.122l-0.177,2.294l1.418,1.418l2.062,1.547l0.464,6.328l-4.419,2.051
+	l-2.191-0.258l2.191-1.547v-0.772l-2.449-4.77l-1.805-0.517l-1.16,3.48l-1.031,2.191l-0.516-0.129H503.374z"/>
+<path id="LA" title="Louisiana" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="
+	M484.765,360.46l-2.619-2.524l0.806-4.386l-0.527-0.712l-7.385,0.803l-19.956,0.365l-0.546-1.909l0.728-6.742l2.644-4.74
+	l4.012-6.931l-0.457-1.912l1.001-0.543l0.366-1.557l-1.823-1.639l-0.089-1.549l-1.46-3.465l-0.117-5.055l-44.233,0.736l0.023,7.634
+	l0.546,7.475l0.547,3.099l2.006,3.281l0.729,4.011l3.463,4.375l0.183,2.552l0.547,0.547l-0.547,6.745l-2.37,4.01l1.275,1.641
+	l-0.546,2.006l-0.547,5.833l-1.094,2.552l0.098,2.885l3.737-1.213l9.659,0.165l8.25,2.836l5.156,0.902l2.964-1.16l2.578,0.902
+	l2.578,0.773l0.645-1.676l-2.578-0.902l-2.063,0.387l-2.191-1.289c0,0,0.128-1.031,0.645-1.16c0.515-0.129,2.449-0.773,2.449-0.773
+	l1.418,1.16l1.418-0.773l2.578,0.516l1.16,1.934l0.258,1.805l3.609,0.258l1.418,1.418l-0.645,1.289l-1.031,0.645l1.289,1.289
+	l6.703,2.836l2.836-1.031l0.773-1.934l2.063-0.516l1.418-1.16l1.031,0.773l0.645,2.32l-1.805,0.645l0.516,0.515l2.708-1.03
+	l1.804-2.707l0.645-0.387l-1.676-0.258l0.645-1.289l-0.129-1.16l1.676-0.387l0.902-1.031l0.516,0.645c0,0-0.129,2.449,0.516,2.449
+	s3.351,0.516,3.351,0.516l3.224,1.547l0.773,1.16h2.32l0.902,0.773l1.804-2.449v-1.16h-1.03l-2.708-2.191l-4.64-0.645l-2.578-1.805
+	l0.902-2.191l1.805,0.258l0.129-0.515l-1.418-0.774v-0.387h2.578l1.418-2.448l-1.031-1.548l-0.258-2.19l-1.16,0.128l-1.547,1.676
+	l-0.516,2.063l-2.449-0.515l-0.773-1.418l1.418-1.548l1.518-2.747l-0.846-1.923L484.765,360.46z"/>
+<path id="MS" title="Mississippi" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="
+	M503.575,360.607l-0.202,1.001h-4.125l-1.16-0.645l-1.676-0.258l-5.414,1.547l-1.418-0.645l-2.063,3.352l-0.879,0.62l-0.896-1.983
+	l-0.912-3.1l-2.734-2.552l0.912-4.421l-0.547-0.729l-1.459,0.182l-6.313,0.696l-19.573,0.299l-0.613-1.775l0.696-6.679l2.486-4.523
+	l4.167-7.292l-0.355-1.939l0.987-0.523l0.347-1.53l-1.848-1.658l-0.092-1.707l-1.464-3.286l-0.087-4.755l1.059-1.978l-0.178-2.724
+	l-1.411-2.458l1.217-1.182l-1.252-1.993l0.365-1.317l1.258-5.204l1.981-1.624l-0.512-1.887l2.917-4.228l2.258-1.083l-0.177-1.334
+	l-0.23-1.341l2.293-4.44l1.87-0.981l0.122-0.712l29.775-3.095l0.148,5.011l0.128,13.277l-0.644,24.748l-0.13,11.215l2.191,14.952
+	L503.575,360.607z"/>
+<path id="IA" title="Iowa" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="
+	M453.847,153.486l0.211,2.222l1.773,0.46l0.761,0.977l0.399,1.479l3.024,2.678l0.546,1.907l-0.538,2.73l-1.261,2.577l-0.637,2.186
+	l-1.732,1.277l-1.368,0.457l-4.449,1.483l-1.109,3.068l0.581,1.094l1.468,1.342l-0.226,3.219l-1.405,1.226l-0.615,1.311l0.101,2.213
+	l-1.503,0.365l-1.296,0.881l-0.222,1.078l0.222,1.687l-1.237,0.89l-1.97-2.499l-1.007-1.953l-52.415,2.005l-0.732,0.132
+	l-1.637-3.601l-0.182-5.287l-1.276-3.281l-0.546-4.193l-1.823-2.917l-0.73-3.828l-2.187-6.016l-0.911-4.284l-1.094-1.732
+	l-1.276-2.187l1.558-3.862l1.094-4.558l-2.188-1.641l-0.364-2.188l0.729-2.005h1.367l65.905-1.012l0.665,3.335l1.796,1.245
+	l0.204,1.135l-1.618,2.702l0.152,2.556l2.005,3.028l2.015,1.032l2.455,0.401L453.847,153.486z"/>
+<path id="MN" title="Minnesota" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="
+	M378.933,97.065l-0.365-6.745l-1.458-5.833l-1.458-10.755l-0.365-7.838l-1.458-2.734l-1.275-4.01v-8.203l0.547-3.099l-1.452-4.347
+	l24.026,0.028l0.258-6.574l0.515-0.128l1.805,0.387l1.546,0.645l0.645,4.383l1.161,4.898l1.289,1.289h3.867l0.258,1.16l5.028,0.258
+	v1.676h3.867l0.258-1.031l0.902-0.903l1.804-0.515l1.032,0.773h2.32l3.094,2.063l4.254,1.934l1.933,0.387l0.387-0.773l1.16-0.387
+	l0.386,2.32l2.063,1.031l0.387-0.387l1.031,0.129v1.675l2.062,0.774h2.45l1.289-0.645l2.578-2.578L447.363,55l0.644,1.418
+	l0.387,1.031h0.773l0.773-0.645l7.09-0.258l1.418,2.449h0.516l0.569-0.865l3.54-0.296l-0.487,1.818l-3.141,1.465l-7.372,3.238
+	l-3.808,1.6l-2.449,2.063l-1.934,2.836l-1.804,3.094l-1.418,0.644l-3.609,3.996l-1.031,0.129l-3.451,2.198l-1.964,2.556
+	l-0.182,2.545l0.076,6.413l-1.097,1.347l-4.052,2.998l-1.778,4.77l2.29,1.781l0.542,2.573l-1.479,2.583l0.137,2.988l0.294,5.367
+	l2.414,2.394h2.654l1.508,2.498l2.694,0.401l3.077,4.522l5.651,3.283l1.709,2.292l0.535,5.135l-64.754,0.913l-0.27-28.447
+	l-0.365-2.37l-3.281-2.734l-0.911-1.458v-1.276l1.641-1.275l1.093-1.094L378.933,97.065z"/>
+<path id="OK" title="Oklahoma" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="
+	M303.268,250.155l-13.303-1.015l-0.702,8.732l16.318,0.922l25.56,1.04l-1.862,19.471l-0.364,14.219l0.182,1.275l3.463,2.917
+	l1.641,0.911l0.547-0.183l0.547-1.64l1.093,1.458h1.641v-1.094l2.188,1.094l-0.364,3.099l3.281,0.183l2.005,0.911l3.281,0.547
+	l2.005,1.459l1.823-1.641l2.734,0.547l2.005,2.734h0.729v1.822l1.823,0.547l1.823-1.823l1.458,0.548h2.006l0.729,2.005l5.024,1.658
+	l1.094-0.548l1.458-3.28h0.911l0.912,1.64l3.281,0.547l2.917,1.094l2.37,0.729l1.458-0.729l0.547-2.005h3.463l1.641,0.729
+	l2.188-1.64h0.911l0.547,1.275h3.281l1.275-1.64l1.458,0.364l1.641,2.005l2.553,1.459l2.552,0.729l1.548,0.893l-0.31-29.675
+	l-1.094-8.75l-0.128-7.074l-1.148-5.213l-0.621-5.725l-0.055-3.043l-9.677,0.254l-37.005-0.364l-35.911-1.641L303.268,250.155z"/>
+<path id="TX" title="Texas" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="
+	M288.214,257.931l18.093,0.866l24.792,0.911l-1.862,18.702l-0.237,14.475l0.054,1.66l3.464,3.045l1.583,1.153l0.945-0.446
+	l0.297-1.449l0.909,1.438l1.684,0.034l-0.001-1.153l1.332,0.771l0.908,0.325l-0.286,3.164l3.259,0.074l2.333,0.955l3.153,0.419
+	l1.899,1.658l1.694-1.656l2.97,0.491l1.771,2.571l0.857,0.255l-0.128,1.567l1.766,0.632l1.858-1.639l1.7,0.491l1.778,0.027
+	l0.744,1.942l5.046,1.686l1.27-0.611l1.188-3.331h0.272l0.723,0.065l0.979,1.649l3.134,0.53l2.661,0.896l2.73,0.953l1.468-0.777
+	l0.569-2.005l3.551,0.035l1.442,0.742l2.232-1.68l0.88,0.035l0.678,1.279h3.233l1.211-1.617l1.489,0.325l1.552,1.915l2.807,1.631
+	l2.279,0.646l1.207,0.638l1.95,1.593l2.427-1.059l2.146,0.908l0.45,4.868l-0.032,7.735l0.546,7.603l0.56,2.875l2.133,3.524
+	l0.716,3.946l3.362,4.416l0.156,2.509l0.596,0.626l-0.583,6.683l-2.29,3.991l1.223,1.717l-0.502,1.864l-0.534,5.903l-1.2,2.662
+	l0.235,2.793l-4.516,1.264l-7.863,3.609l-0.774,1.546l-2.062,1.547l-1.676,1.161l-1.032,0.644l-4.512,4.254l-2.191,1.676
+	l-4.254,2.578l-4.511,1.934l-5.027,2.707l-1.418,1.159l-4.641,2.836l-2.707,0.516l-3.094,4.383l-3.223,0.258l-0.773,1.547
+	l1.805,1.547l-1.16,4.383l-1.032,3.608l-0.901,3.094l-0.645,3.609l0.645,1.935l1.418,5.542l0.773,4.898l1.418,2.191l-0.774,1.159
+	l-2.449,1.548l-4.512-3.094l-4.382-0.902l-1.031,0.387l-2.578-0.516l-3.351-2.449l-4.125-0.902l-6.058-2.707l-1.676-3.094
+	l-1.031-5.155l-2.578-1.548l-0.516-1.804l0.516-0.517l0.258-2.706l-1.031-0.516l-0.515-0.773l1.031-3.48l-1.29-1.804l-2.577-1.032
+	l-2.708-3.479l-2.836-5.286l-3.352-2.062l0.129-1.548l-4.254-9.796l-0.645-3.352l-1.418-1.546l-0.128-1.16l-4.77-4.254l-2.063-2.449
+	v-0.902l-2.062-1.676l-5.414-0.902l-5.93-0.516l-2.449-1.805l-3.609,1.418l-2.836,1.16l-1.805,2.578l-0.773,2.965l-3.481,4.897
+	l-1.933,1.934l-2.062-0.773l-1.418-0.902l-1.547-0.516l-3.094-1.805v-0.516l-1.418-1.546l-4.125-1.676l-5.929-6.188l-1.804-3.738
+	v-6.445l-2.578-5.155l-0.387-2.191l-1.289-0.773l-0.903-1.676l-3.996-1.676l-1.031-1.289l-5.672-6.316l-1.031-2.578l-3.738-1.804
+	l-1.16-3.48l-2.063-2.321l-1.547-0.386l-0.518-3.729l6.38,0.546l23.151,2.188l23.151,1.275l1.781-15.518l3.099-44.297l1.276-14.948
+	l1.093,0.022 M368.133,441.031l-0.451-5.672l-2.191-5.736l-0.452-5.607l1.225-6.573l2.643-5.479l2.771-4.317l2.514-2.836
+	l0.516,0.193l-3.802,5.284l-3.48,5.222l-1.611,5.284l-0.258,4.125l0.708,4.898l2.063,5.735l0.386,4.126l0.129,1.159L368.133,441.031
+	z"/>
+<path id="NM" title="New Mexico" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="M229.759,332.435
+	l-0.618-3.786l6.892,0.419l24.057,2.349l21.743,1.348l1.766-14.916l3.076-44.553l1.386-15.46l1.253,0.103l0.658-8.901l-82.928-8.48
+	l-13.951,96.028l12.327,1.587l1.032-7.992L229.759,332.435z"/>
+<path id="KS" title="Kansas" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="
+	M404.96,252.993l-10.061,0.163l-36.75-0.365l-35.527-1.64l-19.639-1.003l3.104-51.505l17.608,0.538l32.125,0.671l35.324,0.788h4.063
+	l1.742,1.724l1.608-0.017l1.308,0.807l-0.05,2.399l-1.458,1.375l-0.265,1.78l1.47,2.713l2.354,2.548l1.855,1.287l1.038,8.963
+	L404.96,252.993z"/>
+<path id="NE" title="Nebraska" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="
+	M387.591,186.27l2.576,5.598l-0.102,1.835l2.758,4.381l2.168,2.513h-4.026l-34.671-0.748l-32.521-0.71l-17.743-0.625l0.855-17.006
+	l-25.769-2.329l3.463-35.091l12.396,0.82l16.041,0.911l14.219,0.912l18.958,0.912l8.569-0.365l1.64,1.823l3.829,2.37l0.911,0.729
+	l3.463-1.094l3.099-0.365l2.188-0.182l1.458,1.093l3.235,1.276l2.37,1.276l0.364,1.276l0.729,1.641h1.458l0.636,0.037l0.713,3.733
+	l2.329,6.752l0.457,2.996l2.012,3.009l0.454,4.078l1.282,3.381L387.591,186.27z"/>
+<path id="SD" title="South Dakota" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="
+	M379.897,157.026l-0.039-0.463l-2.309-3.864l1.483-3.757l1.19-4.694l-2.218-1.658l-0.308-2.187l0.632-2.037l2.542,0.012
+	l-0.098-3.992l-0.267-24.06l-0.492-3.004l-3.247-2.656l-0.784-1.337l-0.05-1.283l1.612-1.219l1.222-1.329l0.196-2.118l-46.452-1.276
+	l-43.694-2.75l-4.246,50.785l11.634,0.721l15.907,0.961l14.147,0.74l18.959,1.039l9.554-0.338l1.567,1.791l4.143,2.594l0.609,0.576
+	l3.621-1.158l5.216-0.49l1.335,1.065l3.353,1.272l2.349,1.305l0.318,1.183l0.829,1.787L379.897,157.026z"/>
+<path id="ND" title="North Dakota" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="M378.986,97.14
+	l-0.49-6.725l-1.337-5.435l-1.508-10.385l-0.365-8.761l-1.387-2.454l-1.4-4.142l0.025-8.328l0.497-3.049l-1.462-4.36l-22.838-0.45
+	l-14.823-0.516l-21.14-1.031l-18.296-1.701l-5.576,53.563l43.801,2.666L378.986,97.14z"/>
+<path id="WY" title="Wyoming" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="M287.348,108.588
+	l-85.111-10.73l-11.23,70.533l90.312,10.832L287.348,108.588z"/>
+
+<path id="MT" title="Montana" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="
+	M294.391,39.771l-24.458-2.239l-23.331-2.835l-23.331-3.223l-25.78-4.254l-14.695-2.707l-26.092-5.527l-3.572,17.021l2.735,6.016
+	l-1.094,3.646l1.458,3.646l2.552,1.094l3.685,8.587l2.149,2.532l0.365,0.912l2.734,0.912l0.364,1.641l-5.651,14.036v2.006
+	l2.005,2.552h0.729l3.828-2.37l0.547-0.912l1.276,0.547l-0.183,4.192l2.188,10.026l2.37,2.005l0.729,0.547l1.458,1.823l-0.365,2.734
+	l0.547,2.735l0.912,0.729l1.823-1.823h2.188l2.552,1.276l2.005-0.729h3.281l2.917,1.276l2.187-0.365l0.365-2.37l2.37-0.547
+	l1.094,1.094l0.364,2.552l1.137,0.665l1.504-8.798l85.114,10.708L294.391,39.771z"/>
+<path id="CO" title="Colorado" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="M303.02,250.269l3.91-68.832
+	l-90.411-10.082l-9.738,70.119L303.02,250.269z"/>
+<path id="ID" title="Idaho" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="
+	M118.39,135.067l6.993-28.083l1.094-3.373l2.005-4.74l-1.002-1.823l-2.005,0.091l-0.638-0.82l0.364-0.912l0.273-2.461l3.555-4.375
+	l1.458-0.365l0.912-0.911l0.456-2.552l0.729-0.547l3.099-4.648l3.099-3.463l0.183-3.008l-2.734-2.096l-1.224-3.509l10.863-50.506
+	l10.778,2.016l-3.514,17.05L155.972,42l-1.261,3.716l1.571,3.701l2.502,1l3.059,7.62l2.801,3.538l0.404,0.911l2.664,0.912
+	l0.294,1.672l-5.558,13.854l-0.132,2.046l2.098,2.648l0.722-0.039l3.916-2.413l0.541-0.873l1.246,0.525l-0.222,4.269l2.184,10.033
+	l3.124,2.534l1.341,1.727l-0.572,3.256l0.851,2.238l0.846,0.87l1.977-1.875l2.271,0.039l2.328,1.064l2.217-0.543l3.025-0.128
+	l3.173,1.276l2.188-0.237l0.396-2.422l2.338-0.609l1.005,1.208l0.352,2.348l1.136,0.967l-6.687,42.745
+	C194.106,149.582,123.966,136.266,118.39,135.067z"/>
+<path id="UT" title="Utah" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="M206.912,241.61
+	l-66.778-9.467l16.416-89.735l37.3,6.973l-1.184,8.476l-1.843,10.503l6.226,0.74l13.082,1.439l6.547,0.683L206.912,241.61z"/>
+<path id="AZ" title="Arizona" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="
+	M115.545,299.437l-2.095,1.721l-0.258,1.16l0.387,0.774l15.082,8.507l9.667,6.058l11.73,6.832l13.405,7.992l9.796,1.934
+	l19.895,2.157l13.759-94.986l-66.767-9.503l-2.466,13.086l-1.281,0.012l-1.367,2.096l-2.005-0.09l-1.002-2.188l-2.188-0.273
+	l-0.729-0.912h-0.729l-0.729,0.456l-1.549,0.82l-0.091,5.56l-0.182,1.368l-0.456,10.026l-1.185,1.732l-0.456,2.643l2.188,3.92
+	l1.003,4.648l0.638,0.82l0.82,0.456l-0.091,1.823l-1.276,1.094l-2.734,1.368l-1.549,1.549l-1.185,2.916l-0.456,3.919l-2.279,2.188
+	l-1.641,0.546l0.108,0.662l-0.365,1.367l0.365,0.638l2.917,0.456l-0.456,2.188l-1.185,1.732L115.545,299.437z"/>
+<path id="NV" title="Nevada" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="M156.594,142.316
+	l-18.848,102.717l-1.461,0.279l-1.254,1.919l-1.892,0.007l-1.174-2.187l-2.088-0.301l-0.614-0.884l-0.828-0.043l-2.215,1.311
+	l-0.247,5.411l-0.289,4.606l-0.278,6.852l-1.154,1.666l-1.944-0.856l-55.081-83.085l15.141-53.889L156.594,142.316z"/>
+<path id="OR" title="Oregon" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="
+	M118.583,134.307l7.057-27.749l0.838-3.372l1.877-4.484l-0.49-0.927l-2.005-0.037l-1.022-1.332l0.365-1.167l0.401-2.588l3.555-4.375
+	l1.458-0.877l0.912-0.911l1.185-2.843l3.227-4.521l2.843-3.08l0.183-2.752l-2.606-1.968l-1.422-3.702l-10.097-2.88l-12.031-2.826
+	l-12.305,0.091l-0.365-1.094l-4.375,1.641l-3.554-0.456l-1.914-1.276l-1.003,0.546l-3.737-0.182l-1.368-1.094l-4.192-1.641
+	l-0.638,0.091l-3.463-1.185l-1.55,1.458l-4.922-0.273l-4.739-3.281l0.546-0.638l0.183-6.198l-1.823-3.099l-3.281-0.456l-0.547-2.005
+	l-1.877-0.373l-4.624,1.642l-1.805,5.156l-2.578,7.992l-2.578,5.156l-3.996,11.214l-5.156,10.828l-6.445,10.055l-1.547,2.32
+	l-0.645,6.832l0.308,9.632L118.583,134.307z"/>
+<path id="WA" title="Washington" area="2456" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="
+	M81.389,0.416l3.48,1.16l7.734,2.191l6.832,1.546l15.983,4.512l18.304,4.512l12.138,2.557l-10.87,50.701l-9.923-2.811l-12.365-2.847
+	l-12.144,0.026l-0.363-1.072l-4.464,1.737l-3.664-0.587l-1.712-1.263l-1.047,0.525l-3.775-0.112l-1.354-1.076l-4.196-1.685
+	l-0.586,0.117l-3.5-1.216l-1.51,1.449l-4.996-0.238l-4.725-3.29l0.621-0.744l0.097-6.122l-1.82-3.062l-3.281-0.484l-0.54-2.002
+	l-1.814-0.364l-2.834,0.981l-1.805-2.567l0.258-2.32l2.191-0.258l1.289-3.223l-2.063-0.902l0.129-2.965l3.48-0.516l-2.191-2.191
+	l-1.16-5.671l0.516-2.32v-6.317l-1.418-2.578l1.805-7.477l1.675,0.387l1.934,2.32l2.191,2.063l2.578,1.547l3.609,1.676l2.449,0.516
+	l2.321,1.16l2.707,0.773l1.804-0.129v-1.934l1.032-0.902l1.675-1.031l0.258,0.902l0.258,1.418l-1.805,0.387l-0.257,1.676l1.418,1.16
+	l0.902,1.933l0.516,1.547l1.16-0.129l0.129-1.031l-0.774-1.031l-0.387-2.578l0.645-1.418l-0.516-1.16V10.47l1.418-2.836
+	l-0.902-2.063l-1.934-3.867l0.258-0.645L81.389,0.416z M73.848,5.184l1.611-0.129l0.386,1.095l1.225-1.289h1.869l0.645,1.225
+	L78.36,7.439l0.516,0.645l-0.58,1.611L77.2,10.017c0,0-0.709,0.064-0.709-0.193s1.16-2.062,1.16-2.062L76.297,7.31L76.04,8.47
+	l-0.58,0.516l-1.225-1.804L73.848,5.184z"/>
+<path id="CA" title="California" area="2456" fill="#bebdbd" stroke="#FFFFFF" stroke-width="0.75" d="
+	M115.373,299.093l3.142-0.39l1.185-1.604l0.434-2.345l-2.832-0.471l-0.41-0.533l0.381-1.62l-0.127-0.47l1.533-0.495l2.426-2.258
+	l0.464-3.982l1.1-2.713l1.55-1.727l2.806-1.268l1.319-1.28l0.055-1.681l-0.792-0.462l-0.816-0.855l-0.921-4.663l-2.141-3.851
+	l0.451-2.795l-1.929-0.821l-55.066-83.066l15.072-53.902l-53.486-12.517l-1.202,3.774l-0.129,5.93l-4.125,9.41l-2.45,2.062
+	l-0.257,0.902l-1.418,0.645l-1.16,3.352l-0.645,2.578l2.191,3.352l1.289,3.351l0.903,2.836l-0.258,5.156l-1.418,2.449l-0.516,4.641
+	l-0.773,2.964l1.418,3.094l2.191,3.609l1.805,3.867l1.031,3.223l-0.258,2.578l-0.258,0.387v1.676l4.512,5.027l-0.387,1.934
+	l-0.516,1.805l-0.516,1.547l0.129,6.574l1.676,2.965l1.547,2.062l2.191,0.387l0.774,2.191l-0.903,2.836l-1.675,1.289h-0.902
+	l-0.645,3.094l0.386,2.32l2.579,3.48l1.289,4.254l1.16,3.738l1.031,2.449l2.707,4.641l1.16,2.062l0.387,2.32l1.289,0.774v1.933
+	l-0.645,1.547l-1.418,5.672l-0.387,1.547l1.934,2.191l3.351,0.386l3.609,1.418l3.094,1.676h2.32l2.32,2.449l2.062,3.867l0.902,1.805
+	l3.094,1.676l3.867,0.645l1.16,1.676l0.516,2.577l-1.161,0.517l0.258,0.773l2.578,0.645l2.191,0.129l2.52-1.345l3.094,3.351
+	l0.645,1.805l2.062,3.352l0.258,2.577v7.477l0.387,1.418l7.992,1.159l15.726,2.191L115.373,299.093z M45.098,264.236l1.031,1.225
+	L46,266.492l-2.578-0.064l-0.451-0.966l-0.516-1.16L45.098,264.236z M46.645,264.236l0.967-0.515l2.835,1.675l2.45,0.966
+	l-0.709,0.516l-3.61-0.193l-1.289-1.289L46.645,264.236z M63.144,280.026l1.418,1.869l0.644,0.774l1.225,0.451l0.451-1.16
+	l-0.773-1.418l-2.127-1.612l-0.838,0.129V280.026z M61.984,286.922l1.418,2.514l0.966,1.547l-1.16,0.193l-1.031-0.967
+	c0,0-0.58-1.16-0.58-1.482c0-0.323,0-1.741,0-1.741L61.984,286.922z" style="cursor:pointer"/>
+</svg>
+
+        <div style="text-align:left">            
+            <table id="legendTable" cellspacing="4" 
+            style="border-color:#d3d3d3; border-style:solid; border-width:thin">
+                        
+                <!--<tr>
+                    <td align="center">Key</td>
+                    <td align="center">From</td>
+                    <td align="center">To</td>
+                </tr>-->
+            </table>
+        </div>
+</div>
+</td>
+
+<td style="width:450px;vertical-align:top;">  
+<!-- Control panel -->                   
+    <div id="rightPanel" style="background-color:#c4c4c4; border-color:#bebdbd; 
+    border-style:solid; border-width:thin; width:450px; 
+    padding-top:5px; padding-left:10px; padding-right:10px; padding-bottom:5px;">    
+                  
+       <div class="basicdata" title="Basic Data">            
+           <span id="state"></span>&nbsp;&nbsp;&nbsp;&nbsp;           
+           <span id="area"></span> &nbsp;&nbsp;&nbsp;&nbsp;          
+           <span id="year"></span>  
+       </div>                                                                       
+       <br />
+        <div class="collapsibleLineChartPanel" title="Yearly Distribution - Linear">       
+           <canvas id="myCanvas" width="450" height="200">
+                [No canvas support]
+           </canvas>
+        </div>
+       <br />
+       <div class="collapsibleDataTablePanel" title="Yearly Distribution - Data Table"> 
+            <div id="targetdiv"></div>
+       </div>                      
+       <br />      
+       <!--<div style="font-weight:bold; color:Gray; text-align:center; background-color:Red">Range wise distribution of states</div>-->
+       <div class="collapsiblePieChartPanel" title="Range wise distribution of states"> 
+            <canvas id="myCanvas1" width="400" height="300">
+                [No canvas support]
+            </canvas> 
+        </div>               
+        
+        <div style="display:none" id="zoomWindow">            
+            <canvas id="zoomCanvas" width="750" height="400">
+            [No canvas support]
+        </canvas>   
+        
+        </div>
+    </div>
+</td>
+</tr>
+</table>
+</body>
+</html>

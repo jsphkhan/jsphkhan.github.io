@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<map>
+	<year value = "2007">
+		<state id = "AL" name = "Alabama" population = "4,661,900" unemployment = "3.3"/>
+		<state id = "AK" name = "Alaska" population = "683,478" unemployment = "5.9"/>
+		<state id = "AZ" name = "Arizona" population = "6,338,755" unemployment = "3.6"/>
+		<state id = "AR" name = "Arkansas" population = "2,834,797" unemployment = "5.2"/>
+		<state id = "CA" name = "California" population = "36,553,215" unemployment = "5.1"/>
+		
+		<state id = "CO" name = "Colorado" population = "4,939,456" unemployment = "3.5"/>
+		<state id = "CT" name = "Connecticut" population = "3,502,309" unemployment = "4.4"/>
+		<state id = "DE" name = "Delaware" population = "864,764" unemployment = "3.5"/>
+		<state id = "FL" name = "Florida" population = "18,251,243" unemployment = "3.7"/>		
+		<state id = "GA" name = "Georgia" population = "9,544,750" unemployment = "4.4"/>
+		
+		<state id = "HI" name = "Hawaii" population = "1,283,388" unemployment = "2.5"/>
+		<state id = "ID" name = "Idaho" population = "1,499,402" unemployment = "2.7"/>
+		<state id = "IL" name = "Illinois" population = "12,852,548" unemployment = "4.8"/>
+		<state id = "IN" name = "Indiana" population = "6,345,289" unemployment = "4.5"/>		
+		<state id = "IA" name = "Iowa" population = "2,988,046" unemployment = "3.7"/>
+		
+		<state id = "KS" name = "Kansas" population = "2,775,997" unemployment = "4.1"/>
+		<state id = "KY" name = "Kentucky" population = "4,241,474	" unemployment = "5.5"/>
+		<state id = "LA" name = "Louisiana" population = "4,293,204" unemployment = "3.8"/>
+		<state id = "ME" name = "Maine" population = "1,317,207" unemployment = "4.5"/>		
+		<state id = "MD" name = "Maryland" population = "5,618,344" unemployment = "3.5"/>
+		
+		<state id = "MA" name = "Massachusetts" population = "6,449,755" unemployment = "4.5"/>
+		<state id = "MI" name = "Michigan" population = "10,071,822" unemployment = "6.8"/>
+		<state id = "MN" name = "Minnesota" population = "5,197,621" unemployment = "4.6"/>
+		<state id = "MS" name = "Mississippi" population = "2,918,785" unemployment = "6.2"/>		
+		<state id = "MO" name = "Missouri" population = "5,878,415" unemployment = "4.7"/>
+		
+		<state id = "MT" name = "Montana" population = "957,861" unemployment = "3.2"/>
+		<state id = "NE" name = "Nebraska" population = "1,774,571" unemployment = "2.8"/>
+		<state id = "NV" name = "Nevada" population = "2,565,382" unemployment = "4.3"/>
+		<state id = "NH" name = "New Hampshire" population = "1,315,828" unemployment = "3.6"/>		
+		<state id = "NJ" name = "New Jersey" population = "8,685,920" unemployment = "4.2"/>
+		
+		<state id = "NM" name = "New Mexico" population = "1,969,915" unemployment = "3.4"/>
+		<state id = "NY" name = "New York" population = "19,297,729" unemployment = "4.4"/>
+		<state id = "NC" name = "North Carolina" population = "9,061,032" unemployment = "4.6"/>
+		<state id = "ND" name = "North Dakota" population = "639,715" unemployment = "3.1"/>		
+		<state id = "OH" name = "Ohio" population = "11,466,917" unemployment = "5.5"/>
+		
+		<state id = "OK" name = "Oklahoma" population = "3,617,316" unemployment = "4.2"/>
+		<state id = "OR" name = "Oregon" population = "3,747,455" unemployment = "5.0"/>
+		<state id = "PA" name = "Pennsylvania" population = "12,432,792" unemployment = "4.2"/>
+		<state id = "RI" name = "Rhode Island" population = "1,057,832" unemployment = "5.0"/>		
+		<state id = "SC" name = "South Carolina" population = "4,407,709" unemployment = "5.5"/>
+		
+		<state id = "SD" name = "South Dakota" population = "796,214" unemployment = "2.9"/>
+		<state id = "TN" name = "Tennessee" population = "6,156,719" unemployment = "4.5"/>
+		<state id = "TX" name = "Texas" population = "23,904,380" unemployment = "4.3"/>
+		<state id = "UT" name = "Utah" population = "2,645,330" unemployment = "2.4"/>		
+		<state id = "VT" name = "Vermont" population = "621,254" unemployment = "3.9"/>
+		
+		<state id = "VA" name = "Virginia" population = "7,712,091" unemployment = "2.9"/>
+		<state id = "WA" name = "Washington" population = "6,468,424" unemployment = "4.5"/>
+		<state id = "WV" name = "West Virginia" population = "1,812,035" unemployment = "4.1"/>
+		<state id = "WI" name = "Wisconsin" population = "5,601,640" unemployment = "4.8"/>
+		<state id = "WY" name = "Wyoming" population = "522,830" unemployment = "2.8"/>		
+	</year>
+	
+	<year value = "2008">
+		<state id = "AL" name = "Alabama" population = "4,627,851" unemployment = "4.3"/>
+		<state id = "AK" name = "Alaska" population = "686,293" unemployment = "6.3"/>
+		<state id = "AZ" name = "Arizona" population = "6,500,180" unemployment = "4.9"/>
+		<state id = "AR" name = "Arkansas" population = "2,855,390" unemployment = "4.8"/>
+		<state id = "CA" name = "California" population = "36,756,666" unemployment = "6.4"/>
+		
+		<state id = "CO" name = "Colorado" population = "4,861,515" unemployment = "4.3"/>
+		<state id = "CT" name = "Connecticut" population = "3,501,252" unemployment = "5.1"/>
+		<state id = "DE" name = "Delaware" population = "873,092" unemployment = "4.1"/>
+		<state id = "FL" name = "Florida" population = "18,328,340" unemployment = "5.4"/>		
+		<state id = "GA" name = "Georgia" population = "9,685,744" unemployment = "5.5"/>
+		
+		<state id = "HI" name = "Hawaii" population = "1,288,198" unemployment = "3.4"/>
+		<state id = "ID" name = "Idaho" population = "1,523,816" unemployment = "4.0"/>
+		<state id = "IL" name = "Illinois" population = "12,901,563" unemployment = "5.9"/>
+		<state id = "IN" name = "Indiana" population = "6,376,792" unemployment = "5.2"/>		
+		<state id = "IA" name = "Iowa" population = "3,002,555" unemployment = "3.9"/>
+		
+		<state id = "KS" name = "Kansas" population = "2,802,134" unemployment = "4.1"/>
+		<state id = "KY" name = "Kentucky" population = "4,269,245" unemployment = "5.9"/>
+		<state id = "LA" name = "Louisiana" population = "4,410,796" unemployment = "3.8"/>
+		<state id = "ME" name = "Maine" population = "1,316,456" unemployment = "4.8"/>		
+		<state id = "MD" name = "Maryland" population = "5,633,597" unemployment = "3.8"/>
+		
+		<state id = "MA" name = "Massachusetts" population = "6,497,967" unemployment = "4.7"/>
+		<state id = "MI" name = "Michigan" population = "10,003,422" unemployment = "7.4"/>
+		<state id = "MN" name = "Minnesota" population = "5,220,393" unemployment = "5.0"/>
+		<state id = "MS" name = "Mississippi" population = "2,938,618" unemployment = "6.3"/>		
+		<state id = "MO" name = "Missouri" population = "5,911,605" unemployment = "5.4"/>
+		
+		<state id = "MT" name = "Montana" population = "967,440" unemployment = "4.1"/>
+		<state id = "NE" name = "Nebraska" population = "1,783,432" unemployment = "2.9"/>
+		<state id = "NV" name = "Nevada" population = "2,600,167" unemployment = "5.5"/>
+		<state id = "NH" name = "New Hampshire" population = "1,315,809" unemployment = "3.6"/>		
+		<state id = "NJ" name = "New Jersey" population = "8,682,661" unemployment = "4.9"/>
+		
+		<state id = "NM" name = "New Mexico" population = "1,984,356" unemployment = "3.9"/>
+		<state id = "NY" name = "New York" population = "19,490,297" unemployment = "4.8"/>
+		<state id = "NC" name = "North Carolina" population = "9,222,414" unemployment = "5.3"/>
+		<state id = "ND" name = "North Dakota" population = "641,481" unemployment = "2.9"/>		
+		<state id = "OH" name = "Ohio" population = "11,485,910" unemployment = "5.9"/>
+		
+		<state id = "OK" name = "Oklahoma" population = "3,642,361" unemployment = "3.2"/>
+		<state id = "OR" name = "Oregon" population = "3,790,060" unemployment = "5.4"/>
+		<state id = "PA" name = "Pennsylvania" population = "12,448,279" unemployment = "4.9"/>
+		<state id = "RI" name = "Rhode Island" population = "1,050,788" unemployment = "6.9"/>		
+		<state id = "SC" name = "South Carolina" population = "4,479,800" unemployment = "5.7"/>
+		
+		<state id = "SD" name = "South Dakota" population = "804,194" unemployment = "2.8"/>
+		<state id = "TN" name = "Tennessee" population = "6,214,888" unemployment = "5.9"/>
+		<state id = "TX" name = "Texas" population = "24,326,974" unemployment = "4.5"/>
+		<state id = "UT" name = "Utah" population = "2,736,424" unemployment = "3.3"/>		
+		<state id = "VT" name = "Vermont" population = "621,270" unemployment = "4.2"/>
+		
+		<state id = "VA" name = "Virginia" population = "7,769,089" unemployment = "3.5"/>
+		<state id = "WA" name = "Washington" population = "6,549,224" unemployment = "4.9"/>
+		<state id = "WV" name = "West Virginia" population = "1,814,468" unemployment = "3.9"/>
+		<state id = "WI" name = "Wisconsin" population = "5,627,967" unemployment = "4.3"/>
+		<state id = "WY" name = "Wyoming" population = "532,668" unemployment = "2.8"/>		
+	</year>
+	
+	<year value = "2009">
+		<state id = "AL" name = "Alabama" population = "4,708,708" unemployment = "9.4"/>
+		<state id = "AK" name = "Alaska" population = "698,473" unemployment = "7.6"/>
+		<state id = "AZ" name = "Arizona" population = "6,595,778" unemployment = "9.3"/>
+		<state id = "AR" name = "Arkansas" population = "2,889,450" unemployment = "7.2"/>
+		<state id = "CA" name = "California" population = "36,961,664" unemployment = "10.9"/>
+		
+		<state id = "CO" name = "Colorado" population = "5,024,748" unemployment = "8.3"/>
+		<state id = "CT" name = "Connecticut" population = "3,518,288" unemployment = "8.0"/>
+		<state id = "DE" name = "Delaware" population = "885,122" unemployment = "7.8"/>
+		<state id = "FL" name = "Florida" population = "18,537,969" unemployment = "9.7"/>		
+		<state id = "GA" name = "Georgia" population = "9,829,211" unemployment = "9.3"/>
+		
+		<state id = "HI" name = "Hawaii" population = "1,295,178" unemployment = "6.8"/>
+		<state id = "ID" name = "Idaho" population = "1,545,801" unemployment = "7.1"/>
+		<state id = "IL" name = "Illinois" population = "12,910,409" unemployment = "9.5"/>
+		<state id = "IN" name = "Indiana" population = "6,423,113" unemployment = "10.7"/>		
+		<state id = "IA" name = "Iowa" population = "3,007,856" unemployment = "5.3"/>
+		
+		<state id = "KS" name = "Kansas" population = "2,818,747" unemployment = "6.9"/>
+		<state id = "KY" name = "Kentucky" population = "4,314,113" unemployment = "10.7"/>
+		<state id = "LA" name = "Louisiana" population = "4,492,076" unemployment = "6.3"/>
+		<state id = "ME" name = "Maine" population = "1,318,301" unemployment = "8.3"/>		
+		<state id = "MD" name = "Maryland" population = "5,699,478" unemployment = "7.0"/>
+		
+		<state id = "MA" name = "Massachusetts" population = "6,593,587" unemployment = "7.9"/>
+		<state id = "MI" name = "Michigan" population = "9,969,727" unemployment = "13.1"/>
+		<state id = "MN" name = "Minnesota" population = "5,266,214" unemployment = "8.4"/>
+		<state id = "MS" name = "Mississippi" population = "2,951,996" unemployment = "9.2"/>		
+		<state id = "MO" name = "Missouri" population = "5,987,580" unemployment = "9.2"/>
+		
+		<state id = "MT" name = "Montana" population = "974,989" unemployment = "5.9"/>
+		<state id = "NE" name = "Nebraska" population = "1,796,619" unemployment = "4.7"/>
+		<state id = "NV" name = "Nevada" population = "2,643,085" unemployment = "11.4"/>
+		<state id = "NH" name = "New Hampshire" population = "1,324,575" unemployment = "6.1"/>		
+		<state id = "NJ" name = "New Jersey" population = "8,707,739" unemployment = "8.8"/>
+		
+		<state id = "NM" name = "New Mexico" population = "2,009,671" unemployment = "6.4"/>
+		<state id = "NY" name = "New York" population = "19,541,453" unemployment = "8.2"/>
+		<state id = "NC" name = "North Carolina" population = "9,380,884" unemployment = "10.7"/>
+		<state id = "ND" name = "North Dakota" population = "646,844" unemployment = "4.3"/>		
+		<state id = "OH" name = "Ohio" population = "11,542,645" unemployment = "10.0"/>
+		
+		<state id = "OK" name = "Oklahoma" population = "3,687,050" unemployment = "6.2"/>
+		<state id = "OR" name = "Oregon" population = "3,825,657" unemployment = "11.5"/>
+		<state id = "PA" name = "Pennsylvania" population = "12,604,767" unemployment = "7.8"/>
+		<state id = "RI" name = "Rhode Island" population = "1,053,209" unemployment = "10.3"/>		
+		<state id = "SC" name = "South Carolina" population = "4,561,242" unemployment = "11.3"/>
+		
+		<state id = "SD" name = "South Dakota" population = "812,383" unemployment = "5.0"/>
+		<state id = "TN" name = "Tennessee" population = "6,296,254" unemployment = "10.5"/>
+		<state id = "TX" name = "Texas" population = "24,782,302" unemployment = "7.2"/>
+		<state id = "UT" name = "Utah" population = "2,784,572" unemployment = "6.9"/>		
+		<state id = "VT" name = "Vermont" population = "621,760" unemployment = "7.3"/>
+		
+		<state id = "VA" name = "Virginia" population = "7,882,590" unemployment = "6.8"/>
+		<state id = "WA" name = "Washington" population = "6,664,195" unemployment = "9.2"/>
+		<state id = "WV" name = "West Virginia" population = "1,819,777" unemployment = "7.3"/>
+		<state id = "WI" name = "Wisconsin" population = "5,654,774" unemployment = "8.8"/>
+		<state id = "WY" name = "Wyoming" population = "544,270" unemployment = "5.7"/>		
+	</year>
+	
+	<year value = "2010">
+		<state id = "AL" name = "Alabama" population = "100" unemployment = "9.8"/>
+		<state id = "AK" name = "Alaska" population = "200" unemployment = "8.1"/>
+		<state id = "AZ" name = "Arizona" population = "300" unemployment = "10.1"/>
+		<state id = "AR" name = "Arkansas" population = "400" unemployment = "7.9"/>
+		<state id = "CA" name = "California" population = "500" unemployment = "12.4"/>
+		
+		<state id = "CO" name = "Colorado" population = "100" unemployment = "9.0"/>
+		<state id = "CT" name = "Connecticut" population = "200" unemployment = "9.2"/>
+		<state id = "DE" name = "Delaware" population = "300" unemployment = "8.5"/>
+		<state id = "FL" name = "Florida" population = "500" unemployment = "11.3"/>		
+		<state id = "GA" name = "Georgia" population = "100" unemployment = "10.1"/>
+		
+		<state id = "HI" name = "Hawaii" population = "200" unemployment = "6.7"/>
+		<state id = "ID" name = "Idaho" population = "300" unemployment = "9.1"/>
+		<state id = "IL" name = "Illinois" population = "400" unemployment = "10.8"/>
+		<state id = "IN" name = "Indiana" population = "500" unemployment = "10.5"/>		
+		<state id = "IA" name = "Iowa" population = "100" unemployment = "6.1"/>
+		
+		<state id = "KS" name = "Kansas" population = "200" unemployment = "7.1"/>
+		<state id = "KY" name = "Kentucky" population = "300" unemployment = "10.6"/>
+		<state id = "LA" name = "Louisiana" population = "400" unemployment = "7.2"/>
+		<state id = "ME" name = "Maine" population = "500" unemployment = "8.2"/>		
+		<state id = "MD" name = "Maryland" population = "100" unemployment = "7.5"/>
+		
+		<state id = "MA" name = "Massachusetts" population = "200" unemployment = "8.6"/>
+		<state id = "MI" name = "Michigan" population = "300" unemployment = "13.1"/>
+		<state id = "MN" name = "Minnesota" population = "400" unemployment = "7.5"/>
+		<state id = "MS" name = "Mississippi" population = "500" unemployment = "10.6"/>		
+		<state id = "MO" name = "Missouri" population = "100" unemployment = "9.5"/>
+		
+		<state id = "MT" name = "Montana" population = "200" unemployment = "7.1"/>
+		<state id = "NE" name = "Nebraska" population = "300" unemployment = "4.8"/>
+		<state id = "NV" name = "Nevada" population = "400" unemployment = "14.9"/>
+		<state id = "NH" name = "New Hampshire" population = "500" unemployment = "6.3"/>		
+		<state id = "NJ" name = "New Jersey" population = "100" unemployment = "9.6"/>
+		
+		<state id = "NM" name = "New Mexico" population = "200" unemployment = "8.3"/>
+		<state id = "NY" name = "New York" population = "300" unemployment = "8.7"/>
+		<state id = "NC" name = "North Carolina" population = "400" unemployment = "11.1"/>
+		<state id = "ND" name = "North Dakota" population = "500" unemployment = "4.0"/>		
+		<state id = "OH" name = "Ohio" population = "100" unemployment = "10.4"/>
+		
+		<state id = "OK" name = "Oklahoma" population = "200" unemployment = "7.2"/>
+		<state id = "OR" name = "Oregon" population = "300" unemployment = "11.0"/>
+		<state id = "PA" name = "Pennsylvania" population = "400" unemployment = "8.8"/>
+		<state id = "RI" name = "Rhode Island" population = "500" unemployment = "11.7"/>		
+		<state id = "SC" name = "South Carolina" population = "100" unemployment = "11.3"/>
+		
+		<state id = "SD" name = "South Dakota" population = "200" unemployment = "5.0"/>
+		<state id = "TN" name = "Tennessee" population = "300" unemployment = "10.0"/>
+		<state id = "TX" name = "Texas" population = "400" unemployment = "8.2"/>
+		<state id = "UT" name = "Utah" population = "500" unemployment = "7.9"/>		
+		<state id = "VT" name = "Vermont" population = "100" unemployment = "6.5"/>
+		
+		<state id = "VA" name = "Virginia" population = "200" unemployment = "7.1"/>
+		<state id = "WA" name = "Washington" population = "300" unemployment = "9.8"/>
+		<state id = "WV" name = "West Virginia" population = "400" unemployment = "8.8"/>
+		<state id = "WI" name = "Wisconsin" population = "500" unemployment = "8.8"/>
+		<state id = "WY" name = "Wyoming" population = "500" unemployment = "7.2"/>		
+	</year>
+	
+	<year value = "2011">
+		<state id = "AL" name = "Alabama" population = "100" unemployment = "9.3"/>
+		<state id = "AK" name = "Alaska" population = "200" unemployment = "7.3"/>
+		<state id = "AZ" name = "Arizona" population = "300" unemployment = "9.3"/>
+		<state id = "AR" name = "Arkansas" population = "400" unemployment = "7.7"/>
+		<state id = "CA" name = "California" population = "500" unemployment = "11.9"/>
+		
+		<state id = "CO" name = "Colorado" population = "100" unemployment = "8.8"/>
+		<state id = "CT" name = "Connecticut" population = "200" unemployment = "9.1"/>
+		<state id = "DE" name = "Delaware" population = "300" unemployment = "8.2"/>
+		<state id = "FL" name = "Florida" population = "500" unemployment = "10.8"/>		
+		<state id = "GA" name = "Georgia" population = "100" unemployment = "9.9"/>
+		
+		<state id = "HI" name = "Hawaii" population = "200" unemployment = "6.1"/>
+		<state id = "ID" name = "Idaho" population = "300" unemployment = "9.6"/>
+		<state id = "IL" name = "Illinois" population = "400" unemployment = "8.7"/>
+		<state id = "IN" name = "Indiana" population = "500" unemployment = "8.2"/>		
+		<state id = "IA" name = "Iowa" population = "100" unemployment = "6.0"/>
+		
+		<state id = "KS" name = "Kansas" population = "200" unemployment = "6.7"/>
+		<state id = "KY" name = "Kentucky" population = "300" unemployment = "10.0"/>
+		<state id = "LA" name = "Louisiana" population = "400" unemployment = "8.1"/>
+		<state id = "ME" name = "Maine" population = "500" unemployment = "7.6"/>		
+		<state id = "MD" name = "Maryland" population = "100" unemployment = "6.8"/>
+		
+		<state id = "MA" name = "Massachusetts" population = "200" unemployment = "7.8"/>
+		<state id = "MI" name = "Michigan" population = "300" unemployment = "10.2"/>
+		<state id = "MN" name = "Minnesota" population = "400" unemployment = "6.5"/>
+		<state id = "MS" name = "Mississippi" population = "500" unemployment = "10.4"/>		
+		<state id = "MO" name = "Missouri" population = "100" unemployment = "8.9"/>
+		
+		<state id = "MT" name = "Montana" population = "200" unemployment = "7.3"/>
+		<state id = "NE" name = "Nebraska" population = "300" unemployment = "4.2"/>
+		<state id = "NV" name = "Nevada" population = "400" unemployment = "12.5"/>
+		<state id = "NH" name = "New Hampshire" population = "500" unemployment = "4.9"/>		
+		<state id = "NJ" name = "New Jersey" population = "100" unemployment = "9.3"/>
+		
+		<state id = "NM" name = "New Mexico" population = "200" unemployment = "7.6"/>
+		<state id = "NY" name = "New York" population = "300" unemployment = "7.9"/>
+		<state id = "NC" name = "North Carolina" population = "400" unemployment = "9.7"/>
+		<state id = "ND" name = "North Dakota" population = "500" unemployment = "3.3"/>		
+		<state id = "OH" name = "Ohio" population = "100" unemployment = "8.6"/>
+		
+		<state id = "OK" name = "Oklahoma" population = "200" unemployment = "5.6"/>
+		<state id = "OR" name = "Oregon" population = "300" unemployment = "9.6"/>
+		<state id = "PA" name = "Pennsylvania" population = "400" unemployment = "7.5"/>
+		<state id = "RI" name = "Rhode Island" population = "500" unemployment = "10.9"/>		
+		<state id = "SC" name = "South Carolina" population = "100" unemployment = "9.8"/>
+		
+		<state id = "SD" name = "South Dakota" population = "200" unemployment = "4.9"/>
+		<state id = "TN" name = "Tennessee" population = "300" unemployment = "9.6"/>
+		<state id = "TX" name = "Texas" population = "400" unemployment = "8.0"/>
+		<state id = "UT" name = "Utah" population = "500" unemployment = "7.4"/>		
+		<state id = "VT" name = "Vermont" population = "100" unemployment = "5.3"/>
+		
+		<state id = "VA" name = "Virginia" population = "200" unemployment = "6.1"/>
+		<state id = "WA" name = "Washington" population = "300" unemployment = "9.1"/>
+		<state id = "WV" name = "West Virginia" population = "400" unemployment = "8.8"/>
+		<state id = "WI" name = "Wisconsin" population = "500" unemployment = "7.3"/>
+		<state id = "WY" name = "Wyoming" population = "500" unemployment = "6.0"/>		
+	</year>
+</map>
