@@ -1,0 +1,35 @@
+        body
+        {                        
+            margin:0;
+            padding:0;
+        }
+        
+        #wrapper
+        {            
+            overflow:hidden;            
+            position:relative; 
+            background:#000;                     
+        }
+        
+        #wrapper ul
+        {
+            list-style:none;
+            margin:0;
+            padding:0; 
+            -webkit-transition: -webkit-transform 0.3s linear;   
+            display:none;                                 
+        }
+        
+        #wrapper ul li
+        {
+           float:left;                        
+        }
+        
+        #wrapper ul li img
+        {
+            -webkit-backface-visibility: hidden;
+            -webkit-perspective: 1000; 
+        }
+           
+              
+       
