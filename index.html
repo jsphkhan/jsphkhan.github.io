@@ -1,104 +1,121 @@
+
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>Joseph's Github Pages</title>
-        <!--<style type="text/css">
-            html, body {
-                margin: 0;
-                padding: 0;
-                height: 100%;
-                width: 100%;
-            }
-            .main {
-                width: 100%;
-                height: 100%;
-                overflow: hidden;
-                position: relative;
-            }
+  <head>
+    <meta charset="utf-8">
+    <title>Template &middot; Bootstrap</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-            .left {
-                position: absolute;
-                left: 0;
-                width: 400px;
-                bottom: 0;
-                top: 0;
-                border-right: 1px solid #9a9a9a;
-                background: #ccc;
-                overflow-y: auto;
-                overflow-x: hidden; 
-            }
-            .left div {
-                padding: 10px;
-            }
-            .right {
-                position: absolute;
-                left: 401px;
-                right: 0;
-                bottom: 0;
-                top: 0;
-                height: 100%;
-                float: right;
-            }
-            .right div {
-                padding: 10px;
-            }
-            .right header {
-                background: #4285f4;
-                padding: 10px;
-                height: 10px;
-                width: 100%;
-            }
-            ul {
-                list-style: none;
-                margin: 0;
-                padding: 0;
-            }
-            ol.menu li {
-                padding: 10px;
-            }
-            ol.menu li a {
-                text-decoration: none;
-            }
-        </style>-->
-        <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
-    </head>
-    <body>
-        <div class="container-fluid">
-            <div class="row-fluid">
-                <div class="span4">
-                    <div>
-                        <ol class="menu">
-                            <li>
-                                <a href="mediator_pattern_with_backbone_example/">Backbone Example with Mediator Pattern</a>
-                            </li>
-                            <li>
-                                <a href="fluidic_sliding_panel/">Fluidic Sliding Panels</a>
-                            </li>
-                            <li>
-                                <a href="html5_preloader/">HTML5 Preloader</a>
-                            </li>
-                            <li>
-                                <a href="swipe_gesture_common/">Swipe Gesture - common for desktops and mobile browsers</a>
-                            </li>
-                            <li>
-                                <a href="html5_svgmap/">HTML5 SVG Choropleth Map Example</a>
-                            </li>
-                            <li>
-                                <a href="html5_geolocation/">Simple HTML5 Geolocation Demo</a>
-                            </li>
-                            <li>
-                                <a href="growing_pie/">Growing Pie Chart Animation with Raphael JS</a>
-                            </li>
-                        </ol>
-                    </div>
-                </div>
-                <div class="span8 text-center">
-                    <div>
-                        <h1>Welcome to my Github Pages</h1>
-                        <a href="http://www.twitter.com/adsflo_joseph" target="_blank">Contact me on Twitter</a>
-                    </div>
-                </div>
-            </div>
+    <!-- Le styles -->
+    <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 20px;
+        padding-bottom: 40px;
+      }
+
+      /* Custom container */
+      .container-narrow {
+        margin: 0 auto;
+        max-width: 700px;
+      }
+      .container-narrow > hr {
+        margin: 30px 0;
+      }
+
+      /* Main marketing message and sign up button */
+      .jumbotron {
+        margin: 60px 0;
+        text-align: center;
+      }
+      .jumbotron h1 {
+        font-size: 72px;
+        line-height: 1;
+      }
+      .jumbotron .btn {
+        font-size: 21px;
+        padding: 14px 24px;
+      }
+
+      /* Supporting marketing content */
+      .marketing {
+        margin: 60px 0;
+      }
+      .marketing p + h4 {
+        margin-top: 28px;
+      }
+    </style>
+    <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="../assets/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+                    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+                                   <link rel="shortcut icon" href="../assets/ico/favicon.png">
+  </head>
+
+  <body>
+
+    <div class="container-narrow">
+
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a target="_blank" href="http://in.linkedin.com/pub/joseph-khan/45/1bb/78a">About</a></li>
+          <li><a target="_blank" href="http://jbkflex.wordpress.com/">Blog</a></li>
+          <li><a target="_blank" href="http://jbkflex.wordpress.com/contact/">Contact</a></li>
+        </ul>
+        <h3 class="muted">JLabs</h3>
+      </div>
+
+      <hr>
+
+      <div class="jumbotron">
+        <h1>Joseph's Github Pages</h1>
+        <p class="lead">All my lab demos go here</p>
+        <a class="btn btn-large btn-info" href="http://twitter.com/adsflo_joseph"><img src="bootstrap/twitter_black.svg" width="25px"/> Contact me on Twitter</a>
+      </div>
+
+      <hr>
+
+      <div class="row-fluid marketing">
+        <div class="span12">
+          <h4><a href="mediator_pattern_with_backbone_example/">Backbone Example with Mediator Pattern</a></h4>
+          <p>This is a simple implementation of the JavaScript Mediator Pattern (Pub/Sub) in a Backbone application with RequireJS AMD support.</p>
+
+          <h4><a href="fluidic_sliding_panel/">Fluidic Sliding Panels</a></h4>
+          <p>A fluidic sliding panel example created with CSS3 Transitions and JavaScript. It can adjust to any screen size.</p>
+
+          <h4><a href="html5_svgmap/">HTML5 SVG Choropleth Map Example</a></h4>
+          <p>A Demographic Choropleth dynamic Map built with SVG and HTML. This map gives a feel of rendering SVG paths and manipulating them on the runtime using JavaScript.</p>
+
+          <h4><a href="html5_geolocation/">HTML5 Geolocation Demo</a></h4>
+          <p>A simple demo on the Geolocation API.</p>
+        
+          <h4><a href="swipe_gesture_common/">Swipe Gesture - common for desktops and mobile browsers</a></h4>
+          <p>Have you ever swiped across the screen to flip through images in your Smartphone Gallery? The same experience is being implemented in this demo using JavaScript and CSS3.</p>
+
+          <h4><a href="growing_pie/">Growing Pie Chart Animation with Raphael JS</a></h4>
+          <p>The pie chart will grow from zero to hero, built with RaphaelJS SVG and JavaScript.</p>
+
+          <h4><a href="html5_preloader/">HTML5 Preloader</a></h4>
+          <p>An asynchronous preloader implementation using JavaScript. This is work in progress</p>
         </div>
-    </body>
+      </div>
+
+      <hr>
+
+      <div class="footer">
+        <p>&copy; Joseph 2013</p>
+      </div>
+
+    </div> <!-- /container -->
+  </body>
 </html>
