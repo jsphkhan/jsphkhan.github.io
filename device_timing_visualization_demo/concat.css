@@ -1,0 +1,341 @@
+* {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+      font-size: 13px;
+      color: #555;
+      background: #f1f1f1;
+    }
+    header {
+      padding: 15px 10px;
+      background-color: #555;
+    }
+    header span {
+      color: #fff;
+      font-size: 16px;
+    }
+    header .menu {
+      float: right;
+    }
+    header .menu li {
+      float: left;
+      margin-right: 20px;
+    }
+    header .menu li:last-child {
+      margin-right: 0px;
+    }
+    header .menu-item {
+      text-decoration: none;
+      color: #fff;
+    }
+    header .menu-item:hover {
+      color: orange;
+    }
+    .main {
+      padding: 20px;
+    }
+    .widget {
+      border-width: 1px;
+      border-style: solid;
+      margin-bottom: 20px;
+      background-color: #f9f9f9;
+      border-color: #d3d3d3;
+    }
+    .widget .widget-header {
+      padding: 0 10px;
+      height: 35px;
+      border-bottom-width: 1px;
+      border-bottom-style: solid;
+      border-bottom-color: #d3d3d3;
+      background-color: #ececec;
+    }
+    .widget .widget-header h3 {
+      display: -moz-inline-stack;
+      display: inline-block;
+      vertical-align: middle;
+      zoom: 1;
+      font-size: 1.1em;
+      margin: 0;
+      line-height: 35px;
+      float: left;
+    }
+    .widget .widget-header .widget-header-toolbar {
+      float: right;
+      width: auto;
+      height: 35px;
+      border-left: 1px solid #ddd;
+      padding-left: 10px;
+      margin-left: 10px;
+    }
+    .btn-borderless {
+      display: inline-block;
+      padding-top: 10px;
+    }
+    .widget .widget-content {
+      padding: 10px 10px;
+    }
+    select {
+      margin-bottom: 20px;
+    }
+    select option {
+      padding: 5px;
+    }
+    label {
+      margin-left: 30px;
+      color: #9a9a9a;
+    }
+    #mappingPopUp {
+      position: absolute;
+      width: 50%;
+      right:10px;
+      top: 50px;
+      z-index: 1000;
+      background: #fff;
+      padding: 20px;
+      border: 1px solid #d3d3d3;
+      -webkit-box-shadow: -5px 7px 10px -5px rgba(0,0,0,0.78);
+      -moz-box-shadow: -5px 7px 10px -5px rgba(0,0,0,0.78);
+      box-shadow: -5px 7px 10px -5px rgba(0,0,0,0.78);
+
+      display: none;
+    }
+    #mappingPopUp p {
+      font-size: 16px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    #mappingTable {
+      width: 100%;
+      border-collapse: collapse;
+      background: #f1f1f1;
+    }
+    table, td, th {
+      border: 1px solid #000;
+    }
+    #mappingTable td, #mappingTable th {
+      font-size: 14px;
+      border: 1px solid #98bf21;
+      padding: 8;
+    }
+
+    #mappingTable th {
+       font-size: 1em;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        background-color: #A7C942;
+        color: #ffffff;
+    }
+
+    /* Chart specific style - overrding default styles */
+    .c3-grid line {
+      stroke: #ddd;
+    }
+    .c3-xgrid, .c3-ygrid {
+      stroke-dasharray: 0;
+    }
+/*-- Chart --*/
+
+.c3 svg {
+  font: 10px sans-serif;
+}
+.c3 path, .c3 line {
+  fill: none;
+  stroke: #000;
+}
+.c3 text {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+
+.c3-legend-item-tile,
+.c3-xgrid-focus,
+.c3-ygrid,
+.c3-event-rect,
+.c3-bars path {
+  shape-rendering: crispEdges;
+}
+
+.c3-chart-arc path {
+  stroke: #fff;
+
+}
+.c3-chart-arc text {
+  fill: #fff;
+  font-size: 13px;
+}
+
+/*-- Axis --*/
+
+.c3-axis-x .tick {
+}
+.c3-axis-x-label {
+}
+
+.c3-axis-y .tick {
+}
+.c3-axis-y-label {
+}
+
+.c3-axis-y2 .tick {
+}
+.c3-axis-y2-label {
+}
+
+/*-- Grid --*/
+
+.c3-grid line {
+  stroke: #aaa;
+}
+.c3-grid text {
+  fill: #aaa;
+}
+.c3-xgrid, .c3-ygrid {
+  stroke-dasharray: 3 3;
+}
+.c3-xgrid-focus {
+}
+
+/*-- Text on Chart --*/
+
+.c3-text {
+}
+
+.c3-text.c3-empty {
+  fill: #808080;
+  font-size: 2em;
+}
+
+/*-- Line --*/
+
+.c3-line {
+  stroke-width: 1px;
+}
+/*-- Point --*/
+
+.c3-circle._expanded_ {
+  stroke-width: 1px;
+  stroke: white;
+}
+.c3-selected-circle {
+  fill: white;
+  stroke-width: 2px;
+}
+
+/*-- Bar --*/
+
+.c3-bar {
+  stroke-width: 0;
+}
+.c3-bar._expanded_ {
+  fill-opacity: 0.75;
+}
+
+/*-- Arc --*/
+
+.c3-chart-arcs-title {
+  font-size: 1.3em;
+}
+
+/*-- Focus --*/
+
+.c3-target.c3-focused path.c3-line, .c3-target.c3-focused path.c3-step {
+  stroke-width: 2px;
+}
+
+/*-- Region --*/
+
+.c3-region {
+  fill: steelblue;
+  fill-opacity: .1;
+}
+
+/*-- Brush --*/
+
+.c3-brush .extent {
+  fill-opacity: .1;
+}
+
+/*-- Select - Drag --*/
+
+.c3-dragarea {
+}
+
+/*-- Legend --*/
+
+.c3-legend-item {
+  font-size: 12px;
+}
+
+.c3-legend-background {
+  opacity: 0.75;
+  fill: white;
+  stroke: lightgray;
+  stroke-width: 1
+}
+
+/*-- Tooltip --*/
+
+.c3-tooltip {
+  border-collapse:collapse;
+  border-spacing:0;
+  background-color:#fff;
+  empty-cells:show;
+  -webkit-box-shadow: 7px 7px 12px -9px rgb(119,119,119);
+     -moz-box-shadow: 7px 7px 12px -9px rgb(119,119,119);
+          box-shadow: 7px 7px 12px -9px rgb(119,119,119);
+  opacity: 0.9;
+}
+.c3-tooltip tr {
+  border:1px solid #CCC;
+}
+.c3-tooltip th {
+  background-color: #aaa;
+  font-size:14px;
+  padding:2px 5px;
+  text-align:left;
+  color:#FFF;
+}
+.c3-tooltip td {
+  font-size:13px;
+  padding: 3px 6px;
+  background-color:#fff;
+  border-left:1px dotted #999;
+}
+.c3-tooltip td > span {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 6px;
+}
+.c3-tooltip td.value{
+  text-align: right;
+}
+
+.c3-area {
+  stroke-width: 0;
+  opacity: 0.2;
+}
+
+.c3-chart-arcs .c3-chart-arcs-background {
+  fill: #e0e0e0;
+  stroke: none;
+}
+.c3-chart-arcs .c3-chart-arcs-gauge-unit {
+  fill: #000;
+  font-size: 16px;
+}
+.c3-chart-arcs .c3-chart-arcs-gauge-max {
+  fill: #777;
+}
+.c3-chart-arcs .c3-chart-arcs-gauge-min {
+  fill: #777;
+}
+
+.c3-chart-arc .c3-gauge-value {
+  fill: #000;
+  font-size: 28px;
+}

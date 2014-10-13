@@ -1,13 +1,40 @@
+<!--
+	Tasks: 
+	1. Colors for charts - done
+	2. Detect os/browser from user agent - do it on node side or browser side - done
+	3. overall user interface - done
+	4. Zooming feature for data outside visible area - add option yes/no
+	5. Separate css and script files - done
+	6. Launch browser with url for visualization page. Launch it from dev server by recording the url from the request sent to node side - done
+	
+	8. Grunt to merge JS and CSS files for visualization - done
+	9. Express server for primary node server - replace the http with express - done
+	10. Output folder name for reports to be hardcoded. -  done
+	11. Delete results.json at the start of every server call - done, but not required - I am overriting it now
+	12. Do not persist previous data - done
+	
+	14. Visualization folder and client_detection js inside lib - done
+	
+
+	Pending Tasks:
+	7. After tests push it to Github. Submit a pull request to Daniel
+	13. Sliding panel for user agent - detected browser mapping
+	15. Modify Read me file with all my changes
+-->
 <!DOCTYPE html
 <html>
 <head>
 	<title>Visualization Page for Internal Report</title>
-	<link rel="stylesheet" type="text/css" href="concat.min.css">
+	<link rel="stylesheet" type="text/css" href="c3.css">
+	<link rel="stylesheet" type="text/css" href="app.css">
 </head>
 	<body class="dashboard">
 		<header>
 			<span>DeviceTiming - Visualization Dashboard for Report</span>
 			<ul class="menu">
+				<li>
+					<a class="menu-item" href="#" id="mappingLink">User Agent - Browser mapping</a>
+				</li>
 				<li>
 					<a class="menu-item" href="/report.html">Plain HTML Report</a>
 				</li>
@@ -45,7 +72,21 @@
 			</div>
 		</div>
 
+		<div id="mappingPopUp">
+			<p>User agent string to its corresponding detected client | browser mapping</p>
+			<table id="mappingTable">
+				<thead>
+					<tr>
+						<th>Detected Client</th>
+						<th>User Agent String</th>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+		</div>
 
-	    <script type="text/javascript" src="concat.min.js"></script>
+	    <script type="text/javascript" src="d3.min.js"></script>
+	    <script type="text/javascript" src="c3.min.js"></script>
+	    <script type="text/javascript" src="app.js"></script>
 	</body>
 </html>
