@@ -9,6 +9,9 @@ This is a very simple implementation of BackboneJS. A simple Employee Manager De
 The application follows the MV* pattern wherein it has model, collection and views. This was developed as part of a Backbone training I gave.
 This demo application does not have any REST API support. I am using pre-defined JSON data which is bundled along with the package.
 
+#### Screenshot
+<img src="http://jsphkhan.github.io/BackboneExamples/EmployeeManager/app_screenshot/screen.png" />
+
 ### Questions?
 Feel free to contact me on [twitter](https://twitter.com/joseph_rialab)
 
