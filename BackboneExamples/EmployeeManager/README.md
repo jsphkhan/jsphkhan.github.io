@@ -1,4 +1,4 @@
-###Backbone JS Employee Manager Application
+### BackboneJS- Employee Manager Application Demo
 This is a very simple implementation of BackboneJS. A simple Employee Manager Demo Application with the following features
 
 ##### 1. Adding a new employee
