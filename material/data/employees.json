@@ -1,0 +1,13 @@
+{
+	"employees" : [
+		{
+			"name":"Joseph", "empid":"1426", "pic": "avatar-01", "doj":"01 Oct 2013"
+		},
+		{
+			"name":"Ashwin", "empid":"1473", "pic": "avatar-02", "doj":"08 Aug 2014"
+		},
+		{
+			"name":"Bhupender", "empid":"1120", "pic": "avatar-03", "doj":"01 Jun 2013"
+		}
+	]
+}

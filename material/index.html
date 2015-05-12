@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Backbone Employee Manager</title>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="css/styles.css">
+	</head>
+	<body>
+		<header class="navbar navbar-fixed-top">
+			<h4>Backbone Training - Employee Manager Application</h4>
+		</header>
+		<div id="mainContainer" class="container">
+			<div class="row">
+				<div class="col-xs-12 col-md-4 left">
+					<h4>Add an Employee</h4>
+					<form action="#">
+						  <div class="form-group">
+						    <label for="employeeName" class="h5">Employee Name</label>
+						    <input type="text" class="form-control" id="employeeName" placeholder="Enter Name">
+						  </div>
+						  <div class="form-group">
+						    <label for="employeeId" class="h5">Employee ID</label>
+						    <input type="text" class="form-control" id="employeeId" placeholder="Employee ID">
+						  </div>
+						  <div class="form-group">
+						    <label for="doj" class="h5">Date of Joining</label>
+						    <input type="text" class="form-control" id="doj" placeholder="Date of Joining">
+						  </div>
+				 		  <!-- <div class="form-group">
+						    <label for="employeeAvatar" class="h5">Employee Avatar</label>
+						    <input type="file" id="employeeAvatar">
+						  </div> -->
+						  <button type="submit" class="btn btn-primary" id="addBtn">Add an Employee</button>
+					</form>
+				</div>
+				<div class="col-xs-12 col-md-8 right">
+					<h4>Employee List</h4>
+					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+					<ul id="employeeList">
+						<!-- Employee Row is added here dynamically -->
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!-- Template for a Employee Row -->
+		<script type="text/template" id="employee-item-template">
+			<div class="col-xs-2 col-sm-2">
+				<img src="img/<%= pic %>.svg"/>
+			</div>
+			<div class="col-xs-8 col-sm-8">
+				<p class="h4 employee-name"><%= name %></p>
+				<input class="employee-edit-box form-control hide" type="text" value="<%= name %>"/>
+				<p class="h6 employee-id"><%= empid %></p>
+				<p class="h6 doj"><%= doj %></p>
+			</div>
+			<div class="col-xs-2 col-sm-2">
+				<button id="removeBtn" class="btn btn-danger">Remove</button>
+			</div>
+		</script>
+		<!-- JS Dependencies -->
+		<script src="js/lib/jquery-2.0.3.js"> </script>
+		<script src="js/lib/underscore-min.js"> </script>
+		<script src="js/lib/backbone-min.js"> </script>
+		<script src="js/models/EmployeeModel.js"></script>
+		<script src="js/collections/EmployeeCollection.js"></script>
+		<script src="js/views/EmployeeView.js"></script>
+		<script src="js/views/ApplicationView.js"></script>
+		<script src="js/main.js"></script>
+	</body>
+</html>
