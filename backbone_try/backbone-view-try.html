@@ -1,0 +1,48 @@
+<!-- Plain View Try -->
+<!doctype html>
+<html>
+	<head>
+		<style type="text/css">
+			.para {
+				background: yellow;
+				padding: 10px;
+				border: 1px solid orange;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="container">
+
+		</div>
+		<script type="text/javascript" src="jquery-2.0.3.js"></script>
+		<script type="text/javascript" src="underscore.js"></script>
+		<script type="text/javascript" src="backbone.js"></script>
+		<script type="text/javascript">
+			//create a View Class
+			var ViewClass = Backbone.View.extend({
+				//el: "#container",
+				tagName: 'p',
+				id:'myPara',
+				className: 'para',
+				events: {
+					'click':'handleClick'
+				},
+				handleClick: function() {
+					alert("Para Clicked");
+				},
+				initialize: function() {
+					console.log("View initialized");
+				},
+				render: function() {
+					//this.$el.append("<p>Appended Para</p>");
+					this.$el.append("Some Text Inside Para");
+					return this;
+				}
+			});
+
+			//create an instance of the view Class
+			var view1 = new ViewClass();
+			$("#container").append(view1.render().el);
+		</script>
+	</body>
+</html>

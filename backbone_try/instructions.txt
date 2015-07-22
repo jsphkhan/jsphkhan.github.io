@@ -1,0 +1,14 @@
+Command for Precompiling Handlebars template
+	handlebars <input-file-with-path>.handlebars -f <output-file-with-path>.js
+
+	eg. handlebars handlebars-template/list-row.handlebars -f handlebars-precompiled-template/list-row.js
+
+	To convert to Require JS format
+	eg. handlebars handlebars-template/list-row.handlebars -a -f handlebars-precompiled-template/list-row.js
+
+
+
+	** For Template files keep the extension as .handlebars
+	Once precompilation is done, you can access the compiled template directly (in your JS code), without the handlebars extension as the file name, like this
+	** var template = Handlebars.templates['list-row'];
+	** var HTML = template(data);

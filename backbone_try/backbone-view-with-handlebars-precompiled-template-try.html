@@ -1,0 +1,62 @@
+<!-- Backbone View with Precompiled Handlebars Templates -->
+<!-- The template was precompiled and kept as .js file-->
+<!doctype html>
+<html>
+	<head>
+		<style type="text/css">
+			.employee-list {
+				list-style: none;
+				margin: 0;
+				padding: 0;
+			}
+			.employee-list .row {
+				background: yellow;
+				width: 200px;
+				padding: 10px;
+				border: 1px solid orange;
+				margin-bottom: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="container">
+		</div>
+
+		<script type="text/javascript" src="jquery-2.0.3.js"></script>
+		<script type="text/javascript" src="underscore.js"></script>
+		<script type="text/javascript" src="backbone.js"></script>
+		<!--<script type="text/javascript" src="handlebars-v3.0.3.js"></script>-->
+		<script type="text/javascript" src="handlebars.runtime-v3.0.3.js"></script> <!-- Since I am using precompiled template, use only the runtime version of handlebars -->
+		<script type="text/javascript" src="handlebars-precompiled-template/list-row.js"></script> <!-- Include the precompiled template -->
+		<script type="text/javascript">
+			//create a View Class
+			var ViewClass = Backbone.View.extend({
+				//el: "#container",
+				tagName: 'ul',
+				className: 'employee-list',
+				tmpl: Handlebars.templates['list-row'], //get a reference of the pre-compiled template
+				events: {
+					'click .row' : 'handleClick'
+				},
+				handleClick: function() {
+					alert("Click Event");
+				},
+				initialize: function() {
+					console.log("View initialized");
+
+					this.sampleData = [{name: "Joseph",id: "1426"}, {name: "Ayaan",id: "1427"}, {name: "Nisha",id: "1428"}];
+				},
+				render: function() {
+					var HTML = this.tmpl({dataArr: this.sampleData}); //pass data to compiled template to get HTML
+					//console.log(HTML);
+					this.$el.html(HTML);
+					return this;
+				}
+			});
+
+			//create an instance of the view Class
+			var view1 = new ViewClass();
+			$("#container").append(view1.render().el);
+		</script>
+	</body>
+</html>

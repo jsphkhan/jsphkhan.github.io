@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+	<body>
+		<div id="container">
+			
+		</div>
+
+		<script type="text/x-handlebars-template" id="someTemplate">
+			{{#each dataArr}}
+				<div>
+					<span>{{name}}</span>
+					<span>{{address.city}}</span>
+					<span>{{address.state}}</span>
+				</div>
+			{{/each}}
+		</script>
+
+		<script type="text/javascript" src="handlebars-v3.0.3.js"></script>
+		<script type="text/javascript">
+			var data = [{name: "Joseph", address: {city: "Bangalore", state: "Karnataka"}}, {name: "Ayaan", address: {city: "Bangalore", state: "Assam"}}];
+
+			var containerRef = document.querySelector("#container");
+
+			var template = Handlebars.compile(document.querySelector("#someTemplate").innerHTML);
+
+			var HTML = template({dataArr: data});
+			containerRef.innerHTML = HTML;
+		</script>
+	</body>
+</html>

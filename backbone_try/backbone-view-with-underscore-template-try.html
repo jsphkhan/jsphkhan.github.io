@@ -1,0 +1,69 @@
+<!-- Backbone View with Underscore Templates -->
+
+<!doctype html>
+<html>
+	<head>
+		<style type="text/css">
+			.employee {
+				background: yellow;
+				width: 200px;
+				padding: 10px;
+				border: 1px solid orange;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="container">
+		</div>
+
+		<script id="emplTemplate" type="text/template">
+			<div>
+				<p>Name: <%= name %></p>
+				<p>ID: <%= id %></p>
+
+				<button class="delete">Delete View</button>
+			</div>
+		</script>
+		<script type="text/javascript" src="jquery-2.0.3.js"></script>
+		<script type="text/javascript" src="underscore.js"></script>
+		<script type="text/javascript" src="backbone.js"></script>
+		<script type="text/javascript">
+			//create a View Class
+			var ViewClass = Backbone.View.extend({
+				//el: "#container",
+				tagName: 'div',
+				className: 'employee',
+				tmpl: _.template($("#emplTemplate").html()), //compiled template
+				events: {
+					'click':'handleClick',
+					'click .delete':'deleteView'
+				},
+				handleClick: function() {
+					alert("Employee Block Clicked");
+				},
+				deleteView: function() {
+					this.remove();
+				},
+				initialize: function() {
+					console.log("View initialized");
+
+					this.sampleData = {
+						name: "Joseph",
+						id: "1426"
+					};
+				},
+				render: function() {
+					var HTML = this.tmpl(this.sampleData); //pass data to compiled template to get HTML
+					console.log(HTML);
+
+					this.$el.html(HTML);
+					return this;
+				}
+			});
+
+			//create an instance of the view Class
+			var view1 = new ViewClass();
+			$("#container").append(view1.render().el);
+		</script>
+	</body>
+</html>

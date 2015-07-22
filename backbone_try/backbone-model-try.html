@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+	<body>
+		<script type="text/javascript" src="jquery-2.0.3.js"></script>
+		<script type="text/javascript" src="underscore.js"></script>
+		<script type="text/javascript" src="backbone.js"></script>
+		<script type="text/javascript">
+			//create a Model Class
+
+			var ModelClass = Backbone.Model.extend({
+				initialize: function() {
+					console.log("Model initialized");
+
+					this.on("change", this.handleChangeAll); //handle change in any attributes
+					this.on("change:name", this.handleChangeName); //handle change in only name attribute
+
+					//validation error event
+					this.on("invalid", function(model, errorMsg) {
+						console.log("Validation Error: " + errorMsg);
+					});
+				},
+				defaults: {
+					name: "joseph",
+					id: "1426"
+				},
+				handleChangeAll: function(arg) {
+					console.log("Model has been changed");
+				},
+				handleChangeName: function(arg) {
+					console.log("Model's name has been changed");
+				},
+				validate: function(attrs) {
+					if(attrs.name.length === 0) {
+						return "Name cannot be blank"; //triggers an invalid event
+					}
+				}
+			});
+
+			//create a model instance
+			var model1 = new ModelClass(); //empty model object, takes default values
+			var model3 = new ModelClass({}); //still picks default values
+			var model2 = new ModelClass({name: "Ayaan", id: "1427"}); //model initialized with initial values
+
+			model1.set("name", "New Name"); //triggers a change event
+			console.log(model2.get("name")); //"Ayaan"
+
+			//validation example
+			model3.set({name: ""}, {validate: true}); //validation error
+			//OR
+			model3.set("name", "", {validate: true});
+
+			//unset
+			model2.unset("id"); //removes id from model2, also triggers a model change event
+
+			//clear
+			console.log("-------- CLEARING MODEL ---------");
+			model2.clear(); //clears the model, gives an empty object, triggers a model change event
+		</script>
+	</body>
+</html>
