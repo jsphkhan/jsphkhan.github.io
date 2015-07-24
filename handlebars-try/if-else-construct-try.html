@@ -1,5 +1,17 @@
 <!doctype html>
 <html>
+	<head>
+		<style type="text/css">
+			.active {
+				color: green;
+				margin-bottom: 10px;
+			}
+			.inactive {
+				color: red;
+				margin-bottom: 10px;
+			}
+		</style>
+	</head>
 	<body>
 		<div id="container">
 			
@@ -7,17 +19,21 @@
 
 		<script type="text/x-handlebars-template" id="someTemplate">
 			{{#each dataArr}}
-				<div>
-					<span>{{name}}</span>
-					<span>{{address.city}}</span>
-					<span>{{address.state}}</span>
-				</div>
+				{{#if activeUser}}
+					<div class="active">
+						<span>{{name}}</span>
+					</div>
+				{{else}}
+					<div class="inactive">
+						<span>{{name}}</span>
+					</div>
+				{{/if}}
 			{{/each}}
 		</script>
 
 		<script type="text/javascript" src="handlebars-v3.0.3.js"></script>
 		<script type="text/javascript">
-			var data = [{name: "Joseph", address: {city: "Bangalore", state: "Karnataka"}}, {name: "Ayaan", address: {city: "Bangalore", state: "Assam"}}];
+			var data = [{activeUser: true, name: "Joseph"}, {activeUser: false, name: "Ashwin"}, {activeUser: false, name: "Ramesh"}];
 
 			var containerRef = document.querySelector("#container");
 

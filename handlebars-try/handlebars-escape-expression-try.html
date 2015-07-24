@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+	<head>
+	</head>
+	<body>
+		<div id="container">
+		</div>
+
+		<script type="text/x-handlebars-template" id="someTemplate">
+			<p>{{myHelperToEscape unsafeString}}</p>
+			<p>{{safeString}}</p> <!-- This one will be escaped by default -->
+			<p>{{doNotEscapeHelper safeString}}</p> <!-- I am explicitly saying not to escape i.e Render as HTML -->
+			<p>{{{safeString}}}</p> <!-- Using triple stash will not escape -->
+		</script>
+
+
+		<script type="text/javascript" src="handlebars-v3.0.3.js"></script>
+		<script type="text/javascript">
+			//HELPERS
+			Handlebars.registerHelper("myHelperToEscape", function(context) {
+				console.log(context);
+				var escapedString = Handlebars.escapeExpression(context); //EXPLICIT ESCAPING
+				return escapedString;
+			});
+
+			Handlebars.registerHelper("doNotEscapeHelper", function(context) {
+				//console.log(context);
+
+				//for not escaping use SafeString()
+				return new Handlebars.SafeString(context); //so if there are HTML tags in the string, it will not escape and render them as it is.
+			});
+		</script>
+		<script type="text/javascript">
+			var context = {
+				unsafeString: "<script type='text/javascript' src='somemalicious.com'/>",
+				safeString: "<em>Something Safe Here</em>"
+			};
+
+			var containerRef = document.querySelector("#container");
+			var template = Handlebars.compile(document.querySelector("#someTemplate").innerHTML);
+			var HTML = template(context);
+			containerRef.innerHTML = HTML;
+		</script>
+	</body>
+</html>

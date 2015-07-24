@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+	<head>
+	</head>
+	<body>
+		<div id="container1">
+		</div>
+		<hr/>
+		<div id="container2">
+		</div>
+
+		<script type="text/x-handlebars-template" id="someTemplate1">
+			<div class="post">
+				<h1>By {{fullName author}}</h1>
+				<div class="body">{{body}}</div>
+
+				<h1>Comments</h1>
+
+				{{#each comments}}
+				<h2>By {{fullName author}}</h2>
+				<div class="body">{{body}}</div>
+				{{/each}}
+			</div>
+		</script>
+		<script type="text/x-handlebars-template" id="someTemplate2">
+			<ul>
+				{{#each items}}
+					<li>
+						{{myCustomHelper}}
+					</li>
+				{{/each}}
+			</ul>
+		</script>
+
+
+		<script type="text/javascript" src="handlebars-v3.0.3.js"></script>
+		<script type="text/javascript">
+			//Register a Custom Handlebars Helper here
+			Handlebars.registerHelper("fullName", function(context) {
+				console.log(context);
+				return context.firstName + " " + context.lastName;
+			});
+
+			//Another example of Helper function
+			Handlebars.registerHelper("myCustomHelper", function() {
+				console.log(this.name + " , " + this.emotion);
+				return "Name: " + this.name + ", Emotion: " + this.emotion
+			});
+		</script>
+		<script type="text/javascript">
+			//one set of Data
+			var context1 = {
+			  author: {firstName: "Alan", lastName: "Johnson"},
+			  body: "I Love Handlebars",
+			  comments: [{
+			    author: {firstName: "Yehuda", lastName: "Katz"},
+			    body: "Me too!"
+			  }]
+			};
+
+			//Another set of Data
+			var context2 = {
+			  items: [
+			    {name: "Handlebars", emotion: "love"},
+			    {name: "Mustache", emotion: "enjoy"},
+			    {name: "Ember", emotion: "want to learn"}
+			  ]
+			};
+
+
+			var containerRef1 = document.querySelector("#container1"),
+				containerRef2 = document.querySelector("#container2")
+
+			var template1 = Handlebars.compile(document.querySelector("#someTemplate1").innerHTML);
+			var HTML1 = template1(context1);
+			containerRef1.innerHTML = HTML1;
+
+			var template2 = Handlebars.compile(document.querySelector("#someTemplate2").innerHTML);
+			var HTML2 = template2(context2);
+			containerRef2.innerHTML = HTML2;
+		</script>
+	</body>
+</html>

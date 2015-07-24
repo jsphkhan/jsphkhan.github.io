@@ -1,0 +1,13 @@
+Handlebars defaults to escaping, which I think is correct as it is erring on the safe side. If you want to escape content in a handler, it is in the documented.
+
+Use "Handlebars.Utils.escapeExpression" to escape content and Handlebars.SafeString to avoid the return value from being escaped.
+
+Example:
+
+var str = "<div>This content is safe. <span>";
+var unsafeContentFromUser = ...;
+str += Handlebars.Utils.escapeExpression(unsafeContentFromUser);
+str += "</span>. This Content is also safe</div>";
+
+return new Handlebars.SafeString(str);
+As shown here, the content is a mix of safe and unsafe content. The unsafe content is manually escaped and then a safe string is returned to prevent the default behavior of escaping the return value.
