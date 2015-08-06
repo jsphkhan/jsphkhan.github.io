@@ -1,37 +1,58 @@
 <!DOCTYPE html>
 <head>
     <title>HTML5 Preloader example</title>
+    <style type="text/css">
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+        #progressBar {
+            width: 0;
+            height: 10px;
+            background-color: red;
+            transition: width 0.5s ease-in-out;
+            position: absolute;
+            top: 50%;
+            left: 0;
+        }
+    </style>
 </head>
 <body>
         <input type="button" value="Trigger" onclick="trigger()"/>
         <div id="loaderElement" style="width:0; height:0;"></div>
+        <div id="progressBar"></div>
         <script type="text/javascript">
+            var assetArr = ['jk.png', 'work.png', 'flat-trophy.png', 'family.png', 'jquery-1.11.3.min.js', 'jquery.fadethis.min.js'],
+                folderPath = 'assets',
+                total = assetArr.length,
+                count = 0;
+
+            var lObj = document.getElementById('loaderElement');
+            var progressBar = document.getElementById('progressBar');
+
         	function trigger() {
-        		var assetArr = ['color_picker.png','color_picker.png','color_picker.png','color_picker.png','color_picker.png','color_picker.png','color_picker.png','color_picker.png'],
-        			folderPath = 'assets',
-        			total = assetArr.length,
-        			count = 0;
-        		
-        		var lObj = document.getElementById('loaderElement');
+                //progressBar.style.width = "100%";
         		for(var i=0 ; i < total ; i+=1) {
         			var tObj = document.createElement('object');
         			tObj.style.width = "0";
         			tObj.onload = function() {
-        			console.log('loaded ' + count);
-        				count += 1;        				
+        			    console.log('loaded ' + count);
+        				count += 1;
+                        progressBar.style.width = Math.round((100/total)*count) + "%";
         				if(count === total) {
-        					onLoadComplete();	
-        				}        				
+        					onLoadComplete();
+        				}
         			}
         			tObj.data = folderPath + "/" + assetArr[i];
-        			lObj.appendChild(tObj);	
-        			
+        			lObj.appendChild(tObj);
         		}
         		//calback
         		function onLoadComplete() {
         			console.log('DONE');
+                    progressBar.style.width = "110%";
         		}
         	}
-        </script>  
+        </script>
 </body>
 </html>
