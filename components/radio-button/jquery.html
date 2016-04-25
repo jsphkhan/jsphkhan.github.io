@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <title>Custom designed fancy check boxes and radio buttons with CSS and jQuery</title>
+    <meta name="Description" content="Custom designed HTML checkboxes and radio controls with CSS 3.0 and jQuery." />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <script src="../jquery-1.8.3.min.js"></script>
+</head>
+<body>
+<div id="sizer">
+   <!--  <form action="#" method="get" accept-charset="utf-8">
+        <fieldset class="radios"> -->
+            <label class="label_radio" for="radio-01">
+                <input name="sample-radio" id="radio-01" value="1" type="radio" checked />This is option A
+            </label>
+            <label class="label_radio" for="radio-02">
+                <input name="sample-radio" id="radio-02" value="1" type="radio" />This is option B
+            </label>
+            <label class="label_radio" for="radio-03">
+                <input name="sample-radio" id="radio-03" value="1" type="radio" />This is option C
+            </label>
+ <!--        </fieldset>
+    </form> -->
+</div>
+<script>
+    function setupLabel() {
+        console.log('WOW');
+        if ($('.label_radio input').length) {
+            $('.label_radio').each(function(){ 
+                $(this).removeClass('r_on');
+            });
+            $('.label_radio input:checked').each(function(){ 
+                $(this).parent('label').addClass('r_on');
+            });
+        };
+    };
+    $(document).ready(function(){
+        //$('body').addClass('has-js');
+        $('.label_radio').click(function(){
+            setupLabel();
+        });
+        setupLabel(); 
+    });
+</script>
+
+</body>
+</html>

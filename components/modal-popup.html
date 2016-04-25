@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<!-- Import Component CSS -->
+		<!-- <link rel="stylesheet" href="css/foundation.css" /> -->
+		<link rel="stylesheet" type="text/css" href="modal-popup/css/modal-popup.css">
+		<script type="text/javascript" src="jquery-1.8.3.min.js"></script>
+	</head>
+	<body>
+		<div style="float: left; margin-right: 20px;">
+			<button id="sbtn1">Show Popup1</button>
+			<p></p>
+			<button id="hbtn1">Hide Popup1</button>
+		</div>
+		<div>
+			<button id="sbtn2">Show Popup2</button>
+			<p></p>
+			<button id="hbtn2">Hide Popup2</button>
+		</div>
+
+		<!-- Scripts -->
+		<script type="text/javascript" src="modal-popup/modal-popup.js"></script>
+		<script type="text/javascript">
+			//(function() {
+				var someObj = {
+					myProp: "Hello",
+					myFunc: function() {
+						//alert(this.myProp);
+					}
+				};
+
+				var args1 = {
+					mainTitle: "Delete Account",
+					subTitle: 'PNC Bank Saving Account - 9329 When you delete an account it is permanently removed from Yodlee Moneycenter and all historical information will be lost',
+					bodyMessage: "<p>When you delete an account it is permanently removed from Yodlee Moneycenter and all historical information will be lost.</p><p>If you have an active account that you dont want to see, use the visibility feature to hide.</p>",
+					mountTo: 'body',
+					buttons: [
+						{
+							title: 'Delete',
+							type: 'delete',
+							callBack: function() {
+								alert('Perform a Delete function');
+							}
+						},
+						{
+							title: 'Continue',
+							type: 'primary',
+							callBack: function() {
+								popUp1.hide();
+							}
+						}
+					],
+					buttonLayout: "inline", //stacked|inline
+					closeCallback: function() {
+						someObj.myFunc();
+						popUp1.hide();
+					},
+					width: 300,
+					height: 200,
+					modal: true
+				};
+
+				var args2 = {
+					mainTitle: "Hide Account",
+					subTitle: 'PNC Bank Saving Account - 9329',
+					mountTo: 'body',
+					buttons: [
+						{
+							title: 'Cancel',
+							type: 'primary',
+							callBack: function() {
+								popUp2.hide();
+							}
+						},
+						{
+							title: 'Hide',
+							type: 'primary',
+							callBack: function() {
+								alert('Perform a Hide function');
+							}
+						}
+					],
+					buttonLayout: "stacked", //stacked|inline
+					closeCallback: function() {
+						someObj.myFunc();
+						popUp2.hide();
+					},
+					width: 300,
+					height: 200,
+					modal: false
+				};
+
+				var popUp1 = new yo.PopUp(args1);
+				var popUp2 = new yo.PopUp(args2);
+
+				$("#sbtn1").click(function(e) {
+					popUp1.show(e.currentTarget);
+				});
+				$("#hbtn1").click(function() {
+					popUp1.hide();
+				});
+
+				$("#sbtn2").click(function(e) {
+					popUp2.show(e.currentTarget);
+				});
+				$("#hbtn2").click(function() {
+					popUp2.hide();
+				});
+			//})()
+		</script>
+	</body>
+</html>

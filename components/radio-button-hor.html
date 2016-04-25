@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+	<head>
+		<meta name="viewport" content="user-scalable=no, width=device-width">
+		<meta charset="UTF-8">
+		<title>Radio Button Component Example</title>
+		<style type="text/css">
+			body {
+				margin: 0;
+				padding: 20px;
+			}
+      .yodlee-radio-button-label-radio {
+        display: inline-block !important;
+      }
+		</style>
+		<!-- Import Radio Button Component CSS -->
+		<link rel="stylesheet" type="text/css" href="radio-button-new/css/radio-button.css">
+		<script type="text/javascript" src="jquery-1.8.3.min.js"></script><!-- Import JQuery -->
+	</head>
+	<body>
+
+		<!-- HTML Structure for Radio Button -->
+		<label for="radio-01" class="yodlee-radio-button-label-radio" tabindex="0" style="background-color: red;">
+	        <input name="sample-radio" id="radio-01" value="1" type="radio" checked/>
+	        This is option A
+	        <p>This is optional</p>
+	     </label>
+
+	      <label for="radio-02" class="yodlee-radio-button-label-radio" tabindex="0" style="background-color: green;">
+	        <input name="sample-radio" id="radio-02" value="1" type="radio" />
+	        This is option B
+	        <p>This is optional</p>
+	      </label>
+        <!-- Import the Radio Button component js -->
+	 	<script type="text/javascript" src="radio-button-new/radio-button.js"></script>
+	 	<script type="text/javascript">
+	 		$(document).ready(function() {
+	 			yo.RadioButton("yodlee-radio-button-label-radio");   //convert to custom radio buttons. Pass the class name without DOT
+	 		});
+	 	</script>
+	</body>
+</html>

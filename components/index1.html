@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="sample-component/component.css">
+		<script type="text/javascript" src="jquery-1.8.3.min.js"></script>
+	</head>
+	<body>
+		<h3>Simple Component Creation Page</h3>
+		<button id="addComponent">Click to create a new component</button>
+		<hr/>
+		<!-- <button id="removeComponent">-</button> -->
+
+		<!-- Container DIV for the components -->
+		<div id="myDiv"></div>
+
+		<script type="text/javascript" src="sample-component/component.js"></script>
+		<script type="text/javascript">
+			//Initializing Sample Component and Rendering It
+			$("#addComponent").click(function() {
+				var rand = parseInt((Math.random() * 10 + 1));
+
+				//create the arguments object
+				var args = {
+					appendTo: document.querySelector("body"),//document.querySelector("#myDiv"),
+					message: "Hello " + rand,
+					buttonLabel: 'Click' + rand,
+					callBack: function() {
+						alert('Passed Callback: ' + rand);
+					}
+				};
+
+				//create an instance of the component
+				//pass the arguments object
+				var comp = new yo.SampleComponent(args);
+				comp.show();
+			});
+		</script>
+	</body>
+</html>

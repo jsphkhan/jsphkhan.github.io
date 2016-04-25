@@ -1,0 +1,6 @@
+label       { display: block; cursor: pointer; line-height: 20px; padding-bottom: 9px; }
+.label_radio input  { margin-right: 5px; }
+.label_radio    { padding-left: 34px; }
+.label_radio    { background: url(radio-off.png) no-repeat; }
+.label_radio.r_on      { background: url(radio-on.png) no-repeat; }
+.label_radio input  { position: absolute; left: -9999px; }

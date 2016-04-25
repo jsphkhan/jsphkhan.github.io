@@ -1,0 +1,10 @@
+.sample-component {
+	padding: 10px;
+	background: yellow;
+	border: 1px solid #9a9a9a;
+	margin-top: 10px;
+}
+
+.sample-component span {
+	margin-right: 10px;
+}

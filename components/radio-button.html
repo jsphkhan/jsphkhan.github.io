@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Radio Button Component Example</title>
+		<style type="text/css">
+			body {
+				margin: 0;
+				padding: 20px;
+			}
+		</style>
+		<!-- Import Radio Button Component CSS -->
+		<link rel="stylesheet" type="text/css" href="radio-button-new/css/radio-button.css">
+		<script type="text/javascript" src="jquery-1.8.3.min.js"></script><!-- Import JQuery -->
+	</head>
+	<body>
+
+		<!-- HTML Structure for Radio Button -->
+      	<!-- <div class="yodlee-radio-button-label-radio" tabindex="0" style="background-color: red;"> -->
+      		<label for="radio-01" class="yodlee-radio-button-label-radio" tabindex="0" style="background-color: red;">
+            <input name="sample-radio" id="radio-01" value="1" type="radio" tabindex="-1" checked/>
+            This is option A
+            <p>This is optional</p>
+          </label>
+
+          <label for="radio-02" class="yodlee-radio-button-label-radio" tabindex="0" style="background-color: green;">
+            <input name="sample-radio" id="radio-02" value="1" type="radio" tabindex="-1" />
+            This is option B
+            <p>This is optional</p>
+          </label>
+
+          <label for="radio-03" class="yodlee-radio-button-label-radio" tabindex="0" style="background-color: yellow;">
+            <input name="sample-radio" id="radio-03" value="1" type="radio" tabindex="-1" />
+            This is option C
+            <p>This is optional</p>
+          </label>
+
+       <!--  </div> -->
+        <!-- <div class="yodlee-radio-button-label-radio" tabindex="0" style="background-color: green;">
+        	<label for="radio-02">This is option B</label>
+      		<p>This is optional</p>
+            <input name="sample-radio" id="radio-02" value="2" type="radio" />
+        </div> -->
+        <!-- <div class="yodlee-radio-button-label-radio" tabindex="0">
+        	<label for="radio-03">This is option C</label>
+      		<p>This is optional</p>
+            <input name="sample-radio" id="radio-03" value="3" type="radio"  />
+        </div> -->
+
+        <h1>Another Group</h1>
+        <!-- Another Group -->
+        <label for="radio-04" class="yodlee-radio-button-label-radio" tabindex="0" style="background-color: blue;">
+          <input name="sample-radio1" id="radio-04" value="1" type="radio" tabindex="-1" checked/>
+          This is option A
+          <p>This is optional</p>
+        </label>
+
+        <label for="radio-05" class="yodlee-radio-button-label-radio" tabindex="0" style="background-color: orange;">
+          <input name="sample-radio1" id="radio-05" value="1" type="radio" tabindex="-1" />
+          This is option B
+          <p>This is optional</p>
+        </label>
+
+        <label for="radio-06" class="yodlee-radio-button-label-radio" tabindex="0" style="background-color: violet;">
+          <input name="sample-radio1" id="radio-06" value="1" type="radio" tabindex="-1" />
+          This is option C
+          <p>This is optional</p>
+        </label>
+        <!-- <div class="yodlee-radio-button-label-radio" >
+      		<label for="radio-01">This is option A</label>
+      		<p>This is optional</p>
+            <input name="sample-radio1" id="radio-01" value="1" type="radio" />
+        </div>
+        <div class="yodlee-radio-button-label-radio">
+        	<label for="radio-02">This is option B</label>
+      		<p>This is optional</p>
+            <input name="sample-radio1" id="radio-02" value="2" type="radio" />
+        </div>
+        <div class="yodlee-radio-button-label-radio">
+        	<label for="radio-03">This is option C</label>
+      		<p>This is optional</p>
+            <input name="sample-radio1" id="radio-03" value="3" type="radio" checked />
+        </div> -->
+
+        <!-- Import the Radio Button component js -->
+	 	<script type="text/javascript" src="radio-button-new/radio-button.js"></script>
+	 	<script type="text/javascript">
+	 		$(document).ready(function() {
+	 			yo.RadioButton("yodlee-radio-button-label-radio");   //convert to custom radio buttons. Pass the class name without DOT
+	 		});
+	 	</script>
+	</body>
+</html>

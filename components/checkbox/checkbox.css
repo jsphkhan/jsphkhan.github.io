@@ -1,0 +1,32 @@
+body,html{
+	font-size:14px;
+}
+.clear{
+	clear:both;
+}
+.customCheckBox {
+  position: relative;
+  display : inline-block;
+}
+.customCheckBox.on {
+  border-radius : .214rem;
+  background:#017b9c;
+}
+.customCheckBox {
+font-size   : 1.071rem;
+color:#1e1d1c;
+-moz-box-sizing : border-box;
+ box-sizing : border-box;
+width   : 1.142rem;
+height:1.142rem;
+border : .0714rem solid #cdcac9; /* 1px */
+border-radius : .214rem; /* 4px */
+}
+
+
+.widget input[type="checkbox"] {
+  position : absolute;
+  left     : -5000rem;
+  height   : 0;
+  overflow : hidden;
+}

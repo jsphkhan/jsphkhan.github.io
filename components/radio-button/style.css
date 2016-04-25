@@ -1,0 +1,19 @@
+* { margin: 0; padding: 0; }
+html, body {
+	padding: 20px;
+}
+
+/*html        { font: 14px/18px 'HelveticaNeue-Light', 'Helvetica Neue', Arial, Helvetica, sans-serif; color: #fff; background: url(noise.png); }
+a:hover, a:active { outline: none; }
+#sizer      { width: 340px; margin: 0 auto; padding: 144px 200px 240px; background: url(highlight.png) no-repeat 50% 0; }
+form        { width: 300px; padding: 18px 20px 0; margin-bottom: 18px; background: #4f84b8 url(box-grad.png) repeat-x 0 0; border-radius: 10px; -webkit-border-radius: 10px; -moz-border-radius: 10px; -khtml-border-radius: 10px; box-shadow: 0 5px 12px rgba(0,0,0,.4); -webkit-box-shadow: 0 5px 12px rgba(0,0,0,.4); -moz-box-shadow: 0 5px 12px rgba(0,0,0,.4); -khtml-box-shadow: 0 5px 12px rgba(0,0,0,.4); }*/
+fieldset    { border: 0; padding-bottom: 9px; }
+label       { display: block; cursor: pointer; line-height: 20px; padding-bottom: 9px; }
+/*.radios     { padding-top: 18px; background: url(divider.png) repeat-x 0 0; }*/
+
+.label_radio input  { margin-right: 5px; }
+
+.label_radio    { padding-left: 34px; }
+.label_radio    { background: url(radio-off.png) no-repeat; }
+.label_radio.r_on      { background: url(radio-on.png) no-repeat; }
+.label_radio input  { position: absolute; left: -9999px; }

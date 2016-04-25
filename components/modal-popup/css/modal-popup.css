@@ -1,0 +1,173 @@
+/* PopUp Component CSS */
+/*
+** prefix : -modal-popup-;
+** To-Do: 1. Style Guide Finish up, 2. SASS variables, 3. Images eg. close 
+** 4. Button Type support - Style Guide implementations
+** Issues - 1. IE8 border radius and box shadow??
+*/
+.yodlee-modal-popup-modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+  padding: 0;
+  background: black;
+  /* opacity:0;*/
+  z-index: 1001;
+}
+
+.yodlee-modal-popup-modal-window {
+  position: fixed;
+  /*top:150px;	        */
+  margin: 0;
+  /*border:1px solid #151515;*/
+  /*width:400px;
+  height:300px;	        done in script now
+  word-spacing:2px;
+  line-height:15px;
+  font-weight:bold;
+  font-size:13px;
+  color:#2B3A42;
+  background: #fff;*/
+  border-radius: 3px;
+  -webkit-box-shadow: 0px 3px 10px 10px rgba(48, 48, 48, 0.4);
+  -moz-box-shadow: 0px 3px 10px 10px rgba(48, 48, 48, 0.4);
+  box-shadow: 0px 3px 10px 10px rgba(48, 48, 48, 0.4);
+  z-index: 1002;
+  padding: 20px;
+  background: white;
+}
+
+.yodlee-modal-popup-modal-content {
+  /*position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: $yodlee-modal-popup-content-background;*/
+  height: 100%;
+  /*padding: 20px;*/
+}
+
+.yodlee-modal-popup-close-button {
+  /*font-size: 10px;*/
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  display: inline-block;
+  font-family: inherit;
+}
+
+.yodlee-modal-popup-btn-group {
+  /*position: absolute;
+  bottom: 20px;*/
+  text-align: center;
+  margin-top: 20px;
+}
+
+.yodlee-modal-popup-btn {
+  /*margin-right: 10px;
+   margin-top: 20px;
+   margin-bottom: 10px;*/
+  text-decoration: none;
+  position: relative;
+  text-align: center;
+  background: #ffffff;
+  border: 1px solid #e0dddc;
+  text-transform: uppercase;
+  color: #017b9c;
+  font-size: 14px;
+  font-style: ProximaNovaSemibold;
+  padding: 10px;
+  border-radius: 3px;
+  -webkit-box-shadow: 0px 3px 3px 0px rgba(48, 48, 48, 0.2);
+  -moz-box-shadow: 0px 3px 3px 0px rgba(48, 48, 48, 0.2);
+  box-shadow: 0px 3px 3px 0px rgba(48, 48, 48, 0.2);
+  cursor: pointer;
+  display: inline-block;
+  font-family: inherit;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+}
+
+.yodlee-modal-popup-btn:hover {
+  /*background: red;*/
+  color: #026884;
+  background: #efefef;
+}
+
+/* Primary Button */
+/* Secondary Button */
+/* Delete Button */
+.yodlee-modal-popup-btn.delete {
+  color: #c9510c;
+  border: px solid #e0dddc;
+}
+
+.yodlee-modal-popup-btn.delete:hover {
+  color: #bf4600;
+}
+
+.yodlee-modal-popup-btn.stacked {
+  display: block !important;
+  margin-right: 0 !important;
+  margin-bottom: 10px;
+}
+
+.yodlee-modal-popup-btn.inline.last-button {
+  margin-left: 10px;
+}
+
+.yodlee-modal-popup-btn.move-right {
+  float: right;
+}
+
+.yodlee-modal-popup-btn-group.handle-overflow {
+  overflow: hidden;
+}
+
+.yodlee-modal-popup-btn.last-button {
+  margin-bottom: 0px;
+}
+
+.yodlee-modal-popup-main-title {
+    outline: none;
+}
+
+.yodlee-modal-popup-main-title, .yodlee-modal-popup-sub-title {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 14px;
+  color: #1e1d1c;
+  margin-bottom: 10px;
+  text-align: center;
+  word-wrap: break-word;
+}
+
+.yodlee-modal-popup-sub-title {
+  color: #278ea8;
+}
+
+.yodlee-modal-popup-body-message {
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 14px;
+  color: #1e1d1c;
+  text-align: justify;
+  /*margin-bottom: 20px;*/
+  word-wrap: break-word;
+}
+
+.ada-offscreen {
+  position: fixed;
+  left: -100000px;
+  overflow: hidden;
+}

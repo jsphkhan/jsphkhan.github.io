@@ -1,0 +1,38 @@
+.yodlee-radio-button-label-radio {
+  display: block;
+  cursor: pointer;
+  line-height: 20px;
+  padding-bottom: 9px;
+  padding-left: 34px;
+  background: url(radio-off.png) no-repeat;
+}
+
+.yodlee-radio-button-label-radio label {
+  color: #1e1d1c;
+  font-size: 1.071em;
+  font-family: ProximaNovaSemibold;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+}
+
+.yodlee-radio-button-label-radio p {
+  font-family: ProximaNovaRegular;
+  color: #696461;
+  font-style: 1em;
+  margin: 0;
+  padding: 0;
+}
+
+.yodlee-radio-button-label-radio input {
+  margin-right: 5px;
+  /*display: none;*/
+  position: absolute;
+  left: 0px;
+  opacity: 0;
+ /* display: none;*/
+}
+
+.yodlee-radio-button-label-radio.r_on {
+  background: url(radio-on.png) no-repeat;
+}
