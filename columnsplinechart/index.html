@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>NW Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <style type="text/css">
+      body {
+        padding-top: 20px;
+        padding-bottom: 40px;
+      }
+
+      /* Custom container */
+      .container-narrow {
+        margin: 0 auto;
+        max-width: 700px;
+      }
+      .container-narrow > hr {
+        margin: 30px 0;
+      }
+
+      /* Main marketing message and sign up button */
+      .jumbotron {
+        margin: 60px 0;
+        text-align: center;
+      }
+      .jumbotron h1 {
+        font-size: 72px;
+        line-height: 1;
+      }
+      .jumbotron .btn {
+        font-size: 21px;
+        padding: 14px 24px;
+      }
+
+      /* Supporting marketing content */
+      .marketing {
+        margin: 60px 0;
+      }
+      .marketing p + h4 {
+        margin-top: 28px;
+      }
+    </style>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+  </head>
+
+  <body>
+    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    <script type="text/javascript">
+      Highcharts.chart('container', {
+          chart: {
+              zoomType: 'xy'
+          },
+          title: {
+              text: "Today's Net Worth"
+          },
+          xAxis: [{
+              categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+              crosshair: true
+          }],
+          yAxis: [{ // Primary yAxis
+              labels: {
+                  format: '${value}',
+                  style: {
+                      color: Highcharts.getOptions().colors[1]
+                  }
+              },
+              title: {
+                  text: '',
+                  style: {
+                      color: Highcharts.getOptions().colors[1]
+                  }
+              }
+          }, { // Secondary yAxis
+              //opposite: true
+          }],
+          tooltip: {
+              //shared: true
+          },
+          legend: {
+              layout: 'vertical',
+              align: 'left',
+              x: 120,
+              verticalAlign: 'top',
+              y: 100,
+              floating: true,
+              backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+          },
+          plotOptions: {
+              series: {
+                  marker: {
+                      enabled: false
+                  }
+              }
+          },
+          series: [{
+              name: 'Haha',
+              type: 'column',
+              yAxis: 1,
+              data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
+          }, {
+              name: 'Dummy',
+              type: 'spline',
+              data: [7.0, 20.9, 9.5, 14.5, 18.2, 6.5, 25.2, 15.5, 23.3, 14.3, 13.9, 9.6],
+          }]
+      });
+    </script>
+  </body>
+</html>
