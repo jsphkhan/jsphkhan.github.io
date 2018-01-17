@@ -18,7 +18,13 @@
 ##### 5. After Step4, you should see the screen below on your phone. Now tap/click on Yodlee,Inc.In-House that appears under Device Management.
 ![alt tag](/garagefest2017/avocadosdk/installingiosapp/IMG_0597.PNG)
 
-##### 6. You should now land on the screen as shown below.
+##### 6. You should now land on the screen as shown below. Now the last step would be to tap/click on Trust "Yodlee,Inc.In-House" that appears in blue color.
 ![alt tag](/garagefest2017/avocadosdk/installingiosapp/IMG_0598.PNG)
+
+##### 7. A dialog should appear now. Refer the screenshot below. This says to trust the certificate on your phone. Go ahead and tap/click on Trust button. And we are done. 
+![alt tag](/garagefest2017/avocadosdk/installingiosapp/IMG_0599.PNG)
+
+##### 8. We are done. Now relaunch the Fincheck app and you should be able to see the App's landing carousel screen.
+![alt tag]()
 
 
