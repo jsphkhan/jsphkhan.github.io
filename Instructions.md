@@ -25,6 +25,6 @@
 ![alt tag](/garagefest2017/avocadosdk/installingiosapp/IMG_0599.PNG)
 
 ##### 8. We are done. Now relaunch the Fincheck app and you should be able to see the App's landing carousel screen.
-![alt tag]()
+![alt tag](/garagefest2017/avocadosdk/installingiosapp/carousel.jpg)
 
 
