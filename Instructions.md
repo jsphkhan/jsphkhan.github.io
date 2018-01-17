@@ -15,9 +15,10 @@
 ##### 4. Now go to Settings -> General. Refer the screenshot below. And then tap/click on Device Management from the list of items.
 ![alt tag](/garagefest2017/avocadosdk/installingiosapp/IMG_0596.PNG)
 
-##### 5. After Step4, you should see the screen below on your phone.
+##### 5. After Step4, you should see the screen below on your phone. Now tap/click on Yodlee,Inc.In-House that appears under Device Management.
 ![alt tag](/garagefest2017/avocadosdk/installingiosapp/IMG_0597.PNG)
 
-##### 6. 
+##### 6. You should now land on the screen as shown below.
+![alt tag](/garagefest2017/avocadosdk/installingiosapp/IMG_0598.PNG)
 
 
