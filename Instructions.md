@@ -10,8 +10,9 @@
 
 ##### 3. When you launch the app for the very first time you will see a dialog box like shown below. Just tap/click Cancel and follow the steps below. *Why this dialog comes? - this is because we are installing the app from HockeyApp (is an internal Yodlee app distribution platform) and not from the official Apple App Store*
 
-![alt tag](garagefest2017/avocadosdk/installingiosapp/IMG_0595.PNG)
+![alt tag](/garagefest2017/avocadosdk/installingiosapp/IMG_0595.PNG)
 
-##### 4. 
+##### 4. Now go to Settings -> General. Refer the screenshot below.
+![alt tag](/garagefest2017/avocadosdk/installingiosapp/IMG_0596.PNG)
 
 
