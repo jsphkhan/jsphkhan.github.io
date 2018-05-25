@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>NW Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <style type="text/css">
+      body {
+        padding-top: 20px;
+        padding-bottom: 40px;
+      }
+      
+
+    </style>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
+  crossorigin="anonymous"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+  </head>
+
+  <body>
+    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    <button id="myBtn" onclick="handleClick()">Change Data</button>
+    
+    <script type="text/javascript">
+      //tooltip on click
+      //http://jsfiddle.net/vh2uer6n/5/
+      //http://jsfiddle.net/SeCAB/216/
+
+      function handleClick() {
+        console.log('test');
+
+        chart.series[0].update({
+          data: [400, 200, 1000, -2000, 500, 200, -3500, 2100, 3800, -1000, 600],
+        });
+      }
+
+      var roundedCornersSwitch = true; //switch to on/off rounded corners
+
+
+      //Assets & Liabilities
+      var chart = Highcharts.chart('container', {
+          title: {
+            text: ''
+          },
+          chart: {
+            type: 'area',
+            animation: {
+                            duration: 1000
+                        }
+          },
+          credits: {
+              enabled: false
+          },
+          xAxis: {
+            type: 'datetime',
+            dateTimeLabelFormats: {
+              day: '%e %b'
+            }
+          },
+          yAxis: {
+            title: {
+                text: 'Net Worth'
+            },
+            labels: {
+                formatter: function () {
+                    return '$' + this.value;
+                }
+            }
+          },
+          tooltip: {
+            pointFormat: 'Assets: <br/>Liabilities: <br/><b>Net Worth:</b>'
+          },
+          plotOptions: {
+             area: {
+                 pointStart: Date.UTC(2018, 4, 4),
+                 pointInterval: 24 * 3600 * 1000, // one day
+                 marker: {
+                     enabled: false,
+                     symbol: 'circle',
+                     radius: 2,
+                     states: {
+                         hover: {
+                             enabled: true
+                         }
+                     }
+                 },
+                fillOpacity: 0.7
+             }
+          },
+          series: [{
+            //type: 'area',
+            //name: 'Assets',
+            data: [300, 800, -500, 400, 2500, -2000, 3500, 2100, 3800, -1000, 600],
+            threshold: 0,
+            color: '#96C260',
+            negativeColor: '#DA4238',
+            //pointStart: Date.UTC(2018, 4, 4),
+            //pointInterval: 24 * 3600 * 1000 // one day
+          }]
+        });
+    </script>
+  </body>
+</html>
