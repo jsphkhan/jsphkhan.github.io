@@ -24,7 +24,9 @@
 ##### 7. A dialog should appear now. Refer the screenshot below. This says to trust the certificate on your phone. Go ahead and tap/click on Trust button. And we are done. 
 ![alt tag](/garagefest2017/avocadosdk/installingiosapp/IMG_0599.PNG)
 
-##### 8. We are done. Now relaunch the Fincheck app and you should be able to see the App's landing carousel screen.
-![alt tag]()
+##### 8. Now relaunch the Fincheck app and you should be able to see the App's landing carousel screen.
+![alt tag](/garagefest2017/avocadosdk/installingiosapp/carousel.jpg)
+
+###### Do write to me if there are any problems. 
 
 
