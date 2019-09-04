@@ -19,6 +19,9 @@
 		<div id="content" class="hide">
 			<div class="container-fluid">
 				<div class="row header">
+					<div class="progress-box">
+						<div class="progress-box-bar" id="myBar"></div>
+					</div> 
 					<div class="back-image hidden-xs hidden-sm"></div>
 					<div class="back-image-overlay hidden-xs hidden-sm"></div>
 					<div class="col-sm-12 col-md-12 banner">
@@ -30,7 +33,7 @@
 										Joseph
 									</h1>
 									<p>
-										A lead Developer with an awesome company in Dubai. I have been working for nearly 11 yrs now. I have worked for product companies throuhout my career. Have spent around 5 years in the fintech inductry and now working in the travel sector. An absolute technical fanatic, I love to learn and toil around with new technologies and tools. I love anything front end as that is my specialization and mostly work with web technologies. I have also managed small technical teams and have taken products from its nascent stage to production.
+										A Lead Developer with an awesome company in Dubai. I have been working for nearly 11 yrs now. I have worked for product companies throuhout my career. Have spent around 5 years in the fintech industry and now working in the travel sector. An absolute technical fanatic, I love to learn and toil around with new technologies and tools. I love anything front end as that is my specialization and mostly work with web technologies. I have also managed small technical teams and have taken products from its nascent stage to production.
 									</p>
 									<p>I am also an Author and have worked on two books. Scroll down to check out.</p>
 								</div>
@@ -52,8 +55,9 @@
 								<h1 class="sub-title family">
 									A Husband and a Dad too!
 								</h1>
-								<p>I live with my Wife and my Kid. We do not have CATS. All the work mentioned below are entirely done by me. My wife and my kid do not code!</p>
+								<p>I live with my Wife and my Kid. We do not have cats. All the work mentioned below are entirely done by me. My wife and my kid do not code!</p>
 								<p>And yes, I met my wife before my kid.</p>
+								<p>Apart from my day job, I like to travel, play sports and spend time with my family.</p>
 						</div>
 					</div>
 				</div>
@@ -63,9 +67,10 @@
 					<div class="row">
 						<div class="col-sm-7 col-md-7 slide-left">
 							<h1 class="sub-title work">My Work and Interests</h1>
-							<p>I work with JavaScript,HTML and the web standards, Node JS, Backbone, Hybrid Mobile apps for Android and iOS. I also work with Polymer and the Web Components Standards and I absolutely love them. I recently strolled upon ReactJS and React Native. Even built an <a href="https://github.com/jsphkhan/ReactNativeExamples/tree/master/ios/WeatherApp" target="_blank">iOS App</a> with it.</p>
-							<p>SKILLS: I am aware of some other technologies too. Have a look at my other skills on my <a href="https://in.linkedin.com/in/jokhan" target="_blank">LinkedIn</a> page.</p>
-							<p>WORK: Most of my open sourced work can be found on my <a target="_blank" href="https://github.com/jsphkhan">Github Repo's</a> and my <a target="_blank" href="https://jbkflex.wordpress.com/">Old Blog.</a></p>
+							<p>I work with the Web Standards and that means mostly and anything to do with JavaScript alongside Node JS, Hybrid Android/iOS Mobile apps, Native mobile apps, React, React Native etc. 
+							I enjoy learning new JS frameworks & tools, prototyping applications and showcasing them. I am an avid blogger, content writer and also a speaker.</p>
+							<p>Get to know more about my professional career and my skills on my <a href="https://in.linkedin.com/in/jokhan" target="_blank">LinkedIn</a> page.</p>
+							<p>WORK: Most of my open sourced work can be found on my <a target="_blank" href="https://github.com/jsphkhan">Github page</a> and my <a target="_blank" href="https://jbkflex.wordpress.com/">Old Blog.</a></p>
 
 							<p class="books-title">BOOKS: I have worked on the following books</p>
 							<ul>
@@ -200,7 +205,10 @@
 
 		                setTimeout(function(){
 		                    $("#shutter").remove();
-		                    $("#content").removeClass("hide");
+							$("#content").removeClass("hide");
+							
+							// When the user scrolls the page, execute myFunction 
+							window.onscroll = function() {myFunction()};
 		                }, 700);
 
 		                // var script = document.createElement("script");
@@ -212,7 +220,13 @@
 		                // img.src = "assets/jk.png";
 		                // document.body.appendChild(img);
 		    		}
-		    	}
+				}
+				function myFunction() {
+					var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+					var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+					var scrolled = (winScroll / height) * 100;
+					document.getElementById("myBar").style.width = scrolled + "%";
+				}
 		        function progressBarComplete() {
 		            // if(count >= total) {
 		            //     console.log("progressBarComplete");
