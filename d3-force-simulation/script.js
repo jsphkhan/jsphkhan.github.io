@@ -1,5 +1,6 @@
 
-document.getElementById("myBtn").addEventListener('click', start, false);
+//document.getElementById("myBtn").addEventListener('click', start, false);
+window.addEventListener('load', start, false);
 
 function start() {
 	var nodes = [
