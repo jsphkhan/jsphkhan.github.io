@@ -1,0 +1,43 @@
+div#container {
+	width: 1160px;
+	margin: 0 auto;
+}
+
+h2 {
+	text-align: center;
+	margin: 0;
+	margin-bottom: 10px;
+}
+
+g.links .link {
+	fill: none;
+	stroke: #ccc;
+	stroke-width: 2px;
+}
+g.nodes .node {
+	/*fill: #9ECDE9;*/
+  	stroke: none;
+}
+.node.node-a {
+	fill: #00A896;
+}
+.node.node-b {
+	fill: #84DCC6;
+}
+.node.node-c {
+	fill: #B2DBBF;
+}
+g.nodes .node:hover {
+	fill: #385458;
+  	stroke: none;
+}
+g.nodes .blue-node {
+	fill: #8AB7FF;
+	stroke: #9a9a9a;
+	stroke-width: 2px;
+}
+g.texts .text {
+	fill: #000000;
+	font-size: 13px;
+	font-weight: 500;
+}
