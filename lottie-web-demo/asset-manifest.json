@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/lottie-web-demo/static/css/main.78ca29b9.chunk.css",
+    "main.js": "/lottie-web-demo/static/js/main.a013f77c.chunk.js",
+    "main.js.map": "/lottie-web-demo/static/js/main.a013f77c.chunk.js.map",
+    "runtime-main.js": "/lottie-web-demo/static/js/runtime-main.9764c17f.js",
+    "runtime-main.js.map": "/lottie-web-demo/static/js/runtime-main.9764c17f.js.map",
+    "static/js/2.466a4e8e.chunk.js": "/lottie-web-demo/static/js/2.466a4e8e.chunk.js",
+    "static/js/2.466a4e8e.chunk.js.map": "/lottie-web-demo/static/js/2.466a4e8e.chunk.js.map",
+    "index.html": "/lottie-web-demo/index.html",
+    "precache-manifest.df6589032d51db20de7c5d33170f63bf.js": "/lottie-web-demo/precache-manifest.df6589032d51db20de7c5d33170f63bf.js",
+    "service-worker.js": "/lottie-web-demo/service-worker.js",
+    "static/css/main.78ca29b9.chunk.css.map": "/lottie-web-demo/static/css/main.78ca29b9.chunk.css.map",
+    "static/media/logo.svg": "/lottie-web-demo/static/media/logo.25bf045c.svg"
+  }
+}
