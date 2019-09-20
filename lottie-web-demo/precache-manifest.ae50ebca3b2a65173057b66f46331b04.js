@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "5097ab429868f6237daa1566a5fb73e3",
+    "revision": "f433da7c85c8b2a6eb4ee8bf5ed065c6",
     "url": "/lottie-web-demo/index.html"
   },
   {
-    "revision": "36db1aa314ad4166a2c3",
+    "revision": "2efb62934fad2f410d19",
     "url": "/lottie-web-demo/static/css/main.78ca29b9.chunk.css"
   },
   {
@@ -12,15 +12,11 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/lottie-web-demo/static/js/2.466a4e8e.chunk.js"
   },
   {
-    "revision": "36db1aa314ad4166a2c3",
-    "url": "/lottie-web-demo/static/js/main.a013f77c.chunk.js"
+    "revision": "2efb62934fad2f410d19",
+    "url": "/lottie-web-demo/static/js/main.d018f3f7.chunk.js"
   },
   {
     "revision": "7c757d247069a7bad267",
     "url": "/lottie-web-demo/static/js/runtime-main.9764c17f.js"
-  },
-  {
-    "revision": "25bf045ca257e971124f3997d89f321c",
-    "url": "/lottie-web-demo/static/media/logo.25bf045c.svg"
   }
 ]);

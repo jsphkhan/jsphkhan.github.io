@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!--  Meta  -->
+  <meta charset="UTF-8" />
+  <title>Bodymovin Demo</title>
+  <style>
+      #bm { 
+          width: 400px;
+          margin: 0 auto;
+      }
+  </style>
+</head>
+<body>
+  <!-- Our wrapper -->
+  <div id="bm"> </div>
+  
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.5.9/lottie.js"></script>
+  <script>
+    var animation = bodymovin.loadAnimation({
+      container: document.getElementById('bm'),
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      path: 'delivery.json'
+    })
+  </script>
+</body>
+</html>
